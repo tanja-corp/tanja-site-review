@@ -7,6 +7,13 @@
 })(typeof self !== 'undefined' ? self : this, function (OM, LY) {
   'use strict';
 
+  /* UI language: t('日本語') gives the English text in English mode (i18n.js); plain node runs (tests) get the Japanese text. */
+  var t = function (s, v) {
+    var I = typeof self !== 'undefined' && self.I18N;
+    if (I) return I.t(s, v);
+    return v ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return k in v ? v[k] : m; }) : s;
+  };
+
   var STATUS = {
     built: { ja: '実装済み', color: '#24402f', legend: '実装済み' },
     provisional: { ja: '暫定（未承認）', color: '#b7791f', legend: '暫定（実在するが未承認）' },
@@ -45,7 +52,7 @@
   }
 
   var label = function (o, lang) { return lang === 'en' ? (o.en || o.ja || o.id) : (o.ja || o.en || o.id); };
-  var sub = function (o, lang) { return lang === 'en' ? (o.ja || '') : (o.en || ''); };
+  var sub = function (o, lang) { return lang === 'en' ? '' : (o.en || ''); };   // English mode shows no Japanese sub-label
 
   /* small pill, returns {svg, w} */
   function pill(text, x, y, opt) {
@@ -133,7 +140,7 @@
         s += '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 8) + '" text-anchor="middle" font-size="30" fill="' + P.outline + '">＋</text>';
         break;
       case 'ghost-section':
-        s += '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 6) + '" text-anchor="middle" font-size="12" fill="' + P.outline + '">同じ枠組みで挿入できる（CSS変更なし）</text>';
+        s += '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 6) + '" text-anchor="middle" font-size="12" fill="' + P.outline + '">' + esc(t('同じ枠組みで挿入できる（CSS変更なし）')) + '</text>';
         break;
       case 'bar':
         s += '<text x="' + x + '" y="' + (y + 18) + '" font-size="15" font-weight="700" fill="' + P.ink + '" letter-spacing="3">TANJA</text>' +
@@ -193,9 +200,9 @@
       var light = false;
       var bcol = light ? '#fff' : P.ink2, bstroke = light ? 'rgba(255,255,255,.6)' : P.outline, bfill = light ? 'rgba(0,0,0,.25)' : '#fff';
       if (ds.slot) badge('slot ' + ds.slot, { color: bcol, stroke: bstroke, fill: bfill, mono: true });
-      if (ds.repeat) badge('×' + ds.repeat.shown + '（' + ds.repeat.min + '–' + ds.repeat.max + '）', { color: bcol, stroke: bstroke, fill: bfill });
-      if (OM.isEntity(o) && o.er.fields.some(function (f) { return f.i18n; })) badge('3言語', { color: bcol, stroke: bstroke, fill: bfill });
-      var stp = pill(st.ja, 0, 0, { color: '#fff', fill: st.color, size: 9.5 }); bx -= stp.w; s += '<g transform="translate(' + bx + ' ' + by + ')">' + stp.svg + '</g>';
+      if (ds.repeat) badge('×' + ds.repeat.shown + ' (' + ds.repeat.min + '–' + ds.repeat.max + ')', { color: bcol, stroke: bstroke, fill: bfill });
+      if (OM.isEntity(o) && o.er.fields.some(function (f) { return f.i18n; })) badge(t('3言語'), { color: bcol, stroke: bstroke, fill: bfill });
+      var stp = pill(t(st.ja), 0, 0, { color: '#fff', fill: st.color, size: 9.5 }); bx -= stp.w; s += '<g transform="translate(' + bx + ' ' + by + ')">' + stp.svg + '</g>';
     } else if (ds.mock === 'chips') {
       var dotc = st.color; s += '<circle cx="' + (w - 10) + '" cy="' + (h - 8) + '" r="3.5" fill="' + dotc + '"/>';
       if (ds.repeat) s += '<text x="' + (w - 18) + '" y="' + (h - 5) + '" text-anchor="end" font-size="9.5" fill="' + P.ink3 + '">×' + ds.repeat.shown + '</text>';
@@ -213,8 +220,8 @@
       '<rect x="0" y="0" width="6" height="' + h + '" rx="3" fill="' + col + '"' + (ghost ? ' opacity=".45"' : '') + '/>' +
       '<text class="lbl" x="17" y="' + (h / 2 - 2) + '" font-size="12.5" font-weight="700" fill="' + P.ink + '">' + esc(fit(label(o, ctx.lang), w - 40, 12.5)) + '</text>' +
       '<text x="17" y="' + (h / 2 + 15) + '" font-size="10" fill="' + P.ink3 + '">' + esc(fit(sub(o, ctx.lang), w - 30, 10)) + '</text>' +
-      '<circle cx="' + (w - 13) + '" cy="13" r="4" fill="' + st.color + '"><title>' + esc(st.ja) + '</title></circle>';
-    if (o.kind === 'row') s += '<text x="' + (w - 10) + '" y="' + (h - 8) + '" text-anchor="end" font-size="9" fill="' + col + '">行</text>';
+      '<circle cx="' + (w - 13) + '" cy="13" r="4" fill="' + st.color + '"><title>' + esc(t(st.ja)) + '</title></circle>';
+    if (o.kind === 'row') s += '<text x="' + (w - 10) + '" y="' + (h - 8) + '" text-anchor="end" font-size="9" fill="' + col + '">' + esc(t('行')) + '</text>';
     return s;
   }
 
@@ -222,7 +229,7 @@
     var col = lane.domain.color;
     return '<g transform="translate(' + lane.x + ' ' + lane.y + ')"><rect width="' + lane.w + '" height="' + lane.h + '" rx="16" fill="' + col + '" fill-opacity=".05" stroke="' + col + '" stroke-opacity=".28"/>' +
       '<text x="18" y="27" font-size="14" font-weight="700" fill="' + col + '">' + esc(ctx.lang === 'en' ? lane.domain.en : lane.domain.ja) + '</text>' +
-      '<text x="18" y="41" font-size="10" fill="' + ctx.P.ink3 + '">' + esc(ctx.lang === 'en' ? lane.domain.ja : lane.domain.en) + '</text></g>';
+      '<text x="18" y="41" font-size="10" fill="' + ctx.P.ink3 + '">' + esc(ctx.lang === 'en' ? '' : lane.domain.en) + '</text></g>';
   }
 
   /* --------------------------------------------------------------- ER */
@@ -235,7 +242,7 @@
       '<path d="M0 ' + ER.head + ' V7 a7 7 0 0 1 7 -7 H' + (w - 7) + ' a7 7 0 0 1 7 7 V' + ER.head + ' Z" fill="' + col + '"' + (ghost ? ' fill-opacity=".55"' : '') + '/>' +
       '<text class="mono" x="12" y="21" font-size="14" font-weight="700" fill="#fff">' + esc(table.name) + '</text>' +
       '<text x="12" y="37" font-size="10.5" fill="rgba(255,255,255,.88)">' + esc(fit(label(o, ctx.lang) + (ctx.lang === 'en' ? '' : ''), w - 90, 10.5)) + '</text>' +
-      '<circle cx="' + (w - 14) + '" cy="15" r="4.5" fill="' + st.color + '" stroke="#fff" stroke-width="1.2"><title>' + esc('ページ上のオブジェクトの状態：' + st.ja + '（このテーブル自体は案）') + '</title></circle>';
+      '<circle cx="' + (w - 14) + '" cy="15" r="4.5" fill="' + st.color + '" stroke="#fff" stroke-width="1.2"><title>' + esc(t('ページ上のオブジェクトの状態：{s}（このテーブル自体は案）', { s: t(st.ja) })) + '</title></circle>';
     table.fields.forEach(function (f, i) {
       var y = ER.head + i * ER.row;
       if (i % 2) s += '<rect x="1" y="' + y + '" width="' + (w - 2) + '" height="' + ER.row + '" fill="' + P.paper + '"/>';
@@ -246,15 +253,15 @@
       var tx = w - 10;
       s += '<text x="' + tx + '" y="' + (y + 15) + '" text-anchor="end" font-size="10" fill="' + P.ink3 + '">' + esc(f.fk ? '→ ' + (ctx.d.tables.get(f.fk) ? ctx.d.tables.get(f.fk).name : f.fk) : (TYPE_LABEL[f.type] || f.type)) + '</text>';
       var fx = nameX + textW(nm, 11.5) * 0.98 + 6;
-      if (f.i18n) { var p1 = pill('3言語', fx, y + 3, { size: 8.5, color: '#3f6472', stroke: '#3f6472' }); s += p1.svg; fx += p1.w + 3; }
-      if (f.placeholder) { var p2 = pill('仮', fx, y + 3, { size: 8.5, color: '#fff', fill: STATUS.provisional.color }); s += p2.svg; }
-      if (f.note) s += '<title>' + esc(f.name + ' — ' + f.note) + '</title>';
+      if (f.i18n) { var p1 = pill(t('3言語'), fx, y + 3, { size: 8.5, color: '#3f6472', stroke: '#3f6472' }); s += p1.svg; fx += p1.w + 3; }
+      if (f.placeholder) { var p2 = pill(t('仮'), fx, y + 3, { size: 8.5, color: '#fff', fill: STATUS.provisional.color }); s += p2.svg; }
+      if (f.note) s += '<title>' + esc(f.name + ' — ' + t(f.note)) + '</title>';
     });
     var by = ER.head + table.fields.length * ER.row + ER.pad;
-    if (table.rows.length) s += '<text x="12" y="' + (by + 9) + '" font-size="9.5" fill="' + P.ink3 + '">行（' + table.rows.length + '）</text>';
+    if (table.rows.length) s += '<text x="12" y="' + (by + 9) + '" font-size="9.5" fill="' + P.ink3 + '">' + esc(t('行（{n}）', { n: table.rows.length })) + '</text>';
     if (rect.hasRepeat) {
       var rp = o.design.repeat;
-      s += '<text x="12" y="' + (h - 9) + '" font-size="10" fill="' + P.ink3 + '">ページ上の表示 ×' + rp.shown + '（' + rp.min + '〜' + rp.max + '件）</text>';
+      s += '<text x="12" y="' + (h - 9) + '" font-size="10" fill="' + P.ink3 + '">' + esc(t('ページ上の表示 ×{shown}（{min}〜{max}件）', { shown: rp.shown, min: rp.min, max: rp.max })) + '</text>';
     }
     return s;
   }
@@ -303,7 +310,7 @@
     var e = r.edge, faint = e.kind === 'i18n', slot = e.kind === 'slot';
     var col = faint ? '#3f6472' : (slot ? '#3f6472' : '#2e3a30');
     var txt = verbOf(e, ctx.lang);
-    if (e.kind === 'slot' && e.slots) txt += '（' + e.slots.slice(0, 3).join('・') + (e.slots.length > 3 ? '…' : '') + '）';
+    if (e.kind === 'slot' && e.slots) txt += ' (' + e.slots.slice(0, 3).join(', ') + (e.slots.length > 3 ? '…' : '') + ')';
     return '<g class="edge ' + (faint ? 'faint' : '') + '" data-from="' + esc(e.from) + '" data-to="' + esc(e.to) + '" data-id="' + esc(e.id) + '">' +
       '<path class="hit" d="' + r.d + '" fill="none" stroke="transparent" stroke-width="12"/>' +
       '<path class="halo" d="' + r.d + '" fill="none" stroke="#faf8f2" stroke-width="4.5" stroke-opacity=".9"/>' +

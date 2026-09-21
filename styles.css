@@ -501,7 +501,7 @@ html[data-lang="ja"] .vm__text { max-width: none; }
 .crop--feature .crop__title { font-size: var(--fs-headline); line-height: 1.04; font-weight: 400; margin-bottom: var(--sp-4); }
 .crop--feature .crop__body p:not(.chip):not(.tbc) { font-size: var(--fs-body-l); }
 
-.crop-pair { row-gap: var(--sp-8); margin-top: var(--sp-7); }
+.crop-pair { row-gap: var(--sp-7); margin-top: var(--sp-6); }
 
 /* Project grid: three columns on a wide window. A new <li> takes the next free cell, so a 3rd, 4th or 5th project needs no CSS. */
 .project-grid { display: grid; gap: var(--sp-7) var(--col-gap); grid-template-columns: minmax(0, 1fr); }
@@ -588,6 +588,7 @@ a.social__link { cursor: pointer; }
   .vm__item { border-top: 0; padding-top: 0; }
 
   .crop--feature .crop__body { grid-column: col 1 / span 8; }
+  .crop-pair { row-gap: var(--sp-8); margin-top: var(--sp-7); }
   .crop-pair > .crop:first-child { grid-column: col 1 / span 6; }
   .crop-pair > .crop:last-child { grid-column: col 7 / span 6; margin-top: clamp(2rem, 6vw, 5rem); }
   .project-grid { grid-column: col 1 / content-end; grid-template-columns: repeat(2, minmax(0, 1fr)); }

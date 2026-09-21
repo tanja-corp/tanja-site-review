@@ -7,13 +7,14 @@
   var OM = window.OM, LY = window.OMLayout, SK = window.OMSkins;
   var SVGNS = 'http://www.w3.org/2000/svg';
   var DRAFT_KEY = 'tanja-object-map-draft';
+  function t(s, v) { return window.I18N.t(s, v); }
   var VIEWS = ['design', 'concept', 'er'];
   var VIEW_LABEL = { design: 'デザインデータ', concept: '概念図', er: 'ER図' };
   var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   var fileJson = JSON.stringify(window.OBJECT_MODEL);
   var state = {
-    model: JSON.parse(fileJson), view: 'design', sel: null, lang: 'ja', labelsAlways: true,
+    model: JSON.parse(fileJson), view: 'design', sel: null, lang: window.I18N.lang, labelsAlways: true,
     hist: [], fut: [], cam: { x: 0, y: 0, k: 1 }, draft: false, issues: [], lastKey: '', lastAt: 0, stale: null, notice: '', userCam: false, unsavedInvalid: false
   };
   var L = null, ctx = null;
@@ -70,13 +71,13 @@
       var rec = JSON.parse(raw), m = rec && typeof rec.model === 'string' ? JSON.parse(rec.model) : null;
       if (!m || OM.validate(m).some(isErr)) {          // keep the broken draft aside instead of silently losing it
         setAside(raw);
-        state.notice = '保存されていた下書きを読み込めませんでした（別のキーに退避しました）';
+        state.notice = t('保存されていた下書きを読み込めませんでした（別のキーに退避しました）');
         return;
       }
       if (rec.base !== BASE) { state.stale = rec.model; return; }      // model.js has changed since this draft: ask, do not overwrite
       if (rec.model === fileJson) return;
       state.model = m; state.draft = true;
-    } catch (e) { if (raw) setAside(raw); state.notice = '保存されていた下書きを読み込めませんでした（別のキーに退避しました）'; }
+    } catch (e) { if (raw) setAside(raw); state.notice = t('保存されていた下書きを読み込めませんでした（別のキーに退避しました）'); }
   }
 
   /* All edits go through here. mutate() changes the model in place; the three views are then recomputed.
@@ -85,7 +86,7 @@
     opt = opt || {};
     var before = snapshot();
     try { mutate(state.model); }
-    catch (e) { state.model = JSON.parse(before); toast('その操作は実行できませんでした'); afterEdit(); return; }
+    catch (e) { state.model = JSON.parse(before); toast(t('その操作は実行できませんでした')); afterEdit(); return; }
     if (snapshot() === before) return;
     var now = Date.now();
     var coalesce = opt.key && opt.key === state.lastKey && now - state.lastAt < 1200;
@@ -104,12 +105,12 @@
   function fixSelection() { if (state.sel && !state.model.objects.some(function (o) { return o.id === state.sel; })) state.sel = null; }
   function replaceModel(m, label) {
     state.hist.push(snapshot()); state.fut = []; state.model = m; state.lastKey = '';
-    fixSelection(); afterEdit(); toast(label || 'モデルを置き換えました');
+    fixSelection(); afterEdit(); toast(label || t('モデルを置き換えました'));
   }
-  function restoreStale() { state.hist.push(snapshot()); state.model = JSON.parse(state.stale); state.stale = null; state.lastKey = ''; fixSelection(); afterEdit(); toast('前の下書きを復元しました'); }
-  function dropStale() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* ignore */ } state.stale = null; updateChrome(); toast('前の下書きを破棄しました'); }
+  function restoreStale() { state.hist.push(snapshot()); state.model = JSON.parse(state.stale); state.stale = null; state.lastKey = ''; fixSelection(); afterEdit(); toast(t('前の下書きを復元しました')); }
+  function dropStale() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* ignore */ } state.stale = null; updateChrome(); toast(t('前の下書きを破棄しました')); }
   function discardDraft() {
-    state.hist.push(snapshot()); state.model = JSON.parse(fileJson); fixSelection(); afterEdit(); toast('model.js の状態に戻しました');
+    state.hist.push(snapshot()); state.model = JSON.parse(fileJson); fixSelection(); afterEdit(); toast(t('model.js の状態に戻しました'));
   }
 
   /* --------------------------------------------------------------- build */
@@ -149,13 +150,13 @@
 
   function drawSkins() {
     state.model.objects.forEach(function (o) {
-      var g = nodes.get(o.id), rd = L.design.rects[o.id], rc = L.concept.rects[o.id], re = L.er.rects[o.id], t = L.d.tables.get(o.id);
+      var g = nodes.get(o.id), rd = L.design.rects[o.id], rc = L.concept.rects[o.id], re = L.er.rects[o.id], tb = L.d.tables.get(o.id);
       g.querySelector('.skin-design').innerHTML = rd ? SK.designSkin(o, rd, ctx) : '';
       g.querySelector('.skin-concept').innerHTML = rc ? SK.conceptSkin(o, rc, ctx) : '';
-      g.querySelector('.skin-er').innerHTML = re ? (t ? SK.erTableSkin(o, t, re, ctx) : SK.erRowSkin(o, re, ctx)) : '';
+      g.querySelector('.skin-er').innerHTML = re ? (tb ? SK.erTableSkin(o, tb, re, ctx) : SK.erRowSkin(o, re, ctx)) : '';
       g.classList.toggle('in-design', !!rd); g.classList.toggle('in-concept', !!rc); g.classList.toggle('in-er', !!re);
-      var where = [rd && 'デザイン', rc && '概念図', re && 'ER図'].filter(Boolean).join('・');
-      g.setAttribute('aria-label', SK.label(o, ctx.lang) + '（' + where + '）');
+      var where = [rd && t('デザイン'), rc && t('概念図'), re && t('ER図')].filter(Boolean).join(t('・'));
+      g.setAttribute('aria-label', SK.label(o, ctx.lang) + ' (' + where + ')');
     });
   }
 
@@ -357,26 +358,40 @@
   }
 
   function bindCanvas() {
-    var svg = $('#canvas'), drag = null, moved = false;
+    var svg = $('#canvas'), drag = null, moved = false, pts = {}, pinch = null, pinched = false;
+    function ptList() { return Object.keys(pts).map(function (k) { return pts[k]; }); }
+    function pinchGeom() { var a = ptList(); return { d: Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) || 1, x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2 }; }
     svg.addEventListener('pointerdown', function (e) {
-      if (e.button !== 0) return;
-      drag = { x: e.clientX, y: e.clientY, cx: state.cam.x, cy: state.cam.y }; moved = false;
-      svg.setPointerCapture(e.pointerId);
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+      try { svg.setPointerCapture(e.pointerId); } catch (x) { /* not capturable */ }
+      if (ptList().length === 2) { pinch = pinchGeom(); pinched = true; drag = null; moved = true; state.userCam = true; cancelAnimationFrame(camRaf); return; }
+      drag = { x: e.clientX, y: e.clientY, cx: state.cam.x, cy: state.cam.y }; moved = false; pinched = false;
     });
     svg.addEventListener('pointermove', function (e) {
+      if (pts[e.pointerId]) pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+      if (pinch && ptList().length === 2) {
+        var g = pinchGeom(), r = svg.getBoundingClientRect();
+        state.cam.x += g.x - pinch.x; state.cam.y += g.y - pinch.y;
+        zoomAt(g.x - r.left, g.y - r.top, g.d / pinch.d); pinch = g; return;
+      }
       if (!drag) return;
       var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
       if (Math.abs(dx) + Math.abs(dy) > 4) { moved = true; svg.classList.add('panning'); cancelAnimationFrame(camRaf); }
       if (moved) { state.userCam = true; state.cam.x = drag.cx + dx; state.cam.y = drag.cy + dy; applyCam(); }
     });
-    svg.addEventListener('pointerup', function (e) {
-      var wasMoved = moved; drag = null; svg.classList.remove('panning');
+    function endPointer(e, cancelled) {
+      delete pts[e.pointerId];
       try { svg.releasePointerCapture(e.pointerId); } catch (x) { /* already released */ }
-      if (wasMoved) return;
+      if (pinch) { pinch = null; drag = null; if (!ptList().length) { pinched = false; svg.classList.remove('panning'); } return; }
+      var wasMoved = moved || pinched; drag = null; pinched = false; svg.classList.remove('panning');
+      if (cancelled || wasMoved) return;
       var n = e.target.closest && e.target.closest('.node');
       if (n && !n.classList.contains('off')) select(n.getAttribute('data-id'));
       else select(null);
-    });
+    }
+    svg.addEventListener('pointerup', function (e) { endPointer(e, false); });
+    svg.addEventListener('pointercancel', function (e) { endPointer(e, true); });
     svg.addEventListener('wheel', function (e) {
       e.preventDefault();
       var r = svg.getBoundingClientRect();
@@ -403,20 +418,22 @@
     if (el) {
       var counts = { design: 0, concept: 0, er: 0 };
       state.model.objects.forEach(function (o) { VIEWS.forEach(function (v) { if (OM.inView(state.model, o, v)) counts[v]++; }); });
-      el.textContent = (state.unsavedInvalid ? '⚠ エラーがあるため、下書きはこの前の正常な状態のままです｜' : '') + 'オブジェクト ' + state.model.objects.length + '｜リンク ' + (state.model.links || []).length + '｜デザイン ' + counts.design + '・概念 ' + counts.concept + '・ER ' + counts.er + (st ? '｜エラー ' + st : '');
+      el.textContent = (state.unsavedInvalid ? t('⚠ エラーがあるため、下書きはこの前の正常な状態のままです｜') : '') +
+        t('オブジェクト {o}｜リンク {l}｜デザイン {d}・概念 {c}・ER {e}', { o: state.model.objects.length, l: (state.model.links || []).length, d: counts.design, c: counts.concept, e: counts.er }) +
+        (st ? t('｜エラー {n}', { n: st }) : '');
       el.classList.toggle('bad', !!st);
     }
     $('#undo').disabled = !state.hist.length; $('#redo').disabled = !state.fut.length;
     $('#draftbar').hidden = !state.draft || !!state.stale;
     $('#stalebar').hidden = !state.stale;
-    $('#langbtn').textContent = state.lang === 'ja' ? '日本語' : 'English';
+    $('#langbtn').textContent = state.lang === 'ja' ? 'EN' : '日本語';
     $('#labelbtn').setAttribute('aria-pressed', state.labelsAlways ? 'true' : 'false');
     $('#legend').setAttribute('data-view', state.view);
   }
 
   function toast(msg) {
-    var t = $('#toast'); t.textContent = msg; t.classList.add('show');
-    clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('show'); }, 2600);
+    var el = $('#toast'); el.textContent = msg; el.classList.add('show');
+    clearTimeout(toast.t); toast.t = setTimeout(function () { el.classList.remove('show'); }, 2600);
   }
 
   /* ----------------------------------------------------------------- save */
@@ -426,15 +443,15 @@
   }
   function okToSave() {
     var n = OM.validate(state.model).filter(isErr).length;
-    return !n || window.confirm('エラーが ' + n + ' 件あります。それでも保存しますか？（ブラウザ内の下書きは残ります）');
+    return !n || window.confirm(t('エラーが {n} 件あります。それでも保存しますか？（ブラウザ内の下書きは残ります）', { n: n }));
   }
   function saveToFile() {
     if (!okToSave()) return;
     var text = OM.serialize(state.model);
-    if (!window.showSaveFilePicker) { download('model.js', text); toast('model.js をダウンロードしました。architecture/ に上書きしてください'); return; }
+    if (!window.showSaveFilePicker) { download('model.js', text); toast(t('model.js をダウンロードしました。architecture/ に上書きしてください')); return; }
     window.showSaveFilePicker({ suggestedName: 'model.js', types: [{ description: 'JavaScript', accept: { 'text/javascript': ['.js'] } }] })
-      .then(function (handle) { return handle.createWritable().then(function (w) { return w.write(text).then(function () { return w.close(); }); }).then(function () { var invalid = OM.validate(state.model).some(isErr); fileJson = snapshot(); BASE = hashOf(fileJson); if (invalid) { try { localStorage.setItem(DRAFT_KEY + '-rejected', JSON.stringify({ base: BASE, model: fileJson })); } catch (x) { /* ignore */ } } persist(); updateChrome(); toast('保存しました：' + handle.name); }); })
-      .catch(function (e) { if (e && e.name !== 'AbortError') { download('model.js', text); toast('直接保存できなかったためダウンロードしました'); } });
+      .then(function (handle) { return handle.createWritable().then(function (w) { return w.write(text).then(function () { return w.close(); }); }).then(function () { var invalid = OM.validate(state.model).some(isErr); fileJson = snapshot(); BASE = hashOf(fileJson); if (invalid) { try { localStorage.setItem(DRAFT_KEY + '-rejected', JSON.stringify({ base: BASE, model: fileJson })); } catch (x) { /* ignore */ } } persist(); updateChrome(); toast(t('保存しました：{name}', { name: handle.name })); }); })
+      .catch(function (e) { if (e && e.name !== 'AbortError') { download('model.js', text); toast(t('直接保存できなかったためダウンロードしました')); } });
   }
 
   /* ------------------------------------------------------------------ init */
@@ -444,12 +461,9 @@
   }
 
   function buildChrome() {
-    var menu = $('#viewmenu');
-    VIEWS.forEach(function (v, i) {
-      menu.appendChild(h('button', { type: 'button', role: 'tab', 'data-view': v, 'aria-selected': 'false', title: VIEW_LABEL[v] + '（' + (i + 1) + '）', onClick: function () { setView(v); } }, h('span', { class: 'n' }, String(i + 1)), VIEW_LABEL[v]));
-    });
+    buildViewMenu();
     $('#undo').addEventListener('click', undo); $('#redo').addEventListener('click', redo);
-    $('#langbtn').addEventListener('click', function () { state.lang = state.lang === 'ja' ? 'en' : 'ja'; rebuild({}); });
+    $('#langbtn').addEventListener('click', function () { state.lang = state.lang === 'ja' ? 'en' : 'ja'; window.I18N.setLang(state.lang); applyLang(); });
     $('#labelbtn').addEventListener('click', function () { state.labelsAlways = !state.labelsAlways; rebuild({ keepInspector: true }); });
     $('#fitbtn').addEventListener('click', function () { fit(true, true); });
     $('#zin').addEventListener('click', function () { var S = stageSize(); zoomAt(S.w / 2, S.h / 2, 1.25); });
@@ -457,7 +471,7 @@
     $('#inspbtn').addEventListener('click', function () { document.body.classList.toggle('no-insp'); setTimeout(function () { fit(true); }, 60); });
     $('#legendbtn').addEventListener('click', function () { $('#legend').classList.toggle('closed'); });
     $('#savebtn').addEventListener('click', saveToFile);
-    $('#dlbtn').addEventListener('click', function () { if (!okToSave()) return; download('model.js', OM.serialize(state.model)); toast('model.js をダウンロードしました'); });
+    $('#dlbtn').addEventListener('click', function () { if (!okToSave()) return; download('model.js', OM.serialize(state.model)); toast(t('model.js をダウンロードしました')); });
     $('#stalerestore').addEventListener('click', restoreStale); $('#staledrop').addEventListener('click', dropStale);
     $('#draftsave').addEventListener('click', saveToFile);
     $('#draftdrop').addEventListener('click', discardDraft);
@@ -486,15 +500,35 @@
     window.addEventListener('resize', function () { if (!state.userCam) fit(false); });
   }
 
+  /* Attributes on the static HTML that carry Japanese text (title / aria-label / placeholder): keep the original, show t(original). */
+  function applyStatic() {
+    ['title', 'aria-label', 'placeholder'].forEach(function (a) {
+      $$('[' + a + ']').forEach(function (el) {
+        var k = 'data-ja-' + a;
+        if (!el.hasAttribute(k)) { var v = el.getAttribute(a); if (!/[぀-ヿ一-鿿]/.test(v)) return; el.setAttribute(k, v); }
+        el.setAttribute(a, t(el.getAttribute(k)));
+      });
+    });
+    document.title = window.I18N.lang === 'en' ? 'Website Structure / Design Map — TANJA' : 'Website Structure / Design Map — TANJA（オブジェクトマップ）';
+  }
+  function buildViewMenu() {
+    var menu = $('#viewmenu'); menu.textContent = '';
+    VIEWS.forEach(function (v, i) {
+      menu.appendChild(h('button', { type: 'button', role: 'tab', 'data-view': v, 'aria-selected': v === state.view ? 'true' : 'false', title: t(VIEW_LABEL[v]) + ' (' + (i + 1) + ')', onClick: function () { setView(v); } }, h('span', { class: 'n' }, String(i + 1)), h('span', { class: 'vl' }, t(VIEW_LABEL[v]))));
+    });
+  }
+  function applyLang() { applyStatic(); buildViewMenu(); buildLegend(); rebuild({}); }
+
   function buildLegend() {
     var ul = $('#lg-status'); if (!ul) return;
-    Object.keys(SK.STATUS).forEach(function (k) { var st = SK.STATUS[k]; ul.appendChild(h('li', {}, h('i', { class: 'dot', style: 'background:' + st.color }), st.legend || st.ja)); });
+    ul.textContent = '';
+    Object.keys(SK.STATUS).forEach(function (k) { var st = SK.STATUS[k]; ul.appendChild(h('li', {}, h('i', { class: 'dot', style: 'background:' + st.color }), t(st.legend || st.ja))); });
   }
 
   function init() {
     loadDraft(); buildLegend();
     state.issues = OM.validate(state.model);
-    buildChrome(); bindCanvas();
+    buildChrome(); bindCanvas(); applyStatic();
     var hash = parseHash();
     if (VIEWS.indexOf(hash.view) > -1) state.view = hash.view;
     if (hash.sel) state.sel = hash.sel;

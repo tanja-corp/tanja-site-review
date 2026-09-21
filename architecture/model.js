@@ -205,13 +205,14 @@ window.OBJECT_MODEL = {
       "ja": "ホーム（ヒーロー）",
       "en": "Hero",
       "status": "provisional",
-      "summary": "静止画1枚とワードマークだけ（高さは窓の約88%）。場所の1行は任意で、既定では出さない。スライダー・動画・CTAなし。",
+      "summary": "静止画1枚とワードマークと場所の1行（Karatu, Tanzania。仮置き・要承認）。高さは窓の約88%（スマホは窓いっぱい）。スライダー・動画・CTAなし。",
       "design": {
         "parent": "site",
         "order": 1,
         "mock": "hero",
         "h": 300,
         "htmlId": "home",
+        "placeholders": ["hero-line"],
         "component": ".hero",
         "slot": "01",
         "slotField": "image",
@@ -226,7 +227,7 @@ window.OBJECT_MODEL = {
           {"name":"id","type":"id","pk":true},
           {"name":"image","type":"image","req":true},
           {"name":"mobile_crop","type":"image","nullable":true,"note":"縦切り出し（任意）"},
-          {"name":"location_line","type":"text","i18n":true,"nullable":true,"note":"任意。空なら表示しない（既定は空）"},
+          {"name":"location_line","type":"text","i18n":true,"nullable":true,"note":"場所の1行（Farms in Karatu, Tanzania）。所在地の住所は出さない。空なら表示しない"},
           {"name":"wordmark","type":"text"}
         ]
       }

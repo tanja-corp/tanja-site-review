@@ -7,6 +7,7 @@
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="explorer.css">
   <!-- 出所は model.js の1ファイルだけ。3つのビューはここから毎回描き直される。 -->
+  <script src="i18n.js"></script>
   <script src="model.js"></script>
   <script src="model-core.js"></script>
   <script src="layout.js"></script>
@@ -15,11 +16,11 @@
 <body data-view="design">
   <div id="refband" role="note">
     <strong>Website Planning / Structure Reference — not the public TANJA website</strong>
-    <span class="note">ここでの編集・下書きはこのブラウザ内だけに残り、共有されません。</span>
+    <span class="note"><span data-l="ja" lang="ja">ここでの編集・下書きはこのブラウザ内だけに残り、共有されません。</span><span data-l="en" lang="en">Edits and drafts made here stay in this browser only and are not shared.</span></span>
     <a href="../index.html">View Website</a>
   </div>
   <header id="bar">
-    <div class="brand"><strong>TANJA</strong><span>オブジェクトマップ</span></div>
+    <div class="brand"><strong>TANJA</strong><span><span data-l="ja" lang="ja">オブジェクトマップ</span><span data-l="en" lang="en">Object map</span></span></div>
     <nav id="viewmenu" role="tablist" aria-label="ビューの切り替え"></nav>
     <div class="search">
       <input id="search" type="search" placeholder="オブジェクトを探す（/）" autocomplete="off" aria-label="オブジェクトを探す">
@@ -28,24 +29,24 @@
     <div class="tools">
       <button id="undo" type="button" title="元に戻す（Ctrl+Z）" aria-label="元に戻す">↶</button>
       <button id="redo" type="button" title="やり直す（Ctrl+Shift+Z）" aria-label="やり直す">↷</button>
-      <button id="langbtn" type="button" title="キャンバス上の表示言語">日本語</button>
-      <button id="labelbtn" type="button" aria-pressed="true" title="関係ラベルを常に表示（オフなら選択時のみ）">関係ラベル</button>
-      <button id="savebtn" type="button" class="primary" title="model.js に保存（Ctrl+S）">保存</button>
+      <button id="langbtn" type="button" title="表示言語 / Language" aria-label="表示言語 / Language">EN</button>
+      <button id="labelbtn" type="button" aria-pressed="true" title="関係ラベルを常に表示（オフなら選択時のみ）"><span data-l="ja" lang="ja">関係ラベル</span><span data-l="en" lang="en">Relation labels</span></button>
+      <button id="savebtn" type="button" class="primary" title="model.js に保存（Ctrl+S）"><span data-l="ja" lang="ja">保存</span><span data-l="en" lang="en">Save</span></button>
       <button id="dlbtn" type="button" title="model.js をダウンロード">⤓</button>
-      <button id="inspbtn" type="button" title="右パネルの開閉">パネル</button>
+      <button id="inspbtn" type="button" title="右パネルの開閉"><span data-l="ja" lang="ja">パネル</span><span data-l="en" lang="en">Panel</span></button>
     </div>
   </header>
 
   <div id="draftbar" hidden>
-    ブラウザ内の<strong>下書き</strong>を表示しています（model.js とは違います）。
-    <button id="draftsave" type="button">model.js に保存</button>
-    <button id="draftdrop" type="button">下書きを破棄</button>
+    <span data-l="ja" lang="ja">ブラウザ内の<strong>下書き</strong>を表示しています（model.js とは違います）。</span><span data-l="en" lang="en">Showing a <strong>draft</strong> stored in this browser (it differs from model.js).</span>
+    <button id="draftsave" type="button"><span data-l="ja" lang="ja">model.js に保存</span><span data-l="en" lang="en">Save to model.js</span></button>
+    <button id="draftdrop" type="button"><span data-l="ja" lang="ja">下書きを破棄</span><span data-l="en" lang="en">Discard draft</span></button>
   </div>
 
   <div id="stalebar" hidden>
-    <strong>model.js が更新されています。</strong>ブラウザ内に、更新前の版から作った下書きが残っています。
-    <button id="stalerestore" type="button">下書きを復元</button>
-    <button id="staledrop" type="button">破棄</button>
+    <span data-l="ja" lang="ja"><strong>model.js が更新されています。</strong>ブラウザ内に、更新前の版から作った下書きが残っています。</span><span data-l="en" lang="en"><strong>model.js has been updated.</strong> This browser still holds a draft made from the earlier version.</span>
+    <button id="stalerestore" type="button"><span data-l="ja" lang="ja">下書きを復元</span><span data-l="en" lang="en">Restore draft</span></button>
+    <button id="staledrop" type="button"><span data-l="ja" lang="ja">破棄</span><span data-l="en" lang="en">Discard</span></button>
   </div>
 
   <main id="stage">
@@ -65,17 +66,17 @@
     <div id="hud">
       <button id="zin" type="button" aria-label="拡大">＋</button>
       <button id="zout" type="button" aria-label="縮小">−</button>
-      <button id="fitbtn" type="button" title="全体を表示（0）">全体</button>
+      <button id="fitbtn" type="button" title="全体を表示（0）"><span data-l="ja" lang="ja">全体</span><span data-l="en" lang="en">Fit</span></button>
     </div>
 
     <aside id="legend" data-view="design" class="closed">
-      <button id="legendbtn" type="button" aria-label="凡例の開閉">凡例</button>
+      <button id="legendbtn" type="button" aria-label="凡例の開閉"><span data-l="ja" lang="ja">凡例</span><span data-l="en" lang="en">Legend</span></button>
       <div class="body">
-        <p class="lg-title">状態</p>
+        <p class="lg-title"><span data-l="ja" lang="ja">状態</span><span data-l="en" lang="en">Status</span></p>
         <ul id="lg-status"></ul>
-        <div class="only design"><p class="lg-title">デザインデータ</p><p>ページの実物どおりの入れ子。斜線＝仮置き、<code>slot 04</code>＝写真枠、<code>×4</code>＝繰り返し数。オブジェクトを選ぶと「移動先」の線が出る。</p></div>
-        <div class="only concept"><p class="lg-title">概念図</p><p>色の帯＝領域。矢印は「〜する」の向き。点線は入れ子（含む）。</p></div>
-        <div class="only er"><p class="lg-title">ER図</p><p>ここに描いたテーブルは<b>CMSに載せるデータの案</b>で、確定した仕様ではない（状態の点は、対応するページ上のオブジェクトの状態）。<code>PK</code>主キー <code>FK</code>外部キー（斜体は自動生成）／<b>太字</b>必須／<code>?</code>空でよい／「仮」＝いまは仮の値。線の端：縦2本＝1、鳥の足＝多、○＝任意。丸いチップ＝そのテーブルの行（＝デザイン上のカード）。</p></div>
+        <div class="only design"><p class="lg-title"><span data-l="ja" lang="ja">デザインデータ</span><span data-l="en" lang="en">Design data</span></p><p><span data-l="ja" lang="ja">ページの実物どおりの入れ子。斜線＝仮置き、<code>slot 04</code>＝写真枠、<code>×4</code>＝繰り返し数。オブジェクトを選ぶと「移動先」の線が出る。</span><span data-l="en" lang="en">Nested exactly as on the page. Hatching = placeholder, <code>slot 04</code> = photo slot, <code>×4</code> = repeat count. Select an object to see its “links to” lines.</span></p></div>
+        <div class="only concept"><p class="lg-title"><span data-l="ja" lang="ja">概念図</span><span data-l="en" lang="en">Concept map</span></p><p><span data-l="ja" lang="ja">色の帯＝領域。矢印は「〜する」の向き。点線は入れ子（含む）。</span><span data-l="en" lang="en">Coloured bands = domains. Arrows point in the direction of the verb. Dotted lines = containment.</span></p></div>
+        <div class="only er"><p class="lg-title"><span data-l="ja" lang="ja">ER図</span><span data-l="en" lang="en">ER diagram</span></p><p><span data-l="ja" lang="ja">ここに描いたテーブルは<b>CMSに載せるデータの案</b>で、確定した仕様ではない（状態の点は、対応するページ上のオブジェクトの状態）。<code>PK</code>主キー <code>FK</code>外部キー（斜体は自動生成）／<b>太字</b>必須／<code>?</code>空でよい／「仮」＝いまは仮の値。線の端：縦2本＝1、鳥の足＝多、○＝任意。丸いチップ＝そのテーブルの行（＝デザイン上のカード）。</span><span data-l="en" lang="en">The tables drawn here are a <b>proposal for the data a CMS would hold</b>, not a fixed specification (the status dot is the status of the matching object on the page). <code>PK</code> primary key, <code>FK</code> foreign key (italic = generated), <b>bold</b> = required, <code>?</code> = may be empty, “TBC” = value is provisional for now. Line ends: two bars = one, crow’s foot = many, circle = optional. Round chips = rows of that table (the cards in the design).</span></p></div>
       </div>
     </aside>
   </main>
@@ -84,6 +85,9 @@
   <div id="status" role="status"></div>
   <div id="toast" role="status" aria-live="polite"></div>
 
+  <script src="i18n-en-model.js"></script>
+  <script src="i18n-en-inspector.js"></script>
+  <script src="i18n-en-app.js"></script>
   <script src="app.js"></script>
   <script src="inspector.js"></script>
 </body>

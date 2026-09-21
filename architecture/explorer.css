@@ -23,6 +23,8 @@ button { font: inherit; color: inherit; }
 @media (max-width: 1150px) { .brand span { display: none; } .search { flex-basis: 140px; } #viewmenu button { padding: 0 12px; } }
 :focus-visible { outline: 3px solid var(--c-primary); outline-offset: 2px; }
 
+html[lang="ja"] [data-l="en"], html[lang="en"] [data-l="ja"] { display: none !important; }
+
 /* ---- reference band (public review hosting) ---- */
 #refband { grid-area: ref; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; padding: 6px 14px; background: var(--c-primary); color: #fff; font-size: 13px; line-height: 1.4; }
 #refband strong { font-size: 14px; letter-spacing: .01em; }
@@ -187,6 +189,48 @@ button { font: inherit; color: inherit; }
   #bar { flex-wrap: wrap; }
   #inspector { border-left: 0; border-top: 1px solid var(--c-outline-2); }
   body.no-insp { grid-template-rows: auto auto auto 1fr 0 auto; }
+}
+
+/* ---- phones: keep the header short so the canvas keeps most of the screen ---- */
+@media (max-width: 900px) {
+  body { grid-template-rows: auto auto auto 1fr 34vh auto; }
+  body.no-insp { grid-template-rows: auto auto auto 1fr 0 auto; }
+  #refband { padding: 6px 12px; gap: 2px 10px; font-size: 12px; }
+  #refband strong { flex: 1 1 100%; font-size: 12.5px; }
+  #refband .note { flex: 1 1 12em; font-size: 12px; }
+  #refband a { display: inline-flex; align-items: center; }
+  #bar { padding: 6px 12px; gap: 6px 10px; }
+  #viewmenu { flex: 1 1 auto; }
+  #viewmenu button { min-height: 40px; }
+  .search { flex: 1 1 100%; }
+  .tools { flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding-bottom: 2px; scrollbar-width: thin; }
+  .tools button { flex: none; min-height: 44px; }
+  .tools button { min-width: 44px; }
+  #hud button, #legendbtn { min-height: 44px; min-width: 44px; }
+  #refband a { min-height: 40px; }
+  #inspbtn { order: -1; }
+  #langbtn { order: -1; }
+  #labelbtn { order: -1; }
+  #status { padding: 3px 12px; }
+  #inspector button, #inspector select, .search input { min-height: 40px; }
+}
+@media (max-width: 600px) {
+  body { grid-template-rows: auto auto auto 1fr 30vh auto; }
+  body.no-insp { grid-template-rows: auto auto auto 1fr 0 auto; }
+  .brand { display: none; }
+  #viewmenu { display: flex; width: 100%; }
+  #viewmenu button { flex: 1 1 0; justify-content: center; padding: 0 6px; gap: 5px; font-size: 13px; white-space: nowrap; }
+  #viewmenu .n { display: none; }
+}
+/* landscape phones: side panel again, otherwise the canvas would have no height left */
+@media (max-width: 900px) and (max-height: 500px) {
+  body { grid-template-columns: minmax(0, 1fr) 260px; grid-template-rows: auto auto auto 1fr auto; grid-template-areas: "ref ref" "bar bar" "draft draft" "stage insp" "status status"; }
+  body.no-insp { grid-template-columns: minmax(0, 1fr) 0; grid-template-rows: auto auto auto 1fr auto; }
+  #inspector { border-left: 1px solid var(--c-outline-2); border-top: 0; }
+  #refband strong { flex: 1 1 auto; }
+  #bar { flex-wrap: nowrap; }
+  .search { flex: 0 1 180px; }
+  .tools { flex: 1 1 0; min-width: 0; width: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; transition-delay: 0s !important; }

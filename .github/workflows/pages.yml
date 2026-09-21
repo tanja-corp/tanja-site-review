@@ -32,7 +32,8 @@ jobs:
           cp index.html styles.css script.js .nojekyll _site/
           cp -r assets _site/assets
           cp architecture/index.html architecture/explorer.css architecture/model.js architecture/model-core.js \
-             architecture/layout.js architecture/skins.js architecture/app.js architecture/inspector.js _site/architecture/
+             architecture/layout.js architecture/skins.js architecture/app.js architecture/inspector.js \
+             architecture/i18n.js architecture/i18n-en-model.js architecture/i18n-en-inspector.js architecture/i18n-en-app.js _site/architecture/
           find _site -type f | sort
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
