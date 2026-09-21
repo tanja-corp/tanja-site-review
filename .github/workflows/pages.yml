@@ -1,0 +1,42 @@
+# Review hosting: publishes an ALLOW-LIST of files to GitHub Pages. No build step.
+# Anything not copied below (docs/, archive/, research/, knowledge/, tests, READMEs) is NOT published.
+# If you add a file the site needs (image, font, ...), add it to the allow-list here.
+name: Deploy review site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect allow-listed files into _site
+        run: |
+          set -euo pipefail
+          mkdir -p _site/architecture
+          cp index.html styles.css script.js .nojekyll _site/
+          cp -r assets _site/assets
+          cp architecture/index.html architecture/explorer.css architecture/model.js architecture/model-core.js \
+             architecture/layout.js architecture/skins.js architecture/app.js architecture/inspector.js _site/architecture/
+          find _site -type f | sort
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

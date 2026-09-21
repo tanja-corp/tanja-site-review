@@ -1,0 +1,678 @@
+/* ==========================================================================
+   TANJA Web V2 — styles.css
+   Plain CSS, no build step, no web fonts, no framework.
+
+   Structure
+     0  Design tokens (change the look here; everything below reads these)
+     1  Base / reset / language switching / translation-review marker
+     2  Layout: the 12-column editorial grid (.wrap)
+     3  Header, navigation, language control
+     4  Hero
+     5  Shared components (photograph frame, labels)
+     6  About · What We Do · Career · Contact
+     7  Footer
+     8  Breakpoints (phone first: everything above is the phone layout)
+     9  Motion, forced colours, print
+
+   Design references (principles only, no components copied)
+     Material Design 3 → colour roles, type scale, shape scale, state layers, motion easing, window size classes / 12-column grid
+     Apple HIG        → 44pt minimum touch target, safe-area insets, segmented control for language,
+                        full-width sheet for the mobile menu, restraint (content over chrome)
+     Lima Tanzania    → only the header / section structure was observed: a plain header over a full-width photograph,
+                        photograph-and-text halves that run to the window edge. Nothing was copied.
+   ========================================================================== */
+
+/* ---------- 0. Design tokens ---------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* Colour roles. The names follow M3 roles (checked against m3.material.io/styles/color/roles); the value is TANJA's own.
+     Contrast is measured against the surface each text colour sits on: on-surface 15.5:1 · on-surface-variant 8.4:1 · muted 5.8:1 (5.0 on container-high, 4.7 on
+     container-highest, so it is never used below 13px there) · on-primary on forest 11.4:1 · on-inverse-2 on forest 5.9:1 · outline 4.1:1 (non-text boundaries ≥ 3:1). */
+  --c-surface: #faf8f2;            /* surface                      (M3 tone 98) */
+  --c-surface-2: #f2eee4;          /* surface-container            (tone 94)  alternating bands */
+  --c-surface-3: #e7e1d2;          /* surface-container-highest    (tone 90)  */
+  --c-on-surface: #1d201b;         /* on-surface: headings and body */
+  --c-on-surface-2: #474b41;       /* on-surface-variant: secondary copy */
+  --c-on-surface-3: #5f6357;       /* TANJA extension "muted": labels and notes only, 13px and up */
+  --c-outline: #7c7a6c;            /* outline: boundaries that must be seen (language control) */
+  --c-outline-2: #d5cfbf;          /* outline-variant: decorative hairlines only (1.5:1) */
+  --c-primary: #24402f;            /* primary: forest */
+  --c-on-primary: #ffffff;
+  --c-primary-2: #dde7d8;          /* primary-container */
+  --c-on-primary-2: #16301f;       /* on-primary-container */
+  --c-accent: #9c3a2d;             /* tertiary: coffee cherry. Reads as "error" if overused, so: one small mark at most (mobile menu current item), never a fill, never a status */
+  --c-inverse: #19231c;            /* inverse-surface: footer */
+  --c-on-inverse: #ece9de;         /* inverse-on-surface */
+  --c-on-inverse-2: #b9bdaf;       /* inverse-on-surface-variant */
+  --c-hero-scrim: 10, 18, 12;      /* scrim, as an rgb triplet for gradients over photography */
+
+  /* Type: system fonts only (no download). JP uses the platform's Japanese UI face. */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-ja: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Noto Sans JP", "Noto Sans CJK JP", Meiryo, sans-serif;
+
+  /* Type scale (M3 roles, fluid). Headline / lede / body / label are deliberately far apart in size. */
+  --fs-display: clamp(3.5rem, 1.6rem + 8.5vw, 8rem);
+  --fs-headline: clamp(2.25rem, 1.45rem + 3.2vw, 4rem);
+  --fs-lede: clamp(1.375rem, 1.05rem + 1.3vw, 1.875rem);
+  --fs-title-l: clamp(1.5rem, 1.2rem + 1.3vw, 2.125rem);
+  --fs-title: 1.25rem;
+  --fs-body-l: clamp(1.0625rem, 1.0417rem + 0.0926vw, 1.125rem);   /* 17px on a phone, 18px on a desktop */
+  --fs-body: 1rem;
+  --fs-label: 0.8125rem;
+
+  /* Space: 4px base, 8pt rhythm. */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --section-y: clamp(4.5rem, 3rem + 5vw, 8.5rem);
+  --gutter: clamp(1rem, 0.4rem + 3vw, 2.5rem);
+  --col-gap: clamp(1rem, 0.4rem + 2vw, 1.75rem);
+  --container: 82rem;              /* 1312px: widest the text columns get; photographs may run past it to the window edge */
+  --measure: 33.5rem;              /* about 54 characters of Latin text at body size (M3 asks for 40-60) */
+
+  /* Shape: near-square photography, small radii; controls only are pills. */
+  --radius-s: 4px;
+  --radius-pill: 999px;
+
+  /* Motion: M3 tokens, read from m3.material.io (standard easing; emphasized decelerate / accelerate for the one element that travels, the menu sheet).
+     Durations are short3 / medium2 / medium3. Nothing animates height, padding or font size. All of it is switched off under prefers-reduced-motion. */
+  --ease: cubic-bezier(0.2, 0, 0, 1);            /* md.sys.motion.easing.standard */
+  --ease-out: cubic-bezier(0.05, 0.7, 0.1, 1);   /* emphasized decelerate: something entering */
+  --ease-in: cubic-bezier(0.3, 0, 0.8, 0.15);    /* emphasized accelerate: something leaving */
+  --dur-s: 150ms;                                /* short3 */
+  --dur-m: 300ms;                                /* medium2 */
+  --dur-l: 400ms;                                /* medium4: enter (leaving is 200ms, short4) */
+
+  /* Layout constants */
+  --header-h: 4rem;
+  --touch: 44px;                   /* HIG minimum hit target; px on purpose so a larger browser font size cannot push the header off-screen */
+  --focus: var(--c-primary);
+}
+
+@media (min-width: 60em) {
+  :root { --header-h: 4.75rem; }
+}
+
+/* ---------- 1. Base / reset / language switching --------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: var(--header-h);
+}
+
+body {
+  margin: 0;
+  background: var(--c-surface);
+  color: var(--c-on-surface);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-l);
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Japanese: platform Japanese face, looser leading, sensible line breaking. */
+html[data-lang="ja"] body { font-family: var(--font-ja); line-height: 1.9; letter-spacing: 0.02em; }
+html[data-lang="ja"] { line-break: strict; word-break: auto-phrase; }
+
+img, picture, svg { display: block; max-width: 100%; }
+img { height: auto; }
+h1, h2, h3, h4, p, ul, dl, dd, figure { margin: 0; }
+h1, h2, h3, h4 { overflow-wrap: anywhere; }
+ul[role="list"], .site-nav__list, .site-footer__nav ul { list-style: none; padding: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+
+/* Language variants: each translatable string exists three times; only the active one is shown.
+   With JS off the default (English) shows, because <html data-lang="en"> is hard-coded. */
+[data-l="sw"], [data-l="ja"] { display: none; }
+html[data-lang="sw"] [data-l="sw"],
+html[data-lang="ja"] [data-l="ja"] { display: revert; }
+html[data-lang="sw"] [data-l="en"],
+html[data-lang="ja"] [data-l="en"] { display: none; }
+/* Safety net: a string missing its SW/JP variant shows English instead of an empty gap (browsers without :has() keep the rule above). */
+@supports selector(:has(*)) {
+  html[data-lang="sw"] [data-l="en"]:not(:has(~ [data-l="sw"])),
+  html[data-lang="ja"] [data-l="en"]:not(:has(~ [data-l="ja"])) { display: revert; }
+}
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.icon { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.icon--xl { width: 2.5rem; height: 2.5rem; stroke-width: 1.2; }
+
+/* Focus: one ring style everywhere; colour flips on dark surfaces via --focus. */
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 2px; }   /* M3 web focus ring: 3px, offset 2px */
+:focus:not(:focus-visible) { outline: none; }
+
+.skip-link {
+  position: absolute; left: var(--sp-4); top: -4rem; z-index: 300;
+  padding: var(--sp-3) var(--sp-4); min-height: var(--touch);
+  background: var(--c-primary); color: var(--c-on-primary); border-radius: var(--radius-s);
+  text-decoration: none; font-weight: 600;
+  transition: top var(--dur-s) var(--ease);
+}
+.skip-link:focus { top: var(--sp-3); --focus: #fff; outline-offset: 2px; }
+
+/* Translation review marker. Every SW / JP string carries data-review="draft" (or "reviewed"). A section shows this small marker only while it
+   still holds a draft string in the language being read, so it disappears by itself when the last one is approved. No page-wide banner. */
+.tl-scope { position: relative; }
+.tl-mark {
+  display: none; position: absolute; z-index: 1; margin: 0;
+  top: clamp(0.75rem, 0.4rem + 1.2vw, 1.5rem);
+  right: max(var(--gutter), env(safe-area-inset-right), calc((100% - var(--container)) / 2));
+  padding: 0.125rem 0.625rem; border: 1px solid currentColor; border-radius: var(--radius-pill);
+  color: var(--c-on-surface-3); font-size: 0.75rem; line-height: 1.6; letter-spacing: 0.03em; pointer-events: none;
+}
+html[data-lang="sw"] .tl-mark, html[data-lang="ja"] .tl-mark { display: inline-flex; }     /* no :has() support: show it everywhere in SW / JP */
+@supports selector(:has(*)) {
+  html[data-lang="sw"] .tl-mark, html[data-lang="ja"] .tl-mark { display: none; }
+  html[data-lang="sw"] .tl-scope:has(:not(.tl-mark) > [data-l="sw"][data-review="draft"]) > .tl-mark,
+  html[data-lang="ja"] .tl-scope:has(:not(.tl-mark) > [data-l="ja"][data-review="draft"]) > .tl-mark { display: inline-flex; }
+}
+.section--inverse > .tl-mark, .site-footer > .tl-mark { color: var(--c-on-inverse-2); }
+
+/* ---------- 2. Layout: 12-column editorial grid ---------------------------- */
+/* .wrap = two edge tracks + 12 columns. Text sits on the columns; a photograph may run to a window edge:
+     grid-column: col 7 / full-end       right half, bleeding off the right edge
+     grid-column: full-start / col 8     left half, bleeding off the left edge
+   The edge track is at least one gutter wide and grows once the window is wider than --container, so the text column stops at ~1312px
+   while photographs keep going. Below 768px the grid has no gaps and every child takes the whole width. */
+.wrap {
+  --cg: 0px;
+  --edge-l: max(var(--gutter), env(safe-area-inset-left), calc((100% - var(--container)) / 2));
+  --edge-r: max(var(--gutter), env(safe-area-inset-right), calc((100% - var(--container)) / 2));
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(0, calc(var(--edge-l) - var(--cg)))
+    repeat(12, [col] minmax(0, 1fr))
+    [content-end] minmax(0, calc(var(--edge-r) - var(--cg)))
+    [full-end];
+  column-gap: var(--cg);
+}
+.wrap > * { grid-column: col 1 / content-end; min-width: 0; }
+.wrap > .wrap { grid-column: full-start / full-end; }
+
+/* Header and footer use a plain container whose text edge lines up with the .wrap columns. */
+.container {
+  width: 100%; max-width: calc(var(--container) + 2 * var(--gutter)); margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+
+.section { position: relative; padding-block: var(--section-y); }
+.section--flush-end { padding-bottom: 0; }
+/* Backgrounds alternate by themselves. The hero is the first <section> in <main>, so About is 2nd (paper), What We Do 3rd (tint), Career 4th (paper).
+   Insert a section anywhere and the rhythm re-flows; no class needs to be moved. Contact opts out (inverse). */
+main > .section:nth-of-type(odd) { background: var(--c-surface-2); }
+.section--inverse, main > .section--inverse:nth-of-type(odd) { background: var(--c-primary); color: var(--c-on-primary); --focus: #fff; }
+
+.section__title {
+  font-size: var(--fs-headline); line-height: 1.04; font-weight: 400; letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+html[data-lang="ja"] .section__title, html[data-lang="ja"] .group__title,
+html[data-lang="ja"] .crop__title, html[data-lang="ja"] .project__title { letter-spacing: 0.01em; line-height: 1.3; }
+.nb { display: inline-block; max-width: 100%; }   /* keeps a phrase together, but may still wrap if it is wider than the column (large text) */
+
+/* Small uppercase label used for the second level ("Our Company", "Our Staff", "Farm"). Not used for Japanese (no case), where weight and size do the work. */
+.eyebrow, .group__title, .chip {
+  font-size: var(--fs-label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.5;
+}
+html[data-lang="ja"] .eyebrow, html[data-lang="ja"] .group__title, html[data-lang="ja"] .chip { letter-spacing: 0.08em; font-size: 0.875rem; }
+
+.lede { overflow-wrap: anywhere; font-size: var(--fs-lede); line-height: 1.32; font-weight: 400; letter-spacing: -0.012em; text-wrap: pretty; }
+html[data-lang="ja"] .lede { line-height: 1.7; letter-spacing: 0.01em; }
+
+/* ---------- 3. Header, navigation, language control ------------------------ */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--c-surface); color: var(--c-on-surface);
+  border-bottom: 1px solid var(--c-outline-2);
+  --focus: var(--c-primary);
+}
+.site-header__bar {
+  position: relative;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-4); min-height: var(--header-h);
+}
+
+.brand { display: inline-flex; align-items: center; min-height: var(--touch); text-decoration: none; }
+/* The header is sticky and sits inside the page's scroll-padding band; without this, focusing a header control while scrolled makes the browser
+   re-centre the page (a jump of about half a window). Negative margin = "already in view". */
+.site-header :is(a, button) { scroll-margin-top: calc(-1 * var(--header-h)); }
+.brand__mark, .hero__title, .site-footer__brand { font-family: var(--font-sans); }   /* the wordmark does not change face with the language */
+.brand__mark { font-weight: 700; font-size: 1.3125rem; letter-spacing: 0.2em; line-height: 1; margin-right: -0.2em; }
+
+.site-header__tools { display: flex; align-items: center; gap: var(--sp-2); margin-left: auto; }
+
+/* Primary nav — default (no JS / wide) is a plain inline list. */
+.site-nav { order: 3; flex-basis: 100%; padding-bottom: var(--sp-2); }
+.site-nav__list { display: flex; flex-wrap: wrap; gap: 0 var(--sp-2); }
+.site-nav a {
+  position: relative; display: inline-flex; align-items: center; min-height: var(--touch);
+  padding: 0 var(--sp-3); text-decoration: none; font-weight: 500; font-size: 0.9375rem; letter-spacing: 0.01em;
+  border-radius: var(--radius-s);
+  transition: background-color var(--dur-s) var(--ease);
+}
+.site-nav a::after {                       /* current-section marker */
+  content: ""; position: absolute; left: var(--sp-3); right: var(--sp-3); bottom: 0.4rem; height: 2px;
+  background: currentColor; transform: scaleX(0); transform-origin: left;
+  transition: transform var(--dur-m) var(--ease);
+}
+.site-nav a[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) {
+  .site-nav a:hover { background: rgba(29, 32, 27, 0.08); }
+}
+
+/* Language control: a segmented control (HIG) with 44px segments. */
+.lang { display: inline-flex; border: 1px solid var(--c-outline); border-radius: var(--radius-pill); overflow: hidden; }
+.lang__btn {
+  min-width: var(--touch); min-height: var(--touch); padding: 0 var(--sp-3);
+  border: 0; background: transparent; cursor: pointer;
+  font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em;
+  transition: background-color var(--dur-s) var(--ease), color var(--dur-s) var(--ease);
+}
+.lang__btn + .lang__btn { border-left: 1px solid var(--c-outline-2); }
+.lang__btn[aria-pressed="true"] { background: var(--c-primary); color: var(--c-on-primary); }
+@media (hover: hover) {
+  .lang__btn[aria-pressed="false"]:hover { background: rgba(29, 32, 27, 0.08); }
+}
+.lang__btn:focus-visible { outline-offset: -3px; }
+.lang__btn[aria-pressed="true"]:focus-visible { outline: 3px solid transparent; box-shadow: inset 0 0 0 3px currentColor; }
+
+/* Menu button exists only once script.js has loaded (progressive enhancement). */
+.menu-btn {
+  display: none; position: relative; width: var(--touch); height: var(--touch);
+  align-items: center; justify-content: center; padding: 0; border: 0; background: transparent; cursor: pointer;
+  border-radius: var(--radius-pill);
+}
+.menu-btn__icon, .menu-btn__icon::before, .menu-btn__icon::after {
+  display: block; width: 1.375rem; height: 2px; background: currentColor; border-radius: 2px;
+  transition: transform var(--dur-m) var(--ease), background-color var(--dur-s) var(--ease);
+}
+.menu-btn__icon { position: relative; }
+.menu-btn__icon::before, .menu-btn__icon::after { content: ""; position: absolute; left: 0; }
+.menu-btn__icon::before { top: -7px; }
+.menu-btn__icon::after { top: 7px; }
+.menu-btn[aria-expanded="true"] .menu-btn__icon { background: transparent; }
+.menu-btn[aria-expanded="true"] .menu-btn__icon::before { transform: translateY(7px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .menu-btn__icon::after { transform: translateY(-7px) rotate(-45deg); }
+
+/* Before script.js is ready, keep the header's right side from jumping. */
+html:not(.js-ready) .lang, html:not(.js-ready) .menu-btn { visibility: hidden; }
+
+/* --- Mobile: language control + menu button in the bar; nav becomes a full-screen sheet --- */
+@media (max-width: 59.99em) {
+  .js .site-header__bar { flex-wrap: nowrap; }
+  .js .menu-btn { display: inline-flex; }
+
+  .js .site-nav {
+    position: fixed; inset: 0; z-index: -1; order: 0; flex-basis: auto;
+    padding: calc(var(--header-h) + var(--sp-4)) max(var(--gutter), env(safe-area-inset-right)) calc(var(--sp-7) + env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+    background: var(--c-surface); color: var(--c-on-surface); overflow-y: auto; overscroll-behavior: contain;
+    opacity: 0; visibility: hidden; transform: translateY(-0.5rem);
+    transition: opacity 200ms var(--ease-in), transform 200ms var(--ease-in), visibility 0s linear 200ms;   /* leaving: quick */
+  }
+  .js .site-header.is-menu-open .site-nav {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity var(--dur-l) var(--ease-out), transform var(--dur-l) var(--ease-out), visibility 0s;   /* entering: longer, soft landing */
+  }
+  .js .site-nav__list { display: block; }
+  .js .site-nav a {
+    display: flex; width: 100%; min-height: 4rem; padding: 0; border-radius: 0;
+    font-size: var(--fs-title-l); font-weight: 600; letter-spacing: -0.01em;
+    border-bottom: 1px solid var(--c-outline-2);
+  }
+  .js .site-nav a::after { display: none; }
+  .js .site-nav a[aria-current="true"] { color: var(--c-accent); }
+  body.menu-open { overflow: hidden; }
+}
+
+/* --- Desktop: one quiet row. Brand left; menu and language on the right as plain text (no boxes, no pills). --- */
+@media (min-width: 60em) {
+  .site-header__bar { flex-wrap: nowrap; gap: var(--sp-7); }
+  .site-nav { order: 0; flex-basis: auto; margin-left: auto; padding-bottom: 0; }
+  .site-nav__list { flex-wrap: nowrap; gap: var(--sp-5); }
+  .site-nav a { padding: 0 var(--sp-1); font-size: 0.9375rem; letter-spacing: 0.02em; border-radius: 0; }
+  .site-nav a::after { left: var(--sp-1); right: var(--sp-1); bottom: 0.55rem; }
+  .site-header__tools { margin-left: 0; }
+  .brand__mark { font-size: 1.5rem; }
+
+  .site-header .lang { border: 0; border-radius: 0; overflow: visible; }
+  .site-header .lang__btn { position: relative; min-width: var(--touch); padding: 0 var(--sp-2); letter-spacing: 0.1em; font-weight: 500; }
+  .site-header .lang__btn + .lang__btn { border-left: 0; }
+  .site-header .lang__btn + .lang__btn::before {
+    content: ""; position: absolute; left: 0; top: 50%; width: 1px; height: 0.9rem; margin-top: -0.45rem; background: currentColor; opacity: 0.4;
+  }
+  .site-header .lang__btn[aria-pressed="true"] { background: transparent; color: inherit; font-weight: 700; }
+  .site-header .lang__btn[aria-pressed="true"]::after {
+    content: ""; position: absolute; left: var(--sp-2); right: var(--sp-2); bottom: 0.55rem; height: 2px; background: currentColor;
+  }
+  .site-header .lang__btn[aria-pressed="true"]:focus-visible { box-shadow: none; outline: 3px solid var(--focus); outline-offset: -3px; }
+}
+
+/* --- Header over the hero photograph (only when JS is ready, so there is a safe solid fallback) --- */
+.js-ready .site-header { transition: background-color var(--dur-m) var(--ease), border-color var(--dur-m) var(--ease), color var(--dur-m) var(--ease); }
+.js-ready .site-header:not(.is-solid):not(.is-menu-open) {
+  background: transparent; border-bottom-color: transparent; color: #fff; --focus: #fff;
+}
+.js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang { border-color: rgba(255, 255, 255, 0.55); }
+.js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn + .lang__btn { border-left-color: rgba(255, 255, 255, 0.28); }
+.js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn[aria-pressed="true"] { background: #fff; color: var(--c-primary); }
+@media (min-width: 60em) {
+  .js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang { border-color: transparent; }
+  .js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn[aria-pressed="true"] { background: transparent; color: #fff; }
+}
+@media (hover: hover) {
+  .js-ready .site-header:not(.is-solid):not(.is-menu-open) .site-nav a:hover { background: rgba(255, 255, 255, 0.12); }
+  .js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn[aria-pressed="false"]:hover { background: rgba(255, 255, 255, 0.12); }
+}
+@media (hover: hover) and (min-width: 60em) {
+  .site-nav a:hover, .js-ready .site-header:not(.is-solid):not(.is-menu-open) .site-nav a:hover { background: none; }
+  .site-nav a:hover::after { transform: scaleX(1); }
+  .site-header .lang__btn[aria-pressed="false"]:hover, .js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn[aria-pressed="false"]:hover { background: none; }
+  .site-header .lang__btn[aria-pressed="false"]:hover { text-decoration: underline; text-underline-offset: 6px; }
+}
+.js-ready .site-header:not(.is-solid):not(.is-menu-open) :is(.brand__mark, .site-nav a, .lang__btn) { text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4); }
+.js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn[aria-pressed="true"] { text-shadow: none; }
+@media (min-width: 60em) {
+  .js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn[aria-pressed="true"] { text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4); }
+}
+/* the header is 1px taller than --header-h (its border), so pull the hero up by one more pixel */
+.js .hero { margin-top: calc(-1 * (var(--header-h) + 1px)); }
+
+/* ---------- 4. Hero -------------------------------------------------------- */
+/* One static photograph, no slider/video/CTA. Slot 01: replace the <picture> sources only. */
+.hero {
+  position: relative; isolation: isolate; display: flex; align-items: flex-end;
+  height: clamp(34rem, 100vh, 60rem); height: clamp(34rem, 100svh, 60rem);
+  color: #fff; background: #26372a;
+}
+/* Tablet and desktop: the photograph takes about 88% of the window, so the first thing below it is already peeking in. */
+@media (min-width: 48em) {
+  .hero { height: clamp(36rem, 88vh, 62rem); height: clamp(36rem, 88svh, 62rem); }
+}
+.hero__media { position: absolute; inset: 0; z-index: -2; }
+.hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 55%; }
+.hero::after {                       /* scrim: keeps header (top) and wordmark (bottom) legible on any photo */
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(var(--c-hero-scrim), 0.82) 0, rgba(var(--c-hero-scrim), 0.5) 11%, rgba(var(--c-hero-scrim), 0) 34%),
+    linear-gradient(to top, rgba(var(--c-hero-scrim), 0.72) 0, rgba(var(--c-hero-scrim), 0) 48%);
+}
+.hero__inner { padding-block: 0 clamp(2rem, 1rem + 5vw, 5rem); }
+.hero__title { font-size: min(var(--fs-display), 18vw); font-weight: 600; line-height: 0.95; letter-spacing: 0.14em; margin-right: -0.14em; }
+.hero__sub { margin-top: var(--sp-4); font-size: var(--fs-title); font-weight: 400; letter-spacing: 0.02em; text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }   /* optional line, see index.html */
+/* Landscape phones: the 34rem minimum would be taller than the screen, so let the hero fit the viewport. */
+@media (max-height: 34rem) and (orientation: landscape) {
+  .hero { height: 100vh; height: 100svh; min-height: 0; }
+  .hero__title { font-size: clamp(2.5rem, 14vh, 4rem); }
+  .hero__inner { padding-bottom: 1.25rem; }
+}
+
+/* ---------- 5. Shared components ------------------------------------------ */
+/* Photograph frame. Ratio comes from a modifier class; the <img> always covers it. */
+.media {
+  position: relative; overflow: hidden; background: var(--c-surface-3);
+  aspect-ratio: var(--ar, 4 / 3); border-radius: var(--radius-s);
+}
+.media--3x2 { --ar: 3 / 2; }
+.media--4x3 { --ar: 4 / 3; }
+.media--5x4 { --ar: 5 / 4; }
+.media--3x4 { --ar: 3 / 4; }
+.media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--focal, 50% 50%); }
+
+/* Photo placeholder: one flat quiet tone, the slot number and one small line. No hatching, no icon, no shouting. */
+.media--placeholder { color: var(--c-on-surface-3); background: rgba(29, 32, 27, 0.045); box-shadow: inset 0 0 0 1px var(--c-outline-2); }
+.media__slot { position: absolute; left: var(--sp-4); top: var(--sp-3); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em; }
+.media__ph-text { position: absolute; left: var(--sp-4); bottom: var(--sp-3); right: var(--sp-4); font-size: var(--fs-label); letter-spacing: 0.02em; }
+.media--placeholder > .icon { position: absolute; inset: 0; margin: auto; }
+
+.chip { display: block; margin-bottom: var(--sp-3); color: var(--c-on-surface-3); }
+.tbc { margin-top: var(--sp-3); color: var(--c-on-surface-3); font-size: var(--fs-body); }
+.note { margin-top: var(--sp-4); color: var(--c-on-surface-3); font-size: 0.875rem; }
+
+/* ---------- 6. About ------------------------------------------------------- */
+.about { row-gap: var(--sp-7); }
+.about__text { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; }
+.about__text > * + * { margin-top: var(--sp-5); }
+.about__text .eyebrow { margin-top: var(--sp-6); margin-bottom: calc(-1 * var(--sp-2)); color: var(--c-on-surface-3); }
+.about__body { color: var(--c-on-surface-2); max-width: var(--measure); }
+
+/* Facts: a caption row, not a table. Label above, value below, no rules between them. */
+.facts { display: flex; flex-wrap: wrap; gap: var(--sp-5) var(--sp-7); padding-top: var(--sp-5); border-top: 1px solid var(--c-outline-2); }
+.facts > div { min-width: 0; }
+.facts dt { color: var(--c-on-surface-3); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+html[data-lang="ja"] .facts dt { letter-spacing: 0.06em; }
+.facts dd { margin-top: var(--sp-1); font-weight: 600; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+
+/* Staff: the head (label + line) and the row of portraits. Portraits are small: a placeholder never dominates the screen. */
+.staff { row-gap: var(--sp-6); align-items: start; }
+.staff::before { content: ""; grid-column: col 1 / content-end; border-top: 1px solid var(--c-outline-2); }
+.staff__head > * + * { margin-top: var(--sp-2); }
+.staff__head .eyebrow { color: var(--c-on-surface-3); }
+.staff__lede { font-size: var(--fs-title); font-weight: 500; line-height: 1.35; }
+.staff-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-6) var(--sp-4); }
+.person { min-width: 0; }
+.person .media--placeholder { display: grid; place-items: center; }
+.person__name { margin-top: var(--sp-3); font-weight: 600; overflow-wrap: anywhere; }
+.person__role { color: var(--c-on-surface-3); font-size: 0.9375rem; overflow-wrap: anywhere; }
+
+/* Vision / Mission band: full-bleed forest green, two columns, large type. */
+.band { margin-top: var(--section-y); padding-block: clamp(4rem, 2.5rem + 5vw, 8rem); background: var(--c-primary); color: var(--c-on-primary); --focus: #fff; }
+.band__label { color: var(--c-on-inverse-2); margin-bottom: var(--sp-6); }
+.vm__item { padding-top: var(--sp-4); border-top: 1px solid rgba(255, 255, 255, 0.28); }
+.vm__item + .vm__item { margin-top: var(--sp-6); }
+.vm__label { font-size: var(--fs-title); font-weight: 600; margin-bottom: var(--sp-3); }
+.vm__text { overflow-wrap: anywhere; font-size: var(--fs-title-l); line-height: 1.3; font-weight: 400; color: rgba(255, 255, 255, 0.86); max-width: 24ch; }
+html[data-lang="ja"] .vm__text { max-width: none; }
+
+/* ---------- What We Do ----------------------------------------------------- */
+.wwd__head { row-gap: var(--sp-5); margin-bottom: clamp(3rem, 2rem + 4vw, 6rem); align-items: end; }
+.wwd__lede { font-size: var(--fs-title); line-height: 1.5; color: var(--c-on-surface-2); max-width: 26rem; }
+
+.group { row-gap: var(--sp-6); }
+.wwd__head + .group { margin-top: 0; }
+.group + .group { margin-top: clamp(4.5rem, 3rem + 5vw, 8rem); }
+.group__title { display: flex; align-items: center; gap: var(--sp-4); color: var(--c-on-surface-2); }
+.group__title::after { content: ""; flex: 1; height: 1px; background: var(--c-outline-2); }
+
+.crop__title { font-size: var(--fs-title-l); font-weight: 600; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: var(--sp-3); }
+.crop__body { padding-top: var(--sp-4); }
+.crop__body p:not(.chip):not(.tbc) { color: var(--c-on-surface-2); max-width: var(--measure); }
+
+.crop--feature { row-gap: var(--sp-5); }
+.crop--feature .crop__body { padding-top: 0; }
+.crop--feature .crop__title { font-size: var(--fs-headline); line-height: 1.04; font-weight: 400; margin-bottom: var(--sp-4); }
+.crop--feature .crop__body p:not(.chip):not(.tbc) { font-size: var(--fs-body-l); }
+
+.crop-pair { row-gap: var(--sp-8); margin-top: var(--sp-7); }
+
+/* Project grid: three columns on a wide window. A new <li> takes the next free cell, so a 3rd, 4th or 5th project needs no CSS. */
+.project-grid { display: grid; gap: var(--sp-7) var(--col-gap); grid-template-columns: minmax(0, 1fr); }
+.project { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; }
+.project__title { margin-top: var(--sp-4); font-size: var(--fs-title-l); font-weight: 600; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: var(--sp-3); }
+.project p:not(.tbc) { color: var(--c-on-surface-2); max-width: var(--measure); }
+
+/* ---------- Career --------------------------------------------------------- */
+/* A quiet statement of fact. No colour bar, no box: the same weight as any other note. */
+.career { row-gap: var(--sp-6); align-items: center; }
+.career__text > * + * { margin-top: var(--sp-5); }
+.career__text .lede { max-width: 22em; }
+.status { max-width: var(--measure); color: var(--c-on-surface-3); font-size: var(--fs-body); }
+
+/* ---------- Contact -------------------------------------------------------- */
+.contact { row-gap: var(--sp-7); align-items: start; }
+.contact__head > * + * { margin-top: var(--sp-4); }
+.contact__lede { font-size: var(--fs-title); line-height: 1.5; color: rgba(255, 255, 255, 0.82); max-width: 24rem; }
+.contact-list, .social { border-top: 1px solid rgba(255, 255, 255, 0.28); }
+.contact-list > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); padding: var(--sp-5) 0; border-bottom: 1px solid rgba(255, 255, 255, 0.28); }
+.contact-list dt { color: var(--c-on-inverse-2); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+html[data-lang="ja"] .contact-list dt { letter-spacing: 0.06em; }
+.contact-list dd { font-size: clamp(1.625rem, 1rem + 2.6vw, 3rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.01em; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.contact-list a { display: inline-block; padding-block: 0.3rem; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 calc(100% - 0.2rem) / 100% 1px no-repeat; transition: background-size var(--dur-m) var(--ease); }
+@media (hover: hover) { .contact-list a:hover { background-size: 100% 3px; } }
+
+/* Social: rows in the same rhythm as email and phone. While there is no official URL each is a disabled <button>: it looks inactive and says why. */
+.social { margin-top: 0; }
+.social li { border-bottom: 1px solid rgba(255, 255, 255, 0.28); }
+.social__link {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-1) var(--sp-4); width: 100%; min-height: 4.5rem; padding: var(--sp-4) 0;
+  border: 0; background: transparent; color: inherit; text-align: left; text-decoration: none; cursor: default;
+}
+.social__name { min-width: 0; font-size: var(--fs-title-l); font-weight: 400; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.social__state { min-width: 0; margin-left: auto; font-size: 0.875rem; color: var(--c-on-inverse-2); text-align: right; overflow-wrap: anywhere; }
+.social__link:disabled { color: rgba(255, 255, 255, 0.72); }
+.social__link:disabled .icon { opacity: 0.85; }
+.section--inverse .note { color: var(--c-on-inverse-2); }
+a.social__link { cursor: pointer; }
+@media (hover: hover) { a.social__link:hover .social__name { text-decoration: underline; text-underline-offset: 6px; } }
+
+/* ---------- 7. Footer ------------------------------------------------------ */
+.site-footer { position: relative; background: var(--c-inverse); color: var(--c-on-inverse); padding-block: var(--sp-8) calc(var(--sp-6) + env(safe-area-inset-bottom)); --focus: #fff; }
+.site-footer__grid { display: grid; gap: var(--sp-6); }
+.site-footer__brand { font-size: 1.5rem; }
+.site-footer__nav ul { display: flex; flex-wrap: wrap; gap: 0 var(--sp-5); }
+.site-footer__nav a { display: inline-flex; align-items: center; min-height: var(--touch); text-decoration: none; color: var(--c-on-inverse); }
+@media (hover: hover) { .site-footer__nav a:hover { text-decoration: underline; text-underline-offset: 4px; } }
+.site-footer__tools { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5); }
+.site-footer .lang { border-color: rgba(255, 255, 255, 0.4); }
+.site-footer .lang__btn + .lang__btn { border-left-color: rgba(255, 255, 255, 0.22); }
+.site-footer .lang__btn[aria-pressed="true"] { background: #fff; color: var(--c-inverse); }
+@media (hover: hover) { .site-footer .lang__btn[aria-pressed="false"]:hover { background: rgba(255, 255, 255, 0.12); } }
+.site-footer .social { border-top: 0; display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.site-footer .social li { border-bottom: 0; }
+.social__icon { display: inline-flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; padding: 0; background: transparent; border: 1px dashed rgba(255, 255, 255, 0.4); border-radius: var(--radius-pill); color: var(--c-on-inverse-2); cursor: default; }
+.site-footer__legal { padding-top: var(--sp-5); border-top: 1px solid rgba(255, 255, 255, 0.16); color: var(--c-on-inverse-2); font-size: 0.875rem; }
+
+/* ---------- 8. Breakpoints (mobile-first: everything above is the phone layout) ---------- */
+/* Phone: photographs that sit on a text column run edge to edge, without rounded corners. */
+.about__photo, .crop__media, .career__media { grid-column: full-start / full-end; border-radius: 0; }
+
+@media (min-width: 37.5em) {          /* 600px */
+  .staff-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-6) var(--sp-5); }
+  .staff-grid:has(> :nth-child(3):last-child),
+  .staff-grid:has(> :nth-child(5):nth-last-child(-n+2)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 48em) {            /* 768px: two columns where a pair belongs together; photographs keep to the window width */
+  .wrap { --cg: var(--col-gap); }
+  .about__photo, .crop__media, .career__media { --ar: 3 / 2; }
+
+  .wwd__head .section__title { grid-column: col 1 / span 7; }
+  .wwd__head .wwd__lede { grid-column: col 1 / span 7; }
+  .about__text { grid-column: col 1 / span 10; }
+
+  .staff__head { grid-column: col 1 / span 4; }
+  .staff-grid { grid-column: col 5 / content-end; gap: var(--sp-6) var(--col-gap); }
+
+  .band .vm-wrap { row-gap: 0; }
+  .band__label { grid-column: col 1 / content-end; }
+  .vm__item { grid-column: col 1 / span 6; }
+  .vm__item + .vm__item { grid-column: col 7 / span 6; margin-top: 0; padding-left: var(--sp-6); border-left: 1px solid rgba(255, 255, 255, 0.28); }
+  .vm__item { border-top: 0; padding-top: 0; }
+
+  .crop--feature .crop__body { grid-column: col 1 / span 8; }
+  .crop-pair > .crop:first-child { grid-column: col 1 / span 6; }
+  .crop-pair > .crop:last-child { grid-column: col 7 / span 6; margin-top: clamp(2rem, 6vw, 5rem); }
+  .project-grid { grid-column: col 1 / content-end; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .career__text { grid-column: col 1 / span 9; }
+  .contact__head { grid-column: col 1 / span 5; }
+  .contact__body { grid-column: col 6 / content-end; }
+
+  .site-footer__grid { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; column-gap: var(--sp-7); }
+  .site-footer__legal { grid-column: 1 / -1; }
+}
+
+@media (min-width: 64em) {            /* 1024px: the asymmetric desktop composition */
+  .about { row-gap: 0; align-items: stretch; }
+  .about__text { grid-column: col 1 / span 5; grid-row: 1; padding-bottom: var(--sp-4); }
+  .about__photo { grid-column: col 7 / full-end; grid-row: 1; aspect-ratio: auto; min-height: 30rem; }
+  .staff { margin-top: clamp(4.5rem, 3rem + 4vw, 7rem); }
+  .staff::before { grid-row: 1; }
+  .staff__head { grid-row: 2; grid-column: col 1 / span 3; }
+  .staff-grid { grid-row: 2; grid-column: col 4 / content-end; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  .vm__item { grid-column: col 1 / span 5; }
+  .vm__item + .vm__item { grid-column: col 7 / span 6; padding-left: var(--sp-7); }
+
+  .wwd__head .section__title { grid-column: col 1 / span 6; grid-row: 1; }
+  .wwd__head .wwd__lede { grid-column: col 8 / content-end; grid-row: 1; padding-bottom: 0.6rem; }
+
+  .crop--feature { align-items: end; row-gap: 0; }
+  .crop__media { grid-column: full-start / col 8; grid-row: 1; --ar: 5 / 4; }
+  .crop--feature .crop__body { grid-column: col 9 / content-end; grid-row: 1; padding-bottom: var(--sp-2); }
+  .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .career { row-gap: 0; }
+  .career__media { grid-column: col 7 / full-end; grid-row: 1; --ar: 4 / 3; }
+  .career__text { grid-column: col 1 / span 5; grid-row: 1; }
+
+  .contact__head { grid-column: col 1 / span 5; }
+  .contact__body { grid-column: col 7 / content-end; }
+}
+
+@media (min-width: 75em) {            /* 1200px */
+  .staff__head { grid-column: col 1 / span 4; }
+  .staff-grid { grid-column: col 5 / content-end; }
+  .about__photo { min-height: 34rem; }
+  .crop__media { --ar: 3 / 2; }
+}
+
+/* Small phones: keep the header bar inside 320–360px. */
+@media (max-width: 59.99em) {
+  .brand__mark { font-size: min(1.3125rem, 21px); }
+  .lang__btn { font-size: min(0.8125rem, 13px); padding: 0 min(var(--sp-3), 12px); }
+  .site-header__bar { gap: var(--sp-2) min(var(--sp-4), 16px); }
+}
+@media (max-width: 22.5em) {
+  .lang__btn { min-width: 40px; padding: 0 min(var(--sp-2), 8px); }
+  .brand__mark { font-size: min(1.125rem, 18px); letter-spacing: 0.16em; }
+}
+
+/* ---------- 9. Motion, forced colours, print ------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+/* Windows high-contrast / forced-colours: backgrounds are replaced, so state must not rely on them. */
+@media (forced-colors: active) {
+  .menu-btn__icon, .menu-btn__icon::before, .menu-btn__icon::after { forced-color-adjust: none; background-color: ButtonText; }
+  .menu-btn[aria-expanded="true"] .menu-btn__icon { background-color: transparent; }
+  .lang__btn[aria-pressed="true"] { forced-color-adjust: none; background-color: Highlight; color: HighlightText; }
+  .site-header .lang__btn[aria-pressed="true"]::after { forced-color-adjust: none; background-color: Highlight; }
+  .site-nav a[aria-current="true"]::after { forced-color-adjust: none; background-color: LinkText; }
+  .js-ready .site-header:not(.is-solid):not(.is-menu-open) { background: Canvas; }
+  .js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn[aria-pressed="true"] { background-color: Highlight; color: HighlightText; text-shadow: none; }
+  .social__link:disabled, .social__icon { color: GrayText; }
+}
+@media (forced-colors: active) and (min-width: 60em) {
+  .js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__btn[aria-pressed="true"] { background-color: transparent; color: CanvasText; }
+}
+@media print {
+  .hero { margin-top: 0 !important; }
+  .band *, .site-footer, .site-footer *, .section--inverse * { color: #000 !important; }
+  .site-footer { background: none; }
+  .site-header, .tl-mark, .skip-link, .lang, .menu-btn { display: none !important; }
+  .hero { height: auto; min-height: 0; color: #000; background: none; }
+  .hero__media, .hero::after { display: none; }
+  .hero__inner { padding-block: var(--sp-6); }
+  .band, .section--inverse { background: none !important; color: #000; border-block: 1px solid #000; }
+}

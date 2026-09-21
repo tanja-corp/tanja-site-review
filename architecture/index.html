@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Website Structure / Design Map — TANJA</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="explorer.css">
+  <!-- 出所は model.js の1ファイルだけ。3つのビューはここから毎回描き直される。 -->
+  <script src="model.js"></script>
+  <script src="model-core.js"></script>
+  <script src="layout.js"></script>
+  <script src="skins.js"></script>
+</head>
+<body data-view="design">
+  <div id="refband" role="note">
+    <strong>Website Planning / Structure Reference — not the public TANJA website</strong>
+    <span class="note">ここでの編集・下書きはこのブラウザ内だけに残り、共有されません。</span>
+    <a href="../index.html">View Website</a>
+  </div>
+  <header id="bar">
+    <div class="brand"><strong>TANJA</strong><span>オブジェクトマップ</span></div>
+    <nav id="viewmenu" role="tablist" aria-label="ビューの切り替え"></nav>
+    <div class="search">
+      <input id="search" type="search" placeholder="オブジェクトを探す（/）" autocomplete="off" aria-label="オブジェクトを探す">
+      <ul id="results" hidden></ul>
+    </div>
+    <div class="tools">
+      <button id="undo" type="button" title="元に戻す（Ctrl+Z）" aria-label="元に戻す">↶</button>
+      <button id="redo" type="button" title="やり直す（Ctrl+Shift+Z）" aria-label="やり直す">↷</button>
+      <button id="langbtn" type="button" title="キャンバス上の表示言語">日本語</button>
+      <button id="labelbtn" type="button" aria-pressed="true" title="関係ラベルを常に表示（オフなら選択時のみ）">関係ラベル</button>
+      <button id="savebtn" type="button" class="primary" title="model.js に保存（Ctrl+S）">保存</button>
+      <button id="dlbtn" type="button" title="model.js をダウンロード">⤓</button>
+      <button id="inspbtn" type="button" title="右パネルの開閉">パネル</button>
+    </div>
+  </header>
+
+  <div id="draftbar" hidden>
+    ブラウザ内の<strong>下書き</strong>を表示しています（model.js とは違います）。
+    <button id="draftsave" type="button">model.js に保存</button>
+    <button id="draftdrop" type="button">下書きを破棄</button>
+  </div>
+
+  <div id="stalebar" hidden>
+    <strong>model.js が更新されています。</strong>ブラウザ内に、更新前の版から作った下書きが残っています。
+    <button id="stalerestore" type="button">下書きを復元</button>
+    <button id="staledrop" type="button">破棄</button>
+  </div>
+
+  <main id="stage">
+    <svg id="canvas" data-view="design" role="application" aria-label="オブジェクトマップのキャンバス" tabindex="-1">
+      <defs>
+        <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="9" height="9" fill="none"/><line x1="0" y1="0" x2="0" y2="9" stroke="#9c3a2d" stroke-opacity=".22" stroke-width="2.5"/></pattern>
+      </defs>
+      <g id="world">
+        <g id="lanes"></g>
+        <g id="nodes"></g>
+        <g id="edges-concept" class="edges"></g>
+        <g id="edges-er" class="edges"></g>
+        <g id="edges-design" class="edges"></g>
+      </g>
+    </svg>
+
+    <div id="hud">
+      <button id="zin" type="button" aria-label="拡大">＋</button>
+      <button id="zout" type="button" aria-label="縮小">−</button>
+      <button id="fitbtn" type="button" title="全体を表示（0）">全体</button>
+    </div>
+
+    <aside id="legend" data-view="design" class="closed">
+      <button id="legendbtn" type="button" aria-label="凡例の開閉">凡例</button>
+      <div class="body">
+        <p class="lg-title">状態</p>
+        <ul id="lg-status"></ul>
+        <div class="only design"><p class="lg-title">デザインデータ</p><p>ページの実物どおりの入れ子。斜線＝仮置き、<code>slot 04</code>＝写真枠、<code>×4</code>＝繰り返し数。オブジェクトを選ぶと「移動先」の線が出る。</p></div>
+        <div class="only concept"><p class="lg-title">概念図</p><p>色の帯＝領域。矢印は「〜する」の向き。点線は入れ子（含む）。</p></div>
+        <div class="only er"><p class="lg-title">ER図</p><p>ここに描いたテーブルは<b>CMSに載せるデータの案</b>で、確定した仕様ではない（状態の点は、対応するページ上のオブジェクトの状態）。<code>PK</code>主キー <code>FK</code>外部キー（斜体は自動生成）／<b>太字</b>必須／<code>?</code>空でよい／「仮」＝いまは仮の値。線の端：縦2本＝1、鳥の足＝多、○＝任意。丸いチップ＝そのテーブルの行（＝デザイン上のカード）。</p></div>
+      </div>
+    </aside>
+  </main>
+
+  <aside id="inspector" aria-label="インスペクター"></aside>
+  <div id="status" role="status"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+  <script src="inspector.js"></script>
+</body>
+</html>
