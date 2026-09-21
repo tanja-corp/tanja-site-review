@@ -215,6 +215,7 @@ html[data-lang="sw"] .tl-mark, html[data-lang="ja"] .tl-mark { display: inline-f
 
 .section { position: relative; padding-block: var(--section-y); }
 .section--flush-end { padding-bottom: 0; }
+.section--flush-end > .staff { margin-top: var(--section-y); padding-bottom: var(--section-y); }   /* About ends on Our Staff (after the Vision / Mission band) */
 /* Backgrounds alternate by themselves. The hero is the first <section> in <main>, so About is 2nd (paper), What We Do 3rd (tint), Career 4th (paper).
    Insert a section anywhere and the rhythm re-flows; no class needs to be moved. Contact opts out (inverse). */
 main > .section:nth-of-type(odd) { background: var(--c-surface-2); }
@@ -415,7 +416,7 @@ html:not(.js-ready) .lang, html:not(.js-ready) .menu-btn { visibility: hidden; }
     linear-gradient(to top, rgba(var(--c-hero-scrim), 0.72) 0, rgba(var(--c-hero-scrim), 0) 48%);
 }
 .hero__inner { padding-block: 0 clamp(2rem, 1rem + 5vw, 5rem); }
-.hero__title { font-size: min(var(--fs-display), 18vw); font-weight: 600; line-height: 0.95; letter-spacing: 0.14em; margin-right: -0.14em; }
+.hero__title { font-size: min(clamp(3.25rem, 1.6rem + 8vw, 7.5rem), 18vw); font-weight: 700; line-height: 0.95; letter-spacing: 0.14em; margin-right: -0.14em; }
 .hero__sub { margin-top: var(--sp-4); font-size: var(--fs-title); font-weight: 400; letter-spacing: 0.02em; text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }   /* optional line, see index.html */
 /* Landscape phones: the 34rem minimum would be taller than the screen, so let the hero fit the viewport. */
 @media (max-height: 34rem) and (orientation: landscape) {

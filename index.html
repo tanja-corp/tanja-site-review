@@ -115,6 +115,10 @@
       </picture>
       <div class="hero__inner container">
         <h1 class="hero__title" id="hero-title">TANJA</h1>
+        <!-- APPROVAL: hero line = location only ("Karatu, Tanzania"; see docs/CONTENT_SOURCE_MAP.md B1). No address is shown anywhere: registered office vs farm address is undecided. -->
+        <p class="hero__sub" data-placeholder="hero-line">
+          <span data-l="en" lang="en">Farms in Karatu, Tanzania</span><span data-l="sw" lang="sw" data-review="draft">Mashamba ya Karatu, Tanzania</span><span data-l="ja" lang="ja" data-review="draft">タンザニア・カラトゥの農園</span>
+        </p>
       </div>
     </section>
 
@@ -133,14 +137,14 @@
                "long history of coffee growing" states age of the estates only. It says nothing about ownership or how the land was acquired.
                "community-focused work under the Smart Village Project" = docs/CONTENT_SOURCE_MAP.md (A1, B3); wording needs management approval. -->
           <p class="lede">
-            <span data-l="en" lang="en">Coffee is TANJA’s established core. Macadamia and avocado are newer areas of development.</span>
-            <span data-l="sw" lang="sw" data-review="draft">Kahawa ndiyo shughuli kuu ya TANJA iliyoimarika. Makadamia na parachichi ni maeneo mapya yanayoendelezwa.</span>
-            <span data-l="ja" lang="ja" data-review="draft">コーヒーはTANJAが確立した中核事業で、マカダミアとアボカドは比較的新しい開発分野です。</span>
+            <span data-l="en" lang="en">TANJA is an agribusiness in northern Tanzania, built on century-old coffee estates and expanding into macadamia and avocado.</span>
+            <span data-l="sw" lang="sw" data-review="draft">TANJA ni kampuni ya kilimo biashara kaskazini mwa Tanzania, iliyojengwa juu ya mashamba ya kahawa yenye zaidi ya miaka mia moja, na inayopanuka kuelekea makadamia na parachichi.</span>
+            <span data-l="ja" lang="ja" data-review="draft">TANJAは、タンザニア北部で農業事業を展開する企業です。100年以上の歴史を持つコーヒー農園を基盤に、マカダミアとアボカドの栽培にも事業を広げています。</span>
           </p>
           <p class="about__body">
-            <span data-l="en" lang="en">The estates have a long history of coffee growing, and alongside farming, TANJA carries out community-focused work as part of the Smart Village Project.</span>
-            <span data-l="sw" lang="sw" data-review="draft">Mashamba haya yana historia ndefu ya kilimo cha kahawa, na pamoja na kilimo, TANJA hufanya kazi za kijamii kama sehemu ya Mradi wa Smart Village.</span>
-            <span data-l="ja" lang="ja" data-review="draft">農園には長いコーヒー栽培の歴史があり、農業と並行して、<span class="nb">Smart Village Projectの一環として</span>地域社会に向けた取り組みも行っています。</span>
+            <span data-l="en" lang="en">Through the Smart Village Project, TANJA connects commercial agriculture with long-term community and environmental development.</span>
+            <span data-l="sw" lang="sw" data-review="draft">Kupitia Mradi wa Smart Village, TANJA inaunganisha kilimo cha kibiashara na maendeleo ya muda mrefu ya jamii na mazingira.</span>
+            <span data-l="ja" lang="ja" data-review="draft">Smart Village Projectを通じて、商業農業と地域社会・環境の長期的な発展を結び付ける取り組みを進めています。</span>
           </p>
           <!-- APPROVAL (VERIFY): legal name, 2023 start and location: see docs/CONTENT_SOURCE_MAP.md (B1, A1).
                Deliberately NOT stated: employee count, farm area, harvest years, group history, carbon status (sources conflict or are stale). -->
@@ -162,6 +166,23 @@
                  data-alt-ja="背の高い木々に囲まれた斜面に並ぶコーヒーの木の列と、手前の赤い実のついた枝。">
           </picture>
         </figure>
+      </div>
+
+      <!-- ---------------------------------------------------- Vision / Mission (full-bleed band inside About) -->
+      <!-- PLACEHOLDER: official Vision and Mission wording is not yet approved. Do NOT synthesise it from the Smart Village mission,
+           the OSTI values (Trust / Connect / Challenge) or anything else. Replace only the two .vm__text lines. -->
+      <div class="band" id="vision-mission">
+        <div class="wrap vm-wrap">
+          <h3 class="eyebrow band__label" id="vm-title"><span data-l="en" lang="en">Vision / Mission</span><span data-l="sw" lang="sw" data-review="draft">Dira na Dhamira</span><span data-l="ja" lang="ja" data-review="draft">ビジョン / ミッション</span></h3>
+          <div class="vm__item vm__item--vision">
+            <h4 class="vm__label"><span data-l="en" lang="en">Vision</span><span data-l="sw" lang="sw" data-review="draft">Dira</span><span data-l="ja" lang="ja" data-review="draft">ビジョン</span></h4>
+            <p class="vm__text" data-placeholder="vision"><span data-l="en" lang="en">Official wording to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maneno rasmi bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">正式な文言は確認中です。</span></p>
+          </div>
+          <div class="vm__item vm__item--mission">
+            <h4 class="vm__label"><span data-l="en" lang="en">Mission</span><span data-l="sw" lang="sw" data-review="draft">Dhamira</span><span data-l="ja" lang="ja" data-review="draft">ミッション</span></h4>
+            <p class="vm__text" data-placeholder="mission"><span data-l="en" lang="en">Official wording to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maneno rasmi bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">正式な文言は確認中です。</span></p>
+          </div>
+        </div>
       </div>
 
       <!-- ---------------------------------------------------- Our Staff (slot 03, repeatable) -->
@@ -195,23 +216,6 @@
             <p class="person__role"><span data-l="en" lang="en">Role / Position</span><span data-l="sw" lang="sw" data-review="draft">Wadhifa</span><span data-l="ja" lang="ja" data-review="draft">役職</span></p>
           </li>
         </ul>
-      </div>
-
-      <!-- ---------------------------------------------------- Vision / Mission (full-bleed band inside About) -->
-      <!-- PLACEHOLDER: official Vision and Mission wording is not yet approved. Do NOT synthesise it from the Smart Village mission,
-           the OSTI values (Trust / Connect / Challenge) or anything else. Replace only the two .vm__text lines. -->
-      <div class="band" id="vision-mission">
-        <div class="wrap vm-wrap">
-          <h3 class="eyebrow band__label" id="vm-title"><span data-l="en" lang="en">Vision / Mission</span><span data-l="sw" lang="sw" data-review="draft">Dira na Dhamira</span><span data-l="ja" lang="ja" data-review="draft">ビジョン / ミッション</span></h3>
-          <div class="vm__item vm__item--vision">
-            <h4 class="vm__label"><span data-l="en" lang="en">Vision</span><span data-l="sw" lang="sw" data-review="draft">Dira</span><span data-l="ja" lang="ja" data-review="draft">ビジョン</span></h4>
-            <p class="vm__text" data-placeholder="vision"><span data-l="en" lang="en">Official wording to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maneno rasmi bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">正式な文言は確認中です。</span></p>
-          </div>
-          <div class="vm__item vm__item--mission">
-            <h4 class="vm__label"><span data-l="en" lang="en">Mission</span><span data-l="sw" lang="sw" data-review="draft">Dhamira</span><span data-l="ja" lang="ja" data-review="draft">ミッション</span></h4>
-            <p class="vm__text" data-placeholder="mission"><span data-l="en" lang="en">Official wording to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maneno rasmi bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">正式な文言は確認中です。</span></p>
-          </div>
-        </div>
       </div>
     </section>
 
