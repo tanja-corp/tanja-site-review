@@ -3,11 +3,11 @@
 window.OBJECT_MODEL = {
   "meta": {
     "title": "TANJA オブジェクトマップ",
-    "version": "2026-09-20",
+    "version": "2026-09-25",
     "slotEntity": "photo-slot",
     "i18nEntity": "translation",
     "site": "index.html",
-    "notes": "デザインデータ・概念図・ER図は、このファイル1つから毎回描き直される。座標は保存しない。"
+    "notes": "デザインデータ・概念図・ER図は、このファイル1つから毎回描き直される。座標は保存しない。2026-09-25のWeb Development Meetingの決定を反映（Our Staffの独立、Vision/Missionの一時休止、What We Doの3系統再編）。"
   },
   "tokens": [
     {"name":"--c-surface","value":"#faf8f2","group":"color","ja":"背景（紙）"},
@@ -98,7 +98,7 @@ window.OBJECT_MODEL = {
       "ja": "サイト（1ページ）",
       "en": "Site (one page)",
       "status": "built",
-      "summary": "ロングスクロールの1ページ。表示セクションは5つ（Hero／About／What We Do／Career／Contact）とヘッダー・フッター。News は将来挿入（2か所の編集）。",
+      "summary": "ロングスクロールの1ページ。表示セクションは6つ（Hero／About／Our Staff／What We Do／Career／Contact）とヘッダー・フッター。Our Staffは2026-09-25にAboutから独立。News は将来挿入（2か所の編集）。",
       "design": {
         "root": true,
         "layout": "stack",
@@ -145,14 +145,14 @@ window.OBJECT_MODEL = {
       "ja": "ナビ項目",
       "en": "Nav item",
       "status": "built",
-      "summary": "ヘッダーの項目が正。フッターは script.js がヘッダーの一覧を写す（JS無効時は静的な一覧）。各項目は1つのセクションへ移動する。",
+      "summary": "ヘッダーの項目が正。フッターは script.js がヘッダーの一覧を写す（JS無効時は静的な一覧）。各項目は1つのセクションへ移動する。2026-09-25にOur Staffを追加（5項目）。",
       "design": {
         "parent": "header",
         "order": 0,
         "weight": 3,
         "mock": "chips",
         "h": 44,
-        "repeat": {"shown":4,"min":4,"max":5},
+        "repeat": {"shown":5,"min":4,"max":6},
         "component": ".site-nav a",
         "alsoIn": ["footer"]
       },
@@ -238,7 +238,7 @@ window.OBJECT_MODEL = {
       "ja": "About（会社概要）",
       "en": "About",
       "status": "built",
-      "summary": "会社そのものの説明。Our Company／Our Staff／Vision・Mission の3ブロック。Karatu は独立セクションにしない。デスクトップは見出し・導入・事実を左、写真を右の窓の端まで。",
+      "summary": "会社そのものの説明。2026-09-25からOur Companyのみ（TANJAとは何か／名前の意味／始まり）。Our Staffは独立セクションへ、Vision・Missionは非表示（planned）へ移した。Karatu は独立セクションにしない。デスクトップは見出し・導入・事実を左、写真を右の窓の端まで。",
       "design": {
         "parent": "site",
         "order": 2,
@@ -255,7 +255,7 @@ window.OBJECT_MODEL = {
       "ja": "Our Company（会社紹介）",
       "en": "Our company",
       "status": "provisional",
-      "summary": "大きい導入の一文、本文、事実3つ（会社名・開始・所在地）、写真1枚。数値・面積・人数は載せない。",
+      "summary": "大きい導入の一文、本文、事実4つ（会社名・名前の意味・開始・所在地）、写真1枚。名前の意味は未確認のためplaceholder（絶対に推測で作らない）。数値・面積・人数は載せない。",
       "design": {
         "parent": "about",
         "order": 0,
@@ -265,7 +265,8 @@ window.OBJECT_MODEL = {
         "component": ".about（本文｜写真の非対称）＋ .facts",
         "slot": "02",
         "slotField": "photo",
-        "note": "≥1024pxで本文（5列）｜写真（右の窓の端まで）。<1024pxは本文の下に写真。導入の一文を大きく、残りを本文に。事実は表でなく注記の並び"
+        "placeholders": ["name-meaning"],
+        "note": "≥1024pxで本文（5列）｜写真（右の窓の端まで）。<1024pxは本文の下に写真。導入の一文を大きく、残りを本文に。事実は表でなく注記の並び（会社名・名前の意味・開始・所在地）"
       },
       "concept": {"domain":"company","order":0},
       "er": {
@@ -287,10 +288,10 @@ window.OBJECT_MODEL = {
       "ja": "スタッフ",
       "en": "Staff",
       "status": "placeholder",
-      "summary": "人物は創作しない。承認済みの名簿・肩書・顔写真が届くまで「Staff Member／Role」の枠。",
+      "summary": "人物は創作しない。承認済みの名簿・肩書・顔写真が届くまで「Staff Member／Role」の枠。2026-09-25にAboutから独立したtop-levelセクションへ（ヘッダーnavにも項目を追加）。",
       "design": {
-        "parent": "about",
-        "order": 1,
+        "parent": "site",
+        "order": 2.5,
         "mock": "cards",
         "h": 190,
         "repeat": {"shown":4,"min":3,"max":6},
@@ -299,7 +300,7 @@ window.OBJECT_MODEL = {
         "slot": "03",
         "slotField": "portrait",
         "placeholders": ["staff-roster"],
-        "note": "<600px：2列／≥600px：4列／≥1024px：見出しの右8列に自動で並ぶ（3〜6人）。枠は小さく、画面の主役にしない"
+        "note": "独立セクション（About と What We Do の間）。<600px：2列／≥600px：4列／≥1024px：見出しの右8列に自動で並ぶ（3〜6人）。枠は小さく、画面の主役にしない"
       },
       "concept": {"domain":"people","order":0},
       "er": {
@@ -320,18 +321,18 @@ window.OBJECT_MODEL = {
       "kind": "entity",
       "ja": "ビジョン／ミッション",
       "en": "Vision / Mission",
-      "status": "placeholder",
-      "summary": "正式な文言は未確定。Smart Village の使命や OSTI の価値観を混ぜて創作しない。",
+      "status": "planned",
+      "summary": "正式な文言は未確定。Smart Village の使命や OSTI の価値観を混ぜて創作しない。2026-09-25のホワイトボードから外れたため、visible buildからは一時的に非表示（ghost）。過去の検討は破棄しない — docs/WEB_V2_WORKING_BRIEF.md参照。再表示する場合はdesignのghostを外し、index.htmlに.bandを戻す。",
       "design": {
         "parent": "about",
         "order": 2,
         "mock": "band",
         "h": 120,
         "htmlId": "vision-mission",
+        "ghost": true,
         "component": ".band > .vm",
-        "placeholders": ["vision","mission"],
         "tokens": ["--c-primary","--c-on-primary"],
-        "note": "全幅の緑の帯。≥768pxでVisionとMissionを左右2列、大きい文字。文言を差し替えるだけで完成。"
+        "note": "DEFERRED 2026-09-25：現在is not renderedのghost。全幅の緑の帯（CSSは styles.css に残置）。≥768pxでVisionとMissionを左右2列、大きい文字。"
       },
       "concept": {"domain":"company","order":1},
       "er": {
@@ -350,7 +351,7 @@ window.OBJECT_MODEL = {
       "ja": "What We Do（事業内容）",
       "en": "What We Do",
       "status": "built",
-      "summary": "事業の2階層：Farm（Coffee／Macadamia／Avocado）と Project（Carbon／School。増やせる）。",
+      "summary": "2026-09-25に3系統へ再編：Farm（Coffee／Avocado／Macadamia／Beekeeping）、Sustainability（Carbon Credit／Lunch／Cattle。増やせる）、Cafe（単独のfeature block）。",
       "design": {
         "parent": "site",
         "order": 3,
@@ -367,16 +368,16 @@ window.OBJECT_MODEL = {
       "ja": "ファーム（作物）",
       "en": "Farm",
       "status": "provisional",
-      "summary": "コーヒーは確立した中核、マカダミアとアボカドは新しい開発分野。段階を断定しない。",
+      "summary": "コーヒーは確立した中核、アボカド・マカダミア・養蜂は新しい／付随する分野。段階を断定しない。2026-09-25に4項目の均等グリッドへ再編（旧：コーヒーだけ大写真＋ペア）。",
       "design": {
         "parent": "what-we-do",
         "order": 0,
         "layout": "grid",
         "cols": 2,
         "htmlId": "farm",
-        "component": ".group",
+        "component": ".group > .farm-grid",
         "inset": [28,12,12,12],
-        "note": "コーヒーは左の窓の端まで出る大写真＋文。マカダミアとアボカドは2列（右をずらす）"
+        "note": "4項目（Coffee／Avocado／Macadamia／Beekeeping）を同じ大きさのカードで2×2（≥768px）／1列（phone）に。Coffeeはchipラベルのみで少し強調、構造は均等。"
       },
       "concept": {"domain":"company","order":2},
       "er": {
@@ -402,38 +403,17 @@ window.OBJECT_MODEL = {
       "design": {
         "parent": "farm",
         "order": 0,
-        "mock": "crop-feature",
-        "h": 240,
+        "mock": "crop",
+        "h": 230,
         "htmlId": "coffee",
-        "component": ".crop--feature",
+        "component": ".crop",
         "slot": "04",
         "slotField": "photo",
         "placeholders": ["coffee-details"],
-        "span": 2,
-        "note": "確立した中核事業。写真の撮影時期は出典で確認済み（台帳スロット04）。ページ上には日付を出さない。"
+        "note": "確立した中核事業。farm-grid内の1枚（他の3枚と同じ大きさ、chipラベルのみ強調）。写真の撮影時期は出典で確認済み（台帳スロット04）。ページ上には日付を出さない。"
       },
       "concept": {"domain":"company","order":5},
       "er": {"rowOf":"farm","values":{"key":"coffee"}}
-    },
-    {
-      "id": "macadamia",
-      "kind": "row",
-      "ja": "マカダミア",
-      "en": "Macadamia",
-      "status": "placeholder",
-      "design": {
-        "parent": "farm",
-        "order": 1,
-        "mock": "crop",
-        "h": 230,
-        "htmlId": "macadamia",
-        "component": ".crop",
-        "slot": "05",
-        "slotField": "photo",
-        "placeholders": ["macadamia-details"]
-      },
-      "concept": {"domain":"company","order":6},
-      "er": {"rowOf":"farm","values":{"key":"macadamia"}}
     },
     {
       "id": "avocado",
@@ -443,7 +423,7 @@ window.OBJECT_MODEL = {
       "status": "placeholder",
       "design": {
         "parent": "farm",
-        "order": 2,
+        "order": 1,
         "mock": "crop",
         "h": 230,
         "htmlId": "avocado",
@@ -452,16 +432,57 @@ window.OBJECT_MODEL = {
         "slotField": "photo",
         "placeholders": ["avocado-details"]
       },
-      "concept": {"domain":"company","order":7},
+      "concept": {"domain":"company","order":6},
       "er": {"rowOf":"farm","values":{"key":"avocado"}}
+    },
+    {
+      "id": "macadamia",
+      "kind": "row",
+      "ja": "マカダミア",
+      "en": "Macadamia",
+      "status": "placeholder",
+      "design": {
+        "parent": "farm",
+        "order": 2,
+        "mock": "crop",
+        "h": 230,
+        "htmlId": "macadamia",
+        "component": ".crop",
+        "slot": "05",
+        "slotField": "photo",
+        "placeholders": ["macadamia-details"]
+      },
+      "concept": {"domain":"company","order":7},
+      "er": {"rowOf":"farm","values":{"key":"macadamia"}}
+    },
+    {
+      "id": "beekeeping",
+      "kind": "row",
+      "ja": "養蜂",
+      "en": "Beekeeping",
+      "status": "placeholder",
+      "summary": "TANJAの農園活動のひとつ。規模・生産量は未確認。",
+      "design": {
+        "parent": "farm",
+        "order": 3,
+        "mock": "crop",
+        "h": 230,
+        "htmlId": "beekeeping",
+        "component": ".crop",
+        "slot": "10",
+        "slotField": "photo",
+        "placeholders": ["beekeeping-details"]
+      },
+      "concept": {"domain":"company","order":8},
+      "er": {"rowOf":"farm","values":{"key":"beekeeping"}}
     },
     {
       "id": "project",
       "kind": "entity",
-      "ja": "プロジェクト",
-      "en": "Project",
+      "ja": "サステナビリティ",
+      "en": "Sustainability",
       "status": "built",
-      "summary": "Carbon と School は最初の2件で、閉じた分類ではない。成果・提携先・受益者数は書かない。写真主体で、枠線のカードにしない。",
+      "summary": "2026-09-25に「Project」から改称。Carbon Credit・Lunch・Cattleが最初の3件で、閉じた分類ではない。成果・提携先・受益者数は書かない。写真主体で、枠線のカードにしない。htmlId／CSSコンポーネント名は互換のため project のまま。",
       "design": {
         "parent": "what-we-do",
         "order": 1,
@@ -470,7 +491,7 @@ window.OBJECT_MODEL = {
         "htmlId": "project",
         "component": ".project-grid",
         "inset": [28,12,12,12],
-        "note": "3列（≥1024px）／2列（≥768px）／1列。<li> を足すと次の空きに入る。CSS変更不要"
+        "note": "3列（≥1024px）／2列（≥768px）／1列。<li> を足すと次の空きに入る。CSS変更不要（4件目以降も同じ）"
       },
       "concept": {"domain":"company","order":3},
       "er": {
@@ -490,9 +511,10 @@ window.OBJECT_MODEL = {
     {
       "id": "carbon",
       "kind": "row",
-      "ja": "カーボン",
-      "en": "Carbon",
+      "ja": "カーボンクレジット",
+      "en": "Carbon Credit",
       "status": "placeholder",
+      "summary": "2026-09-25に表示名を「Carbon」から「Carbon Credit」へ変更（id／slotは同一プロジェクトのため据え置き）。credit取得・発行・成果は断定しない。",
       "design": {
         "parent": "project",
         "order": 0,
@@ -504,15 +526,16 @@ window.OBJECT_MODEL = {
         "slotField": "photo",
         "placeholders": ["carbon-details"]
       },
-      "concept": {"domain":"company","order":8},
+      "concept": {"domain":"company","order":9},
       "er": {"rowOf":"project","values":{"slug":"carbon"}}
     },
     {
       "id": "school",
       "kind": "row",
-      "ja": "学校",
-      "en": "School",
+      "ja": "ランチ",
+      "en": "Lunch",
       "status": "placeholder",
+      "summary": "2026-09-25に表示名を「School」から「Lunch」へ変更（ホワイトボード写真の直接表記に一致。id／slotは同一プロジェクトのため据え置き — docs/CONTENT_SOURCE_MAP.md D11の学校食支援活動に基づく）。「Lunch」単体は一般的すぎる語のため、正式名称・対象は未確定（VERIFY）。",
       "design": {
         "parent": "project",
         "order": 1,
@@ -524,8 +547,29 @@ window.OBJECT_MODEL = {
         "slotField": "photo",
         "placeholders": ["school-details"]
       },
-      "concept": {"domain":"company","order":9},
+      "concept": {"domain":"company","order":10},
       "er": {"rowOf":"project","values":{"slug":"school"}}
+    },
+    {
+      "id": "cattle",
+      "kind": "row",
+      "ja": "牛",
+      "en": "Cattle",
+      "status": "placeholder",
+      "summary": "2026-09-25に新規追加。TANJAの牛の存在と、サステナビリティ・プロジェクトとしての取り組みは別物として扱う（区別が未確認の間は牛の飼育事実だけを述べる）。",
+      "design": {
+        "parent": "project",
+        "order": 2,
+        "mock": "project-card",
+        "h": 210,
+        "htmlId": "cattle",
+        "component": ".project",
+        "slot": "11",
+        "slotField": "photo",
+        "placeholders": ["cattle-details"]
+      },
+      "concept": {"domain":"company","order":11},
+      "er": {"rowOf":"project","values":{"slug":"cattle"}}
     },
     {
       "id": "project-more",
@@ -533,8 +577,38 @@ window.OBJECT_MODEL = {
       "ja": "＋将来のプロジェクト",
       "en": "More projects (future)",
       "status": "planned",
-      "summary": "3件目・4件目は <li> を複製するだけで追加できる。",
+      "summary": "4件目・5件目は <li> を複製するだけで追加できる。",
       "design": {"parent":"project","order":9,"mock":"ghost","h":210,"ghost":true}
+    },
+    {
+      "id": "cafe",
+      "kind": "entity",
+      "ja": "カフェ",
+      "en": "Cafe",
+      "status": "placeholder",
+      "summary": "2026-09-25に新規追加。What We Do の第3の系統（FarmでもSustainabilityでもない）。公開できる説明が存在しないため、見出しとplaceholderのみ。社内のクラウドファンディング計画・開店予定・予算は承認なく公開しない。",
+      "design": {
+        "parent": "what-we-do",
+        "order": 2,
+        "mock": "career",
+        "h": 190,
+        "htmlId": "cafe",
+        "component": ".wrap.group.cafe（写真｜文の対、career と同じ形）",
+        "slot": "12",
+        "slotField": "photo",
+        "placeholders": ["cafe-details"],
+        "note": "Farm・Sustainabilityと並ぶ3本目のgroup。≥1024pxで写真（右の窓の端まで）｜文。"
+      },
+      "concept": {"domain":"company","order":12},
+      "er": {
+        "table": "Cafe",
+        "col": 1,
+        "fields": [
+          {"name":"id","type":"id","pk":true},
+          {"name":"text","type":"text","i18n":true,"placeholder":true},
+          {"name":"photo","type":"image"}
+        ]
+      }
     },
     {
       "id": "news",
@@ -886,6 +960,63 @@ window.OBJECT_MODEL = {
       }
     },
     {
+      "id": "slot-10",
+      "kind": "row",
+      "ja": "スロット10：Beekeeping",
+      "en": "Slot 10",
+      "status": "placeholder",
+      "er": {
+        "rowOf": "photo-slot",
+        "values": {
+          "slot_no": "10",
+          "location": "Beekeeping",
+          "ratio_desktop": "3:2",
+          "ratio_mobile": "3:2",
+          "focal_point": "中央",
+          "min_resolution": "1200×800",
+          "derivative": "—"
+        }
+      }
+    },
+    {
+      "id": "slot-11",
+      "kind": "row",
+      "ja": "スロット11：Cattle",
+      "en": "Slot 11",
+      "status": "placeholder",
+      "er": {
+        "rowOf": "photo-slot",
+        "values": {
+          "slot_no": "11",
+          "location": "Cattle",
+          "ratio_desktop": "3:2",
+          "ratio_mobile": "3:2",
+          "focal_point": "中央",
+          "min_resolution": "1200×800",
+          "derivative": "—"
+        }
+      }
+    },
+    {
+      "id": "slot-12",
+      "kind": "row",
+      "ja": "スロット12：Cafe",
+      "en": "Slot 12",
+      "status": "placeholder",
+      "er": {
+        "rowOf": "photo-slot",
+        "values": {
+          "slot_no": "12",
+          "location": "Cafe",
+          "ratio_desktop": "4:3（右の窓の端まで）",
+          "ratio_mobile": "4:3（幅いっぱい）",
+          "focal_point": "中央",
+          "min_resolution": "1280×960",
+          "derivative": "—"
+        }
+      }
+    },
+    {
       "id": "photo",
       "kind": "entity",
       "ja": "写真",
@@ -1054,6 +1185,30 @@ window.OBJECT_MODEL = {
       "views": ["concept"]
     },
     {
+      "id": "l28",
+      "from": "farm",
+      "to": "beekeeping",
+      "card": "1:N",
+      "verb": {"ja":"営む","en":"keeps"},
+      "views": ["concept"]
+    },
+    {
+      "id": "l29",
+      "from": "project",
+      "to": "cattle",
+      "card": "1:N",
+      "verb": {"ja":"取り組む","en":"includes"},
+      "views": ["concept"]
+    },
+    {
+      "id": "l30",
+      "from": "tanja",
+      "to": "cafe",
+      "card": "1:1",
+      "verb": {"ja":"経営する","en":"runs"},
+      "views": ["concept"]
+    },
+    {
       "id": "l11",
       "from": "our-company",
       "to": "tanja",
@@ -1089,6 +1244,14 @@ window.OBJECT_MODEL = {
       "id": "l15",
       "from": "nav-item",
       "to": "about",
+      "card": "N:1",
+      "verb": {"ja":"移動先","en":"links to"},
+      "views": ["design"]
+    },
+    {
+      "id": "l31",
+      "from": "nav-item",
+      "to": "staff",
       "card": "N:1",
       "verb": {"ja":"移動先","en":"links to"},
       "views": ["design"]

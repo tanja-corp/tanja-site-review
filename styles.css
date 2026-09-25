@@ -214,8 +214,6 @@ html[data-lang="sw"] .tl-mark, html[data-lang="ja"] .tl-mark { display: inline-f
 }
 
 .section { position: relative; padding-block: var(--section-y); }
-.section--flush-end { padding-bottom: 0; }
-.section--flush-end > .staff { margin-top: var(--section-y); padding-bottom: var(--section-y); }   /* About ends on Our Staff (after the Vision / Mission band) */
 /* Backgrounds alternate by themselves. The hero is the first <section> in <main>, so About is 2nd (paper), What We Do 3rd (tint), Career 4th (paper).
    Insert a section anywhere and the rhythm re-flows; no class needs to be moved. Contact opts out (inverse). */
 main > .section:nth-of-type(odd) { background: var(--c-surface-2); }
@@ -463,7 +461,6 @@ html[data-lang="ja"] .facts dt { letter-spacing: 0.06em; }
 
 /* Staff: the head (label + line) and the row of portraits. Portraits are small: a placeholder never dominates the screen. */
 .staff { row-gap: var(--sp-6); align-items: start; }
-.staff::before { content: ""; grid-column: col 1 / content-end; border-top: 1px solid var(--c-outline-2); }
 .staff__head > * + * { margin-top: var(--sp-2); }
 .staff__head .eyebrow { color: var(--c-on-surface-3); }
 .staff__lede { font-size: var(--fs-title); font-weight: 500; line-height: 1.35; }
@@ -473,7 +470,9 @@ html[data-lang="ja"] .facts dt { letter-spacing: 0.06em; }
 .person__name { margin-top: var(--sp-3); font-weight: 600; overflow-wrap: anywhere; }
 .person__role { color: var(--c-on-surface-3); font-size: 0.9375rem; overflow-wrap: anywhere; }
 
-/* Vision / Mission band: full-bleed forest green, two columns, large type. */
+/* Vision / Mission band: full-bleed forest green, two columns, large type.
+   DEFERRED 2026-09-25: not currently used (index.html has no .band markup — see the DEFERRED comment near About). Kept so the
+   band can be reinstated by re-adding the markup without redesigning it. */
 .band { margin-top: var(--section-y); padding-block: clamp(4rem, 2.5rem + 5vw, 8rem); background: var(--c-primary); color: var(--c-on-primary); --focus: #fff; }
 .band__label { color: var(--c-on-inverse-2); margin-bottom: var(--sp-6); }
 .vm__item { padding-top: var(--sp-4); border-top: 1px solid rgba(255, 255, 255, 0.28); }
@@ -496,12 +495,9 @@ html[data-lang="ja"] .vm__text { max-width: none; }
 .crop__body { padding-top: var(--sp-4); }
 .crop__body p:not(.chip):not(.tbc) { color: var(--c-on-surface-2); max-width: var(--measure); }
 
-.crop--feature { row-gap: var(--sp-5); }
-.crop--feature .crop__body { padding-top: 0; }
-.crop--feature .crop__title { font-size: var(--fs-headline); line-height: 1.04; font-weight: 400; margin-bottom: var(--sp-4); }
-.crop--feature .crop__body p:not(.chip):not(.tbc) { font-size: var(--fs-body-l); }
-
-.crop-pair { row-gap: var(--sp-7); margin-top: var(--sp-6); }
+/* Farm grid: four equal-weight crop cards (Coffee, Avocado, Macadamia, Beekeeping). One column on a phone, two from 768px up —
+   deliberately flat so the group reads as one set at a glance; Coffee's "chip" label is its only extra weight. */
+.farm-grid { display: grid; gap: var(--sp-7) var(--col-gap); grid-template-columns: minmax(0, 1fr); margin-top: var(--sp-6); }
 
 /* Project grid: three columns on a wide window. A new <li> takes the next free cell, so a 3rd, 4th or 5th project needs no CSS. */
 .project-grid { display: grid; gap: var(--sp-7) var(--col-gap); grid-template-columns: minmax(0, 1fr); }
@@ -509,10 +505,11 @@ html[data-lang="ja"] .vm__text { max-width: none; }
 .project__title { margin-top: var(--sp-4); font-size: var(--fs-title-l); font-weight: 600; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: var(--sp-3); }
 .project p:not(.tbc) { color: var(--c-on-surface-2); max-width: var(--measure); }
 
-/* ---------- Career --------------------------------------------------------- */
-/* A quiet statement of fact. No colour bar, no box: the same weight as any other note. */
-.career { row-gap: var(--sp-6); align-items: center; }
-.career__text > * + * { margin-top: var(--sp-5); }
+/* ---------- Career / Cafe --------------------------------------------------- */
+/* A quiet statement of fact. No colour bar, no box: the same weight as any other note.
+   Cafe (added 2026-09-25) shares this same text | edge-bleed-photo shape — see the "wrap group cafe" markup in What We Do. */
+.career, .cafe { row-gap: var(--sp-6); align-items: center; }
+.career__text > * + *, .cafe__text > * + * { margin-top: var(--sp-5); }
 .career__text .lede { max-width: 22em; }
 .status { max-width: var(--measure); color: var(--c-on-surface-3); font-size: var(--fs-body); }
 
@@ -562,7 +559,7 @@ a.social__link { cursor: pointer; }
 
 /* ---------- 8. Breakpoints (mobile-first: everything above is the phone layout) ---------- */
 /* Phone: photographs that sit on a text column run edge to edge, without rounded corners. */
-.about__photo, .crop__media, .career__media { grid-column: full-start / full-end; border-radius: 0; }
+.about__photo, .career__media, .cafe__media { grid-column: full-start / full-end; border-radius: 0; }
 
 @media (min-width: 37.5em) {          /* 600px */
   .staff-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-6) var(--sp-5); }
@@ -572,7 +569,7 @@ a.social__link { cursor: pointer; }
 
 @media (min-width: 48em) {            /* 768px: two columns where a pair belongs together; photographs keep to the window width */
   .wrap { --cg: var(--col-gap); }
-  .about__photo, .crop__media, .career__media { --ar: 3 / 2; }
+  .about__photo, .career__media, .cafe__media { --ar: 3 / 2; }
 
   .wwd__head .section__title { grid-column: col 1 / span 7; }
   .wwd__head .wwd__lede { grid-column: col 1 / span 7; }
@@ -587,13 +584,10 @@ a.social__link { cursor: pointer; }
   .vm__item + .vm__item { grid-column: col 7 / span 6; margin-top: 0; padding-left: var(--sp-6); border-left: 1px solid rgba(255, 255, 255, 0.28); }
   .vm__item { border-top: 0; padding-top: 0; }
 
-  .crop--feature .crop__body { grid-column: col 1 / span 8; }
-  .crop-pair { row-gap: var(--sp-8); margin-top: var(--sp-7); }
-  .crop-pair > .crop:first-child { grid-column: col 1 / span 6; }
-  .crop-pair > .crop:last-child { grid-column: col 7 / span 6; margin-top: clamp(2rem, 6vw, 5rem); }
+  .farm-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .project-grid { grid-column: col 1 / content-end; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-  .career__text { grid-column: col 1 / span 9; }
+  .career__text, .cafe__text { grid-column: col 1 / span 9; }
   .contact__head { grid-column: col 1 / span 5; }
   .contact__body { grid-column: col 6 / content-end; }
 
@@ -605,10 +599,8 @@ a.social__link { cursor: pointer; }
   .about { row-gap: 0; align-items: stretch; }
   .about__text { grid-column: col 1 / span 5; grid-row: 1; padding-bottom: var(--sp-4); }
   .about__photo { grid-column: col 7 / full-end; grid-row: 1; aspect-ratio: auto; min-height: 30rem; }
-  .staff { margin-top: clamp(4.5rem, 3rem + 4vw, 7rem); }
-  .staff::before { grid-row: 1; }
-  .staff__head { grid-row: 2; grid-column: col 1 / span 3; }
-  .staff-grid { grid-row: 2; grid-column: col 4 / content-end; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .staff__head { grid-column: col 1 / span 3; }
+  .staff-grid { grid-column: col 4 / content-end; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
   .vm__item { grid-column: col 1 / span 5; }
   .vm__item + .vm__item { grid-column: col 7 / span 6; padding-left: var(--sp-7); }
@@ -616,14 +608,11 @@ a.social__link { cursor: pointer; }
   .wwd__head .section__title { grid-column: col 1 / span 6; grid-row: 1; }
   .wwd__head .wwd__lede { grid-column: col 8 / content-end; grid-row: 1; padding-bottom: 0.6rem; }
 
-  .crop--feature { align-items: end; row-gap: 0; }
-  .crop__media { grid-column: full-start / col 8; grid-row: 1; --ar: 5 / 4; }
-  .crop--feature .crop__body { grid-column: col 9 / content-end; grid-row: 1; padding-bottom: var(--sp-2); }
   .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
-  .career { row-gap: 0; }
-  .career__media { grid-column: col 7 / full-end; grid-row: 1; --ar: 4 / 3; }
-  .career__text { grid-column: col 1 / span 5; grid-row: 1; }
+  .career, .cafe { row-gap: 0; }
+  .career__media, .cafe__media { grid-column: col 7 / full-end; grid-row: 1; --ar: 4 / 3; }
+  .career__text, .cafe__text { grid-column: col 1 / span 5; grid-row: 1; }
 
   .contact__head { grid-column: col 1 / span 5; }
   .contact__body { grid-column: col 7 / content-end; }
@@ -633,7 +622,6 @@ a.social__link { cursor: pointer; }
   .staff__head { grid-column: col 1 / span 4; }
   .staff-grid { grid-column: col 5 / content-end; }
   .about__photo { min-height: 34rem; }
-  .crop__media { --ar: 3 / 2; }
 }
 
 /* Small phones: keep the header bar inside 320–360px. */
