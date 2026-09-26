@@ -459,7 +459,9 @@ html:not(.js-ready) .lang, html:not(.js-ready) .menu-btn { visibility: hidden; }
 html[data-lang="ja"] .facts dt { letter-spacing: 0.06em; }
 .facts dd { margin-top: var(--sp-1); font-weight: 600; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 
-/* Staff: the head (label + line) and the row of portraits. Portraits are small: a placeholder never dominates the screen. */
+/* Staff: the head (label + line) and the row of portraits. Portraits are small: a placeholder never dominates the screen.
+   DEFERRED 2026-09-26: not currently used (index.html has no .staff markup — see the DEFERRED comment near About). Kept, like
+   the Vision/Mission band above, so the section can be reinstated by re-adding the markup without redesigning it. */
 .staff { row-gap: var(--sp-6); align-items: start; }
 .staff__head > * + * { margin-top: var(--sp-2); }
 .staff__head .eyebrow { color: var(--c-on-surface-3); }
@@ -484,6 +486,10 @@ html[data-lang="ja"] .vm__text { max-width: none; }
 /* ---------- What We Do ----------------------------------------------------- */
 .wwd__head { row-gap: var(--sp-5); margin-bottom: clamp(3rem, 2rem + 4vw, 6rem); align-items: end; }
 .wwd__lede { font-size: var(--fs-title); line-height: 1.5; color: var(--c-on-surface-2); max-width: 26rem; }
+/* Link to the what-we-do.html detail page, added 2026-09-26. */
+.wwd__more { margin-top: var(--sp-3); }
+.wwd__more a { font-weight: 600; text-decoration: none; }
+@media (hover: hover) { .wwd__more a:hover { text-decoration: underline; text-underline-offset: 4px; } }
 
 .group { row-gap: var(--sp-6); }
 .wwd__head + .group { margin-top: 0; }
@@ -492,6 +498,11 @@ html[data-lang="ja"] .vm__text { max-width: none; }
 .group__title::after { content: ""; flex: 1; height: 1px; background: var(--c-outline-2); }
 
 .crop__title { font-size: var(--fs-title-l); font-weight: 600; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: var(--sp-3); }
+/* Titles link to their detail section on what-we-do.html (added 2026-09-26): inherit colour, underline only on hover/focus. */
+.crop__title a, .project__title a, .cafe__text .eyebrow a { color: inherit; text-decoration: none; }
+@media (hover: hover) {
+  .crop__title a:hover, .project__title a:hover, .cafe__text .eyebrow a:hover { text-decoration: underline; text-underline-offset: 4px; }
+}
 .crop__body { padding-top: var(--sp-4); }
 .crop__body p:not(.chip):not(.tbc) { color: var(--c-on-surface-2); max-width: var(--measure); }
 
@@ -512,6 +523,36 @@ html[data-lang="ja"] .vm__text { max-width: none; }
 .career__text > * + *, .cafe__text > * + * { margin-top: var(--sp-5); }
 .career__text .lede { max-width: 22em; }
 .status { max-width: var(--measure); color: var(--c-on-surface-3); font-size: var(--fs-body); }
+
+/* ---------- What We Do detail page (what-we-do.html, added 2026-09-26) ----- */
+/* Reading layout, not the homepage's asymmetric grid: everything sits in .container (the same max-width as the header), one
+   column, so a photo | text pair only needs two columns from tablet width up. Reuses .media, .chip, .tbc, .group__title. */
+.wwd-detail__intro { padding-top: var(--sp-3); }
+.wwd-detail__back { margin-bottom: var(--sp-5); }
+.wwd-detail__back a { font-weight: 600; text-decoration: none; }
+@media (hover: hover) { .wwd-detail__back a:hover { text-decoration: underline; text-underline-offset: 4px; } }
+.wwd-detail__intro .lede { margin-top: var(--sp-4); max-width: var(--measure); }
+
+/* Jump-nav: one group per What We Do branch, plain link lists (no boxes/pills — matches the header nav's restraint). */
+.wwd-jump { margin-top: var(--sp-7); display: flex; flex-wrap: wrap; gap: var(--sp-6) var(--sp-8); }
+.wwd-jump__group .eyebrow { color: var(--c-on-surface-3); margin-bottom: var(--sp-2); }
+.wwd-jump__group ul { display: flex; flex-direction: column; gap: var(--sp-1); }
+.wwd-jump__group a { display: inline-flex; align-items: center; min-height: var(--touch); text-decoration: none; font-weight: 500; }
+@media (hover: hover) { .wwd-jump__group a:hover { text-decoration: underline; text-underline-offset: 4px; } }
+
+.wwd-detail { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-5); padding-block: var(--section-y); }
+.wwd-detail:first-of-type { padding-top: var(--sp-6); }
+.wwd-detail + .wwd-detail { border-top: 1px solid var(--c-outline-2); }
+.wwd-detail__media { grid-column: 1 / -1; }
+.wwd-detail__title { font-size: var(--fs-headline); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; }
+.wwd-detail__section { margin-top: var(--sp-6); max-width: var(--measure); }
+.wwd-detail__section h4 { font-size: var(--fs-title); font-weight: 600; margin-bottom: var(--sp-2); }
+.wwd-detail__section p:not(.tbc) { color: var(--c-on-surface-2); }
+
+@media (min-width: 48em) {          /* 768px: photo beside text */
+  .wwd-detail { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+  .wwd-detail__media { grid-column: 1 / span 1; }
+}
 
 /* ---------- Contact -------------------------------------------------------- */
 .contact { row-gap: var(--sp-7); align-items: start; }

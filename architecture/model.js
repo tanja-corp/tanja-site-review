@@ -145,14 +145,14 @@ window.OBJECT_MODEL = {
       "ja": "ナビ項目",
       "en": "Nav item",
       "status": "built",
-      "summary": "ヘッダーの項目が正。フッターは script.js がヘッダーの一覧を写す（JS無効時は静的な一覧）。各項目は1つのセクションへ移動する。2026-09-25にOur Staffを追加（5項目）。",
+      "summary": "ヘッダーの項目が正。フッターは script.js がヘッダーの一覧を写す（JS無効時は静的な一覧）。各項目は1つのセクションへ移動する。2026-09-25にOur Staffを追加（5項目）、2026-09-26にOur Staffを削除（4項目に戻る）。",
       "design": {
         "parent": "header",
         "order": 0,
         "weight": 3,
         "mock": "chips",
         "h": 44,
-        "repeat": {"shown":5,"min":4,"max":6},
+        "repeat": {"shown":4,"min":4,"max":6},
         "component": ".site-nav a",
         "alsoIn": ["footer"]
       },
@@ -238,7 +238,7 @@ window.OBJECT_MODEL = {
       "ja": "About（会社概要）",
       "en": "About",
       "status": "built",
-      "summary": "会社そのものの説明。2026-09-25からOur Companyのみ（TANJAとは何か／名前の意味／始まり）。Our Staffは独立セクションへ、Vision・Missionは非表示（planned）へ移した。Karatu は独立セクションにしない。デスクトップは見出し・導入・事実を左、写真を右の窓の端まで。",
+      "summary": "会社そのものの説明。2026-09-25からOur Companyのみ（TANJAとは何か／名前の意味／始まり）。Our Staffは独立セクションへ（2026-09-26に削除）、Vision・Missionは非表示（planned）へ移した。Karatu は独立セクションにしない。デスクトップは見出し・導入・事実を左、写真を右の窓の端まで。",
       "design": {
         "parent": "site",
         "order": 2,
@@ -287,20 +287,17 @@ window.OBJECT_MODEL = {
       "kind": "entity",
       "ja": "スタッフ",
       "en": "Staff",
-      "status": "placeholder",
-      "summary": "人物は創作しない。承認済みの名簿・肩書・顔写真が届くまで「Staff Member／Role」の枠。2026-09-25にAboutから独立したtop-levelセクションへ（ヘッダーnavにも項目を追加）。",
+      "status": "planned",
+      "summary": "人物は創作しない。承認済みの名簿・肩書・顔写真が届くまで「Staff Member／Role」の枠。2026-09-25にAboutから独立したtop-levelセクションへ移したが、2026-09-26にユーザー指示でvisible buildから削除（ghost）。過去の検討は破棄しない。再表示する場合はdesignのghostを外し、index.htmlに<section id=\"our-staff\">を戻す（ヘッダー／フッターnavの項目も含む）。",
       "design": {
         "parent": "site",
         "order": 2.5,
         "mock": "cards",
         "h": 190,
-        "repeat": {"shown":4,"min":3,"max":6},
         "htmlId": "our-staff",
+        "ghost": true,
         "component": ".staff-grid > .person",
-        "slot": "03",
-        "slotField": "portrait",
-        "placeholders": ["staff-roster"],
-        "note": "独立セクション（About と What We Do の間）。<600px：2列／≥600px：4列／≥1024px：見出しの右8列に自動で並ぶ（3〜6人）。枠は小さく、画面の主役にしない"
+        "note": "DEFERRED 2026-09-26：現在は表示されないghost。再表示時は repeat（3〜6人）と slot 03（portrait）を design に戻すこと。<600px：2列／≥600px：4列／≥1024px：見出しの右8列に自動で並ぶ想定。CSSは styles.css に残置。"
       },
       "concept": {"domain":"people","order":0},
       "er": {
@@ -832,6 +829,7 @@ window.OBJECT_MODEL = {
       "ja": "スロット03：Our Staff",
       "en": "Slot 03",
       "status": "placeholder",
+      "ghost": true,
       "er": {
         "rowOf": "photo-slot",
         "values": {
