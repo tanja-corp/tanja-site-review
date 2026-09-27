@@ -1,8 +1,9 @@
 /* TANJA Web V2 — script.js
    Progressive enhancement only. The page is fully readable in English with JavaScript off.
    Jobs: (1) language switch + remembered choice, (2) mobile menu, (3) header over the hero,
-         (4) current-section marker, (5) footer menu copies the header menu.
-   No libraries, no network requests.
+         (4) current-section marker, (5) footer menu copies the header menu, (6) hero photo rotation.
+   No libraries. No requests this file makes itself; the hero rotation (added 2026-09-26) does cause the browser to fetch two
+   more photos, but only when it runs (see job 6) — same-origin images already referenced in the page, not a network call.
 
    Load order: the inline boot script in <head> adds html.js before first paint (layout rules use it), and
    restores a saved SW/JP choice. This file adds html.js-ready when it has run (controls become visible).
@@ -169,6 +170,35 @@
       var target = mirror.querySelector('ul');
       if (source && target && source.children.length) target.innerHTML = source.innerHTML;
     });
+
+    /* ---------- 6. hero photo rotation ---------- */
+    // Slide 1 is real (fetched) from the start; slides 2+ carry data-srcset/data-src instead of the real attributes, so the
+    // browser fetches nothing for them unless this code promotes those attributes — which only happens here, so a visitor who
+    // prefers reduced motion, or whose JS fails to load, never downloads photos they will never see (job 6 just never runs;
+    // slide 1 keeps the .is-active class already in the HTML, i.e. the old single static hero).
+    var heroMedia = document.querySelector('[data-hero-rotate]');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (heroMedia && !reduceMotion.matches) {
+      var slides = [].slice.call(heroMedia.querySelectorAll('.hero__slide'));
+      if (slides.length > 1) {
+        slides.slice(1).forEach(function (slide) {
+          [].forEach.call(slide.querySelectorAll('source[data-srcset]'), function (s) {
+            s.setAttribute('srcset', s.getAttribute('data-srcset'));
+          });
+          var img = slide.querySelector('img[data-src]');
+          if (img) img.setAttribute('src', img.getAttribute('data-src'));
+        });
+        var current = 0;
+        setInterval(function () {
+          var next = (current + 1) % slides.length;
+          slides[next].classList.add('is-active');
+          slides[next].setAttribute('aria-hidden', 'false');
+          slides[current].classList.remove('is-active');
+          slides[current].setAttribute('aria-hidden', 'true');
+          current = next;
+        }, 6000);
+      }
+    }
 
   } finally {
     // Always runs, even if something above threw: the language and menu controls must not stay hidden.

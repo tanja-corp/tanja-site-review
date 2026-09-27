@@ -102,21 +102,58 @@
   <main id="main">
 
     <!-- =================================================================== 01 HOME = HERO
-         One static photograph, no slider, no video, no CTA. Replaceable as a single image field (slot 01).
-         Desktop: landscape 1800×1200, about 88% of the window height.  Mobile (≤700px): portrait crop 660×1166, focal point = red cherry cluster.
+         2026-09-26: now a lightweight photo rotation (option A from the whiteboard), not a single static photo. Still no slider
+         library, no video, no CTA. Replaceable/extendable as a set of image fields (slot 01, plus the reused slots noted below).
+         Desktop: landscape 1800×1200, about 88% of the window height.  Mobile (≤700px): portrait crop 660×1166 for slide 1 only
+         (the other slides use their existing square/landscape crops — object-fit: cover handles any source ratio).
+         HOW THE ROTATION WORKS (script.js, "hero photo rotation"):
+         - Slide 1 (#coffee cherries, this section's own slot 01) is real from first paint: fetchpriority="high", counted for LCP.
+         - Slides 2+ reuse photos ALREADY on this page (slot 04 Coffee, slot 09 Career/dam) for variety, chosen because they are
+           the only other TANJA/OSTI-sourced, non-fabricated farm photographs currently approved for use — see
+           docs/CONTENT_GAPS_2026-09-25.md for the Drive-access limitation that is the reason there are only three, not the
+           whiteboard's literal "Coffee → Avocado → Macadamia" sequence. They carry <source data-srcset> / <img data-src> instead
+           of the real attributes, so the browser fetches NOTHING for them unless script.js promotes those attributes — which it
+           only does when JavaScript runs AND the visitor has not asked for reduced motion. No `data-slot` is set on slides 2/3:
+           they are a second APPEARANCE of an existing cataloged photo, not a new slot, so architecture/check.js's slot counts
+           (tied to slide 1's section-level data-slot="01", and separately to the Coffee/Career cards' own data-slot) are unaffected.
+         - Rotation swaps the .is-active class (a 1.2s opacity crossfade) every 6s and toggles aria-hidden so only the visible
+           slide reaches assistive tech at any time.
+         - No JS, or prefers-reduced-motion: reduce → slide 1 keeps .is-active forever (hardcoded in the HTML, not added by JS)
+           and slides 2/3 are never materialized/fetched: the page behaves exactly like the old single static hero.
          The hero needs nothing but the wordmark. A location line is OPTIONAL and is not shown by default. To add one (only after TANJA approves it), put this
          after the <h1> — no CSS change is needed, and it is a translatable triad like every other string (the hero has no draft marker of its own: while its SW / JP strings are drafts, the marker of the section below still shows, and check.js counts them):
            <p class="hero__sub"><span data-l="en" lang="en">…</span><span data-l="sw" lang="sw" data-review="draft">…</span><span data-l="ja" lang="ja" data-review="draft">…</span></p> -->
     <section class="hero" id="home" aria-labelledby="hero-title" data-slot="01">
-      <picture class="hero__media">
-        <source media="(max-width: 700px)" srcset="assets/images/01-hero-mobile.webp" type="image/webp">
-        <source media="(max-width: 700px)" srcset="assets/images/01-hero-mobile.jpg" type="image/jpeg">
-        <source srcset="assets/images/01-hero-desktop.webp" type="image/webp">
-        <img src="assets/images/01-hero-desktop.jpg" width="1800" height="1200" fetchpriority="high" decoding="async"
-             alt="Coffee branches in the foreground with red and green cherries, and rows of coffee trees on the slope behind."
-             data-review-sw="draft" data-review-ja="draft" data-alt-sw="Matawi ya kahawa mbele yenye matunda mekundu na ya kijani, na safu za miti ya kahawa kwenye mteremko wa nyuma."
-             data-alt-ja="手前のコーヒーの枝に赤い実と緑の実がつき、奥の斜面にコーヒーの木の列が並んでいる。">
-      </picture>
+      <div class="hero__media" data-hero-rotate>
+        <picture class="hero__slide is-active" aria-hidden="false">
+          <source media="(max-width: 700px)" srcset="assets/images/01-hero-mobile.webp" type="image/webp">
+          <source media="(max-width: 700px)" srcset="assets/images/01-hero-mobile.jpg" type="image/jpeg">
+          <source srcset="assets/images/01-hero-desktop.webp" type="image/webp">
+          <img src="assets/images/01-hero-desktop.jpg" width="1800" height="1200" fetchpriority="high" decoding="async"
+               style="--focal: 30% 55%"
+               alt="Coffee branches in the foreground with red and green cherries, and rows of coffee trees on the slope behind."
+               data-review-sw="draft" data-review-ja="draft" data-alt-sw="Matawi ya kahawa mbele yenye matunda mekundu na ya kijani, na safu za miti ya kahawa kwenye mteremko wa nyuma."
+               data-alt-ja="手前のコーヒーの枝に赤い実と緑の実がつき、奥の斜面にコーヒーの木の列が並んでいる。">
+        </picture>
+        <!-- Slide 2: reuses slot 04's photo (Coffee card). data-srcset/data-src only — script.js materializes these, and only when
+             it is safe to (JS ran, motion allowed). No src/srcset here on purpose: this must fetch nothing otherwise. -->
+        <picture class="hero__slide" aria-hidden="true">
+          <source data-srcset="assets/images/04-coffee-800.webp 800w, assets/images/04-coffee.webp 1280w" sizes="100vw" type="image/webp">
+          <img data-src="assets/images/04-coffee.jpg" width="1280" height="1024" decoding="async"
+               alt="Clusters of green coffee cherries on branches among broad leaves."
+               data-review-sw="draft" data-review-ja="draft" data-alt-sw="Vishada vya matunda ya kahawa ya kijani kwenye matawi kati ya majani mapana."
+               data-alt-ja="広い葉の間の枝に房になってついた緑色のコーヒーの実。">
+        </picture>
+        <!-- Slide 3: reuses slot 09's photo (Career). Same deferred-fetch pattern as slide 2. -->
+        <picture class="hero__slide" aria-hidden="true">
+          <source data-srcset="assets/images/09-career-800.webp 800w, assets/images/09-career.webp 1280w" sizes="100vw" type="image/webp">
+          <img data-src="assets/images/09-career.jpg" width="1280" height="960" decoding="async"
+               style="--focal: 50% 58%"
+               alt="Calm, rippled water between banks of bare red earth, with trees and a wooded hill behind under a blue sky with white clouds."
+               data-review-sw="draft" data-review-ja="draft" data-alt-sw="Maji tulivu yenye mawimbi madogo kati ya kingo za udongo mwekundu usio na nyasi, na miti na kilima chenye miti nyuma, chini ya anga la buluu lenye mawingu meupe."
+               data-alt-ja="草の少ない赤土の土手に囲まれた、さざ波の立つ静かな水面。奥に木々と樹木に覆われた丘があり、青空に白い雲が浮かんでいる。">
+        </picture>
+      </div>
       <div class="hero__inner container">
         <h1 class="hero__title" id="hero-title">TANJA</h1>
         <!-- APPROVAL: hero line = location only ("Karatu, Tanzania"; see docs/CONTENT_SOURCE_MAP.md B1). No address is shown anywhere: registered office vs farm address is undecided. -->

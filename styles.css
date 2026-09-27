@@ -395,7 +395,8 @@ html:not(.js-ready) .lang, html:not(.js-ready) .menu-btn { visibility: hidden; }
 .js .hero { margin-top: calc(-1 * (var(--header-h) + 1px)); }
 
 /* ---------- 4. Hero -------------------------------------------------------- */
-/* One static photograph, no slider/video/CTA. Slot 01: replace the <picture> sources only. */
+/* A slow photo rotation (added 2026-09-26; was one static photograph), no slider library, no video, no CTA. Slot 01 is slide 1;
+   see the long comment in index.html above the hero section for how the rotation/deferred-fetch/reduced-motion mechanics work. */
 .hero {
   position: relative; isolation: isolate; display: flex; align-items: flex-end;
   height: clamp(34rem, 100vh, 60rem); height: clamp(34rem, 100svh, 60rem);
@@ -406,7 +407,15 @@ html:not(.js-ready) .lang, html:not(.js-ready) .menu-btn { visibility: hidden; }
   .hero { height: clamp(36rem, 88vh, 62rem); height: clamp(36rem, 88svh, 62rem); }
 }
 .hero__media { position: absolute; inset: 0; z-index: -2; }
-.hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 55%; }
+/* Each .hero__slide is a full-bleed layer; script.js crossfades .is-active between them. Slide 1 has .is-active in the HTML
+   itself, so with no JS (or prefers-reduced-motion: reduce, belt-and-braces below) exactly one photo shows, permanently — the
+   same single static hero as before. */
+.hero__slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1200ms var(--ease); }
+.hero__slide.is-active { opacity: 1; }
+.hero__slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--focal, 50% 50%); }
+@media (prefers-reduced-motion: reduce) {
+  .hero__slide { transition: none; }   /* script.js also never starts the rotation under reduced motion; this is belt-and-braces */
+}
 .hero::after {                       /* scrim: keeps header (top) and wordmark (bottom) legible on any photo */
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:

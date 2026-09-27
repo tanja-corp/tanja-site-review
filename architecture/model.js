@@ -205,7 +205,7 @@ window.OBJECT_MODEL = {
       "ja": "ホーム（ヒーロー）",
       "en": "Hero",
       "status": "provisional",
-      "summary": "静止画1枚とワードマークと場所の1行（Karatu, Tanzania。仮置き・要承認）。高さは窓の約88%（スマホは窓いっぱい）。スライダー・動画・CTAなし。",
+      "summary": "2026-09-26からゆっくりした写真ローテーション（ホワイトボード案A）。ワードマークと場所の1行（Karatu, Tanzania。仮置き・要承認）。高さは窓の約88%（スマホは窓いっぱい）。スライダーライブラリ・動画・CTAなし。写真は今のところ3枚（スロット01・04・09の再利用。Driveの追加共有待ちのためAvocado／Macadamiaはまだ無い）。reduced-motionまたはJS無効ならスロット01の1枚だけの静止ヒーローに戻る。",
       "design": {
         "parent": "site",
         "order": 1,
@@ -213,11 +213,11 @@ window.OBJECT_MODEL = {
         "h": 300,
         "htmlId": "home",
         "placeholders": ["hero-line"],
-        "component": ".hero",
+        "component": ".hero > [data-hero-rotate] > .hero__slide ×3",
         "slot": "01",
         "slotField": "image",
         "tokens": ["--fs-display","--c-on-primary"],
-        "note": "≤700pxは縦切り出し画像に差し替え。上部に暗いスクリムを重ねる。"
+        "note": "≤700pxはスロット01のみ縦切り出し画像に差し替え（他の2枚はobject-fit: coverで自動対応）。上部に暗いスクリムを重ねる。2枚目・3枚目はdata-srcset/data-srcで遅延取得（JS＋motion許可時のみ）。"
       },
       "concept": {"domain":"site","order":2},
       "er": {
@@ -227,6 +227,7 @@ window.OBJECT_MODEL = {
           {"name":"id","type":"id","pk":true},
           {"name":"image","type":"image","req":true},
           {"name":"mobile_crop","type":"image","nullable":true,"note":"縦切り出し（任意）"},
+          {"name":"rotation_photos","type":"ref","nullable":true,"note":"追加の写真（0〜。今は2枚：Photo slot 04, 09 を再利用）。空なら静止ヒーローのまま"},
           {"name":"location_line","type":"text","i18n":true,"nullable":true,"note":"場所の1行（Farms in Karatu, Tanzania）。所在地の住所は出さない。空なら表示しない"},
           {"name":"wordmark","type":"text"}
         ]
