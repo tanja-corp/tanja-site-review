@@ -3,15 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title data-review-sw="draft" data-review-ja="draft" data-sw="TANJA — Tunachofanya (Maelezo Kamili)" data-ja="TANJA — 事業内容（詳細）">TANJA — What We Do (Full Details)</title>
+  <title data-review-sw="draft" data-review-ja="draft" data-sw="TANJA — Tunachofanya" data-ja="TANJA — 事業内容">TANJA — What We Do</title>
   <meta name="description" data-review-sw="draft" data-review-ja="draft"
-        content="Detail on every part of TANJA's work: Farm (Coffee, Avocado, Macadamia, Beekeeping), Sustainability (Carbon Credit, Lunch, Cattle) and Cafe."
-        data-sw="Maelezo ya kila sehemu ya kazi za TANJA: Shamba (Kahawa, Parachichi, Makadamia, Ufugaji Nyuki), Uendelevu (Mkopo wa Kaboni, Chakula cha Mchana, Ng'ombe) na Mkahawa."
-        data-ja="TANJAの事業内容の詳細：Farm（コーヒー・アボカド・マカダミア・養蜂）、Sustainability（カーボンクレジット・ランチ・牛）、カフェ。">
-  <meta name="theme-color" content="#24402f">
+        content="TANJA's farm (coffee, avocado, macadamia, beekeeping), its sustainability projects (carbon credit, lunch, cattle) and its café."
+        data-sw="Shamba la TANJA (kahawa, parachichi, makadamia, ufugaji nyuki), miradi yake ya uendelevu (hati za kaboni, chakula cha mchana, ng’ombe) na mkahawa wake."
+        data-ja="TANJAの農園（コーヒー、アボカド、マカダミア、養蜂）、サステナビリティ・プロジェクト（カーボンクレジット、ランチ、牛）、カフェ。">
+  <meta name="theme-color" content="#1f3a2b">
+  <!-- Link previews (WhatsApp, LinkedIn, Facebook). Absolute URLs point at the review host; change them when the site moves to its real domain. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TANJA">
+  <meta property="og:title" content="TANJA — What We Do">
+  <meta property="og:description" content="The farm, the projects that grow from it, and our café.">
+  <meta property="og:url" content="https://tanja-corp.github.io/tanja-site-review/what-we-do.html">
+  <meta property="og:image" content="https://tanja-corp.github.io/tanja-site-review/assets/images/01-hero-1-1200.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="800">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
-  <!-- Language boot: same as index.html — runs before first paint so a returning SW/JP visitor never sees an English flash. -->
+  <!-- Language boot: same as index.html. -->
   <script>
     (function () {
       var d = document.documentElement;
@@ -26,31 +37,23 @@
 </head>
 
 <!--
-  TANJA Web V2 — What We Do detail page (added 2026-09-26).
+  TANJA Web V2 — What We Do detail page (added 2026-09-26, rebuilt 2026-09-29).
 
-  WHY THIS FILE EXISTS
-  - The homepage's What We Do section (index.html #what-we-do) is a scannable summary: one photo, one short paragraph, one
-    "Details to be confirmed." line per item. This page is the destination for "tell me more": one jump-able anchor per item
-    (#coffee, #avocado, #macadamia, #beekeeping, #carbon, #school, #cattle, #cafe — same ids as index.html, a different document,
-    so both id sets are valid), each inside a "detail frame" that can hold a longer write-up once TANJA supplies one.
-  - Every item's title on the homepage links here (e.g. what-we-do.html#coffee). This page's own jump-nav near the top links to
-    every item's anchor on this same page.
-  - Coffee is built out as the worked example of the detail frame (Overview / Growing & processing / Status), since it is the
-    item with the most already-approved copy to work with. The other seven items use the SAME frame markup/CSS with only an
-    "Overview" (reusing the homepage's approved short description) and a single "Details to be confirmed." — copy the extra
-    <div class="wwd-detail__section"> blocks from #coffee when more is approved for another item. Do NOT invent content for the
-    other items merely to fill the frame: see CLAUDE.md "Content integrity" and docs/CONTENT_GAPS_2026-09-25.md.
-  - Header/footer nav here point back to index.html's sections (index.html#about, etc.) since those sections don't exist on this
-    page; script.js's current-section spy already ignores nav links that don't start with "#" (i.e. cross-page links), so no
-    script change was needed. "What We Do" points at this page itself.
-  - Same translation-triad and data-review="draft" convention as index.html. NOTE: architecture/check.js only scans index.html,
-    so it does not machine-check this page's triads — verify SW/JA parity by eye, or run scripts/verify-render.js, which does
-    load this page (console errors, overflow, language switch) even though it does not count strings.
+  - One anchor per item (#coffee, #avocado, #macadamia, #beekeeping, #carbon, #school, #cattle, #cafe — the same ids as index.html,
+    a different document). Every homepage tile links here; the sticky jump bar links to every anchor on this page.
+  - FARM follows the production owner's request (Naoaki, 2026-09-29): ONE overall introduction for the four farm items, in his
+    words. Each farm item below therefore carries a photo and a short list of key facts only — no descriptive prose.
+    The facts come from public OSTI pages, the owner's own message or TANJA's external-facing decks; see docs/COPY_DECK.md.
+  - SUSTAINABILITY items carry a longer write-up from the same sources. Deliberately NOT stated: issued credits, partner names,
+    beneficiary counts, herd numbers.
+  - architecture/check.js only scans index.html; scripts/verify-render.js loads this page in all three languages.
 -->
 
 <body>
   <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
-    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M4.5 20c.6-3.8 3.7-6 7.5-6s6.9 2.2 7.5 6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6"/></symbol>
     <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.4 6.6h.01"/></symbol>
     <symbol id="i-facebook" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
   </svg>
@@ -59,26 +62,28 @@
     <span data-l="en" lang="en">Skip to content</span><span data-l="sw" lang="sw" data-review="draft">Ruka hadi maudhui</span><span data-l="ja" lang="ja" data-review="draft">本文へ移動</span>
   </a>
 
-  <!-- ===================================================================== HEADER (same as index.html; nav hrefs point back to index.html's sections) -->
   <header class="site-header" data-header>
     <div class="site-header__bar container">
-      <a class="brand" href="index.html" data-placeholder="logo"><span class="brand__mark">TANJA</span></a>
-
+      <a class="brand" href="index.html#home"><span class="brand__mark">TANJA</span></a>
       <nav class="site-nav" id="site-nav" aria-labelledby="nav-primary-label">
         <span class="visually-hidden" id="nav-primary-label"><span data-l="en" lang="en">Primary</span><span data-l="sw" lang="sw" data-review="draft">Menyu kuu</span><span data-l="ja" lang="ja" data-review="draft">メインメニュー</span></span>
         <ul class="site-nav__list">
           <li><a href="index.html#about"><span data-l="en" lang="en">About</span><span data-l="sw" lang="sw" data-review="draft">Kuhusu Sisi</span><span data-l="ja" lang="ja" data-review="draft">TANJAについて</span></a></li>
-          <li><a href="what-we-do.html"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></a></li>
+          <li><a href="what-we-do.html" aria-current="page"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></a></li>
           <li><a href="index.html#career"><span data-l="en" lang="en">Career</span><span data-l="sw" lang="sw" data-review="draft">Ajira</span><span data-l="ja" lang="ja" data-review="draft">キャリア</span></a></li>
           <li><a href="index.html#contact"><span data-l="en" lang="en">Contact</span><span data-l="sw" lang="sw" data-review="draft">Wasiliana Nasi</span><span data-l="ja" lang="ja" data-review="draft">お問い合わせ</span></a></li>
         </ul>
       </nav>
-
       <div class="site-header__tools">
-        <div class="lang" role="group" aria-label="Language / Lugha / 言語">
-          <button type="button" class="lang__btn" data-set-lang="en" lang="en" aria-label="English" aria-pressed="true">EN</button>
-          <button type="button" class="lang__btn" data-set-lang="sw" lang="sw" aria-label="Kiswahili" aria-pressed="false">SW</button>
-          <button type="button" class="lang__btn" data-set-lang="ja" lang="ja" aria-label="JP 日本語" aria-pressed="false">JP</button>
+        <div class="lang" data-lang-menu>
+          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list" aria-label="EN — Language / Lugha / 言語">
+            <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="lang__code" aria-hidden="true">EN</span><svg class="icon lang__chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </button>
+          <ul class="lang__list" id="nav-lang-list" hidden>
+            <li><button type="button" class="lang__opt" data-set-lang="en" lang="en" aria-pressed="true"><span class="lang__name">English</span><small>EN</small></button></li>
+            <li><button type="button" class="lang__opt" data-set-lang="sw" lang="sw" aria-pressed="false"><span class="lang__name">Kiswahili</span><small>SW</small></button></li>
+            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li>
+          </ul>
         </div>
         <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav">
           <span class="menu-btn__icon" aria-hidden="true"></span>
@@ -89,226 +94,318 @@
   </header>
 
   <main id="main">
-
-    <!-- =================================================================== PAGE INTRO -->
-    <section class="section tl-scope" id="wwd-detail-top" aria-labelledby="wwd-detail-title">
+    <section class="page-hero tl-scope" id="wwd-detail-top" aria-labelledby="wwd-detail-title">
       <p class="tl-mark" role="note"><span data-l="en" lang="en">Draft translation</span><span data-l="sw" lang="sw" data-review="draft">Tafsiri ya rasimu</span><span data-l="ja" lang="ja" data-review="draft">翻訳は下書き</span></p>
-      <div class="container wwd-detail__intro">
-        <p class="wwd-detail__back"><a href="index.html#what-we-do">← <span data-l="en" lang="en">Back to home</span><span data-l="sw" lang="sw" data-review="draft">Rudi Nyumbani</span><span data-l="ja" lang="ja" data-review="draft">ホームに戻る</span></a></p>
+      <div class="page-hero__media">
+        <picture>
+          <source srcset="assets/images/wwd-hero-1200.webp 1200w, assets/images/wwd-hero.webp 1990w" sizes="100vw" type="image/webp">
+          <img src="assets/images/wwd-hero.jpg" width="1990" height="1119" fetchpriority="high" decoding="async" style="--focal: 50% 60%"
+               alt="Coffee on a slope running down to a wide plain, with trees and a blue sky."
+               data-review-sw="draft" data-review-ja="draft" data-alt-sw="Kahawa kwenye mteremko unaoshuka hadi uwanda mpana, na miti na anga la buluu."
+               data-alt-ja="広い平原へと下る斜面のコーヒー畑。木々と青空。">
+        </picture>
+      </div>
+      <div class="container page-hero__inner">
+        <p class="wwd-detail__back"><a href="index.html#what-we-do"><svg class="icon" aria-hidden="true"><use href="#i-arrow-l"/></svg><span data-l="en" lang="en">Back to home</span><span data-l="sw" lang="sw" data-review="draft">Rudi mwanzo</span><span data-l="ja" lang="ja" data-review="draft">ホームに戻る</span></a></p>
+        <p class="kicker"><span class="kicker__n">02</span><span><span data-l="en" lang="en">Farm · Sustainability · Cafe</span><span data-l="sw" lang="sw" data-review="draft">Shamba · Uendelevu · Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">農園・サステナビリティ・カフェ</span></span></p>
         <h1 class="section__title" id="wwd-detail-title"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></h1>
-        <p class="lede"><span data-l="en" lang="en">Full detail on Farm, Sustainability and Cafe, one section at a time.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo kamili ya Shamba, Uendelevu na Mkahawa, sehemu moja kwa wakati.</span><span data-l="ja" lang="ja" data-review="draft">Farm・Sustainability・Cafeそれぞれの詳細をご覧いただけます。</span></p>
-
-        <!-- Jump-nav: one link per item, grouped the same way as the homepage. -->
-        <nav class="wwd-jump" aria-labelledby="wwd-jump-label">
-          <span class="visually-hidden" id="wwd-jump-label"><span data-l="en" lang="en">Jump to a section</span><span data-l="sw" lang="sw" data-review="draft">Nenda kwenye sehemu</span><span data-l="ja" lang="ja" data-review="draft">セクションへ移動</span></span>
-          <div class="wwd-jump__group">
-            <p class="eyebrow"><span data-l="en" lang="en">Farm</span><span data-l="sw" lang="sw" data-review="draft">Shamba</span><span data-l="ja" lang="ja" data-review="draft">農園</span></p>
-            <ul role="list">
-              <li><a href="#coffee"><span data-l="en" lang="en">Coffee</span><span data-l="sw" lang="sw" data-review="draft">Kahawa</span><span data-l="ja" lang="ja" data-review="draft">コーヒー</span></a></li>
-              <li><a href="#avocado"><span data-l="en" lang="en">Avocado</span><span data-l="sw" lang="sw" data-review="draft">Parachichi</span><span data-l="ja" lang="ja" data-review="draft">アボカド</span></a></li>
-              <li><a href="#macadamia"><span data-l="en" lang="en">Macadamia</span><span data-l="sw" lang="sw" data-review="draft">Makadamia</span><span data-l="ja" lang="ja" data-review="draft">マカダミア</span></a></li>
-              <li><a href="#beekeeping"><span data-l="en" lang="en">Beekeeping</span><span data-l="sw" lang="sw" data-review="draft">Ufugaji Nyuki</span><span data-l="ja" lang="ja" data-review="draft">養蜂</span></a></li>
-            </ul>
-          </div>
-          <div class="wwd-jump__group">
-            <p class="eyebrow"><span data-l="en" lang="en">Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">サステナビリティ</span></p>
-            <ul role="list">
-              <li><a href="#carbon"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Mkopo wa Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></a></li>
-              <li><a href="#school"><span data-l="en" lang="en">Lunch</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana</span><span data-l="ja" lang="ja" data-review="draft">ランチ</span></a></li>
-              <li><a href="#cattle"><span data-l="en" lang="en">Cattle</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe</span><span data-l="ja" lang="ja" data-review="draft">牛</span></a></li>
-            </ul>
-          </div>
-          <div class="wwd-jump__group">
-            <p class="eyebrow"><span data-l="en" lang="en">Cafe</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></p>
-            <ul role="list">
-              <li><a href="#cafe"><span data-l="en" lang="en">Cafe</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></a></li>
-            </ul>
-          </div>
-        </nav>
+        <p class="lede"><span data-l="en" lang="en">The farm, the projects that grow from it, and our café.</span><span data-l="sw" lang="sw" data-review="draft">Shamba, miradi inayotokana nalo, na mkahawa wetu.</span><span data-l="ja" lang="ja" data-review="draft">農園、農園から広がるプロジェクト、そしてカフェ。</span></p>
       </div>
     </section>
 
-    <!-- ================================================================ FARM DETAIL -->
-    <section class="section tl-scope" id="farm-detail" aria-labelledby="farm-detail-title">
+    <nav class="wwd-jump" aria-labelledby="wwd-jump-label">
+      <span class="visually-hidden" id="wwd-jump-label"><span data-l="en" lang="en">Jump to a section</span><span data-l="sw" lang="sw" data-review="draft">Nenda kwenye sehemu</span><span data-l="ja" lang="ja" data-review="draft">セクションへ移動</span></span>
+      <div class="container wwd-jump__row">
+        <div class="wwd-jump__group">
+          <p class="eyebrow"><span data-l="en" lang="en">Farm</span><span data-l="sw" lang="sw" data-review="draft">Shamba</span><span data-l="ja" lang="ja" data-review="draft">農園</span></p>
+          <ul>
+            <li><a href="#coffee"><span data-l="en" lang="en">Coffee</span><span data-l="sw" lang="sw" data-review="draft">Kahawa</span><span data-l="ja" lang="ja" data-review="draft">コーヒー</span></a></li>
+            <li><a href="#avocado"><span data-l="en" lang="en">Avocado</span><span data-l="sw" lang="sw" data-review="draft">Parachichi</span><span data-l="ja" lang="ja" data-review="draft">アボカド</span></a></li>
+            <li><a href="#macadamia"><span data-l="en" lang="en">Macadamia</span><span data-l="sw" lang="sw" data-review="draft">Makadamia</span><span data-l="ja" lang="ja" data-review="draft">マカダミア</span></a></li>
+            <li><a href="#beekeeping"><span data-l="en" lang="en">Beekeeping</span><span data-l="sw" lang="sw" data-review="draft">Ufugaji Nyuki</span><span data-l="ja" lang="ja" data-review="draft">養蜂</span></a></li>
+          </ul>
+        </div>
+        <div class="wwd-jump__group">
+          <p class="eyebrow"><span data-l="en" lang="en">Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">サステナビリティ</span></p>
+          <ul>
+            <li><a href="#carbon"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Hati za Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></a></li>
+            <li><a href="#school"><span data-l="en" lang="en">Lunch</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana</span><span data-l="ja" lang="ja" data-review="draft">ランチ</span></a></li>
+            <li><a href="#cattle"><span data-l="en" lang="en">Cattle</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe</span><span data-l="ja" lang="ja" data-review="draft">牛</span></a></li>
+          </ul>
+        </div>
+        <div class="wwd-jump__group">
+          <p class="eyebrow"><span data-l="en" lang="en">Cafe</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></p>
+          <ul>
+            <li><a href="#cafe"><span data-l="en" lang="en">Cafe</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ================================================================ FARM -->
+    <section class="detail-group tl-scope" aria-labelledby="farm-detail-title">
       <p class="tl-mark" role="note"><span data-l="en" lang="en">Draft translation</span><span data-l="sw" lang="sw" data-review="draft">Tafsiri ya rasimu</span><span data-l="ja" lang="ja" data-review="draft">翻訳は下書き</span></p>
       <div class="container">
         <h2 class="group__title" id="farm-detail-title"><span data-l="en" lang="en">Farm</span><span data-l="sw" lang="sw" data-review="draft">Shamba</span><span data-l="ja" lang="ja" data-review="draft">農園</span></h2>
+        <div class="detail-group__head farm-intro" data-reveal style="margin-top: var(--sp-6)">
+          <p class="statement"><span data-l="en" lang="en">Our farms have a history spanning more than a century and lie on the edge of Ngorongoro, where we share water sources with wildlife. Drawing on this heritage and rich natural surroundings, we grow coffee, avocados and macadamias, and keep bees.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu yana historia ya zaidi ya karne moja na yako pembezoni mwa Ngorongoro, ambapo tunashiriki vyanzo vya maji na wanyamapori. Tukitegemea urithi huu na mazingira haya tajiri ya asili, tunalima kahawa, parachichi na makadamia, na tunafuga nyuki.</span><span data-l="ja" lang="ja" data-review="draft">私たちの農園はンゴロンゴロのほとりに広がり、100年を超える歴史をもちます。水源は野生動物と分かち合うものです。受け継いだ歴史と豊かな自然を生かし、コーヒー、アボカド、マカダミアを育て、ミツバチを飼っています。</span></p>
+          <div class="farm-intro__body">
+            <p><span data-l="en" lang="en">Our coffee farms hold Rainforest Alliance certification, and our avocado farms hold GLOBALG.A.P. certification.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu ya kahawa yana cheti cha Rainforest Alliance, na mashamba yetu ya parachichi yana cheti cha GLOBALG.A.P.</span><span data-l="ja" lang="ja" data-review="draft">認証は、コーヒー農園がレインフォレスト・アライアンス、アボカド農園がGLOBALG.A.P.です。</span></p>
+            <p><span data-l="en" lang="en">We aim to care for the environment, support the wellbeing of the people who work here, and bring joy to those who enjoy the harvests of this rich land.</span><span data-l="sw" lang="sw" data-review="draft">Tunalenga kutunza mazingira, kusaidia ustawi wa watu wanaofanya kazi hapa, na kuleta furaha kwa wale wanaofurahia mavuno ya ardhi hii tajiri.</span><span data-l="ja" lang="ja" data-review="draft">目指すのは、環境を守り、ここで働く人々のウェルビーイングを支え、この豊かな土地の実りを味わう人々に喜びを届けることです。</span></p>
+          </div>
+        </div>
 
-        <!-- Coffee: the worked example of the detail frame — copy this shape for another item once more content is approved. -->
+        <!-- Coffee: key facts only (owner's request). Sources (keys defined in docs/COPY_DECK.md): O-farms (all three estates grow coffee), O-ecsite 2024-10 / O-tour 2025-03
+             (three processing methods), O-action1 2024-09 (main harvest June–September), N (certification), O-solar (sold in Japan by OSTI Japan). -->
         <article class="wwd-detail" id="coffee">
-          <figure class="media media--3x2 wwd-detail__media" data-slot="04">
+          <figure class="media media--3x2 wwd-detail__media">
             <picture>
-              <source srcset="assets/images/04-coffee-800.webp 800w, assets/images/04-coffee.webp 1280w" sizes="(min-width: 48em) 40vw, 100vw" type="image/webp">
-              <img src="assets/images/04-coffee.jpg" width="1280" height="1024" loading="lazy" decoding="async"
-                   alt="Clusters of green coffee cherries on branches among broad leaves."
-                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Vishada vya matunda ya kahawa ya kijani kwenye matawi kati ya majani mapana."
-                   data-alt-ja="広い葉の間の枝に房になってついた緑色のコーヒーの実。">
+              <source srcset="assets/images/wwd-coffee-process-700.webp 700w, assets/images/wwd-coffee-process.webp 1200w" sizes="(min-width: 48em) 50vw, 100vw" type="image/webp">
+              <img src="assets/images/wwd-coffee-process.jpg" width="1200" height="800" loading="lazy" decoding="async"
+                   alt="Two cupped hands holding pale parchment coffee above a drying bed."
+                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Viganja viwili vikiwa vimeshika kahawa ya ganda juu ya kitanda cha kukaushia."
+                   data-alt-ja="乾燥棚の上で、パーチメントコーヒーをすくう両手。">
             </picture>
           </figure>
           <div class="wwd-detail__body">
-            <p class="chip"><span data-l="en" lang="en">Established core</span><span data-l="sw" lang="sw" data-review="draft">Shughuli kuu iliyoimarika</span><span data-l="ja" lang="ja" data-review="draft">確立した中核事業</span></p>
+            <p class="chip">Rainforest Alliance</p>
             <h3 class="wwd-detail__title"><span data-l="en" lang="en">Coffee</span><span data-l="sw" lang="sw" data-review="draft">Kahawa</span><span data-l="ja" lang="ja" data-review="draft">コーヒー</span></h3>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Overview</span><span data-l="sw" lang="sw" data-review="draft">Muhtasari</span><span data-l="ja" lang="ja" data-review="draft">概要</span></h4>
-              <p><span data-l="en" lang="en">Coffee is TANJA’s established core activity, grown on the estates around Karatu.</span><span data-l="sw" lang="sw" data-review="draft">Kahawa ndiyo shughuli kuu ya TANJA iliyoimarika, inayolimwa katika mashamba ya eneo la Karatu.</span><span data-l="ja" lang="ja" data-review="draft">コーヒーはTANJAの確立した中核事業で、カラトゥ周辺の農園で栽培されています。</span></p>
-            </div>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Growing &amp; processing</span><span data-l="sw" lang="sw" data-review="draft">Ukuzaji na Uchakataji</span><span data-l="ja" lang="ja" data-review="draft">栽培と加工</span></h4>
-              <p class="tbc" data-placeholder="coffee-growing-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
-            </div>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Status &amp; certification</span><span data-l="sw" lang="sw" data-review="draft">Hali na Uthibitisho</span><span data-l="ja" lang="ja" data-review="draft">現状と認証</span></h4>
-              <p class="tbc" data-placeholder="coffee-status-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
+              <h4><span data-l="en" lang="en">Key facts</span><span data-l="sw" lang="sw" data-review="draft">Mambo muhimu</span><span data-l="ja" lang="ja" data-review="draft">主な事実</span></h4>
+              <dl class="keyfacts">
+                <div><dt><span data-l="en" lang="en">Grown on</span><span data-l="sw" lang="sw" data-review="draft">Hulimwa</span><span data-l="ja" lang="ja" data-review="draft">栽培地</span></dt><dd><span data-l="en" lang="en">All three estates: Bergfrieden, Shah and Tinga Tinga</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yote matatu: Bergfrieden, Shah na Tinga Tinga</span><span data-l="ja" lang="ja" data-review="draft">3つの農園すべて（バーグフリーデン、シャー、ティンガティンガ）</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Processing</span><span data-l="sw" lang="sw" data-review="draft">Uchakataji</span><span data-l="ja" lang="ja" data-review="draft">精製方法</span></dt><dd><span data-l="en" lang="en">Fully washed, honey and natural</span><span data-l="sw" lang="sw" data-review="draft">Iliyooshwa kikamilifu (fully washed), honey na natural</span><span data-l="ja" lang="ja" data-review="draft">フルウォッシュド、ハニー、ナチュラル</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Main harvest</span><span data-l="sw" lang="sw" data-review="draft">Mavuno makuu</span><span data-l="ja" lang="ja" data-review="draft">主な収穫期</span></dt><dd><span data-l="en" lang="en">June to September</span><span data-l="sw" lang="sw" data-review="draft">Juni hadi Septemba</span><span data-l="ja" lang="ja" data-review="draft">6月〜9月</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Certification</span><span data-l="sw" lang="sw" data-review="draft">Cheti</span><span data-l="ja" lang="ja" data-review="draft">認証</span></dt><dd>Rainforest Alliance</dd></div>
+                <div><dt><span data-l="en" lang="en">In Japan</span><span data-l="sw" lang="sw" data-review="draft">Nchini Japani</span><span data-l="ja" lang="ja" data-review="draft">日本での販売</span></dt><dd><span data-l="en" lang="en">Imported and sold by the group company OSTI Japan</span><span data-l="sw" lang="sw" data-review="draft">Huagizwa na kuuzwa na kampuni dada ya OSTI Japan</span><span data-l="ja" lang="ja" data-review="draft">グループ会社のOSTI Japanが輸入・販売</span></dd></div>
+              </dl>
             </div>
           </div>
         </article>
 
+        <!-- Avocado: O-support 2026-04 (first trees planted 2023 bearing fruit; coffee cut-back stems used as stakes), O-ye2025 (reservoir
+             supplies the avocado fields), N (certification). -->
         <article class="wwd-detail" id="avocado">
-          <div class="media media--3x2 media--placeholder wwd-detail__media" data-slot="06" aria-hidden="true"><span class="media__slot">06</span><span class="media__ph-text"><span data-l="en" lang="en">Photo to be added</span><span data-l="sw" lang="sw" data-review="draft">Picha itaongezwa</span><span data-l="ja" lang="ja" data-review="draft">写真は追加予定</span></span></div>
+          <figure class="media media--3x2 wwd-detail__media">
+            <picture>
+              <source srcset="assets/images/01-hero-2-1200.webp" type="image/webp">
+              <img src="assets/images/01-hero-2-1200.jpg" width="1200" height="800" loading="lazy" decoding="async" style="--focal: 60% 45%"
+                   alt="A single green avocado hanging from a branch, with the orchard blurred behind."
+                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Parachichi moja la kijani likining’inia kwenye tawi, shamba likionekana kwa ukungu nyuma."
+                   data-alt-ja="枝から下がる一つの緑のアボカド。背景に果樹園がぼやけて写る。">
+            </picture>
+          </figure>
           <div class="wwd-detail__body">
-            <p class="chip"><span data-l="en" lang="en">Newer area</span><span data-l="sw" lang="sw" data-review="draft">Eneo jipya</span><span data-l="ja" lang="ja" data-review="draft">新しい分野</span></p>
+            <p class="chip">GLOBALG.A.P.</p>
             <h3 class="wwd-detail__title"><span data-l="en" lang="en">Avocado</span><span data-l="sw" lang="sw" data-review="draft">Parachichi</span><span data-l="ja" lang="ja" data-review="draft">アボカド</span></h3>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Overview</span><span data-l="sw" lang="sw" data-review="draft">Muhtasari</span><span data-l="ja" lang="ja" data-review="draft">概要</span></h4>
-              <p><span data-l="en" lang="en">Avocado is one of TANJA’s newer agricultural development areas.</span><span data-l="sw" lang="sw" data-review="draft">Parachichi ni mojawapo ya maeneo mapya ya kilimo yanayoendelezwa na TANJA.</span><span data-l="ja" lang="ja" data-review="draft">アボカドは、TANJAが新たに開発を進める農業分野のひとつです。</span></p>
-            </div>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">More detail</span><span data-l="sw" lang="sw" data-review="draft">Maelezo Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳細</span></h4>
-              <p class="tbc" data-placeholder="avocado-more-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
+              <h4><span data-l="en" lang="en">Key facts</span><span data-l="sw" lang="sw" data-review="draft">Mambo muhimu</span><span data-l="ja" lang="ja" data-review="draft">主な事実</span></h4>
+              <dl class="keyfacts">
+                <div><dt><span data-l="en" lang="en">First planted</span><span data-l="sw" lang="sw" data-review="draft">Upandaji wa kwanza</span><span data-l="ja" lang="ja" data-review="draft">最初の定植</span></dt><dd>2023</dd></div>
+                <div><dt><span data-l="en" lang="en">Stage</span><span data-l="sw" lang="sw" data-review="draft">Hatua</span><span data-l="ja" lang="ja" data-review="draft">現状</span></dt><dd><span data-l="en" lang="en">The first trees have begun to bear fruit (April 2026)</span><span data-l="sw" lang="sw" data-review="draft">Miti ya kwanza imeanza kuzaa matunda (Aprili 2026)</span><span data-l="ja" lang="ja" data-review="draft">最初に植えた木が実をつけ始めた（2026年4月）</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Water</span><span data-l="sw" lang="sw" data-review="draft">Maji</span><span data-l="ja" lang="ja" data-review="draft">水</span></dt><dd><span data-l="en" lang="en">From the farm’s reservoir, completed in 2025</span><span data-l="sw" lang="sw" data-review="draft">Kutoka bwawa la shamba, lililokamilika mwaka 2025</span><span data-l="ja" lang="ja" data-review="draft">2025年に完成した農園の貯水池から</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Young trees</span><span data-l="sw" lang="sw" data-review="draft">Miti michanga</span><span data-l="ja" lang="ja" data-review="draft">若木の支え</span></dt><dd><span data-l="en" lang="en">Staked with stems cut back from the coffee</span><span data-l="sw" lang="sw" data-review="draft">Hushikiliwa kwa vijiti vilivyokatwa kutoka kwenye kahawa</span><span data-l="ja" lang="ja" data-review="draft">コーヒーの剪定で出た幹を添え木に使用</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Certification</span><span data-l="sw" lang="sw" data-review="draft">Cheti</span><span data-l="ja" lang="ja" data-review="draft">認証</span></dt><dd>GLOBALG.A.P.</dd></div>
+              </dl>
             </div>
           </div>
         </article>
 
+        <!-- Macadamia: O-ye2025 (28,000 seedlings planted, 2025), O-support (young trees, still years from sale),
+             O-about (the OSTI group has grown macadamia in Rwanda since 2013). -->
         <article class="wwd-detail" id="macadamia">
-          <div class="media media--3x2 media--placeholder wwd-detail__media" data-slot="05" aria-hidden="true"><span class="media__slot">05</span><span class="media__ph-text"><span data-l="en" lang="en">Photo to be added</span><span data-l="sw" lang="sw" data-review="draft">Picha itaongezwa</span><span data-l="ja" lang="ja" data-review="draft">写真は追加予定</span></span></div>
+          <figure class="media media--3x2 wwd-detail__media">
+            <picture>
+              <source srcset="assets/images/05-macadamia.webp" type="image/webp">
+              <img src="assets/images/05-macadamia.jpg" width="476" height="595" loading="lazy" decoding="async"
+                   alt="Young macadamia trees planted in rows on a green field under a blue sky."
+                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Miti michanga ya makadamia iliyopandwa kwa safu kwenye shamba la kijani chini ya anga la buluu."
+                   data-alt-ja="青空の下、緑の畑に列をなして植えられたマカダミアの若木。">
+            </picture>
+          </figure>
           <div class="wwd-detail__body">
-            <p class="chip"><span data-l="en" lang="en">Newer area</span><span data-l="sw" lang="sw" data-review="draft">Eneo jipya</span><span data-l="ja" lang="ja" data-review="draft">新しい分野</span></p>
             <h3 class="wwd-detail__title"><span data-l="en" lang="en">Macadamia</span><span data-l="sw" lang="sw" data-review="draft">Makadamia</span><span data-l="ja" lang="ja" data-review="draft">マカダミア</span></h3>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Overview</span><span data-l="sw" lang="sw" data-review="draft">Muhtasari</span><span data-l="ja" lang="ja" data-review="draft">概要</span></h4>
-              <p><span data-l="en" lang="en">Macadamia is one of TANJA’s newer agricultural development areas.</span><span data-l="sw" lang="sw" data-review="draft">Makadamia ni mojawapo ya maeneo mapya ya kilimo yanayoendelezwa na TANJA.</span><span data-l="ja" lang="ja" data-review="draft">マカダミアは、TANJAが新たに開発を進める農業分野のひとつです。</span></p>
-            </div>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">More detail</span><span data-l="sw" lang="sw" data-review="draft">Maelezo Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳細</span></h4>
-              <p class="tbc" data-placeholder="macadamia-more-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
+              <h4><span data-l="en" lang="en">Key facts</span><span data-l="sw" lang="sw" data-review="draft">Mambo muhimu</span><span data-l="ja" lang="ja" data-review="draft">主な事実</span></h4>
+              <dl class="keyfacts">
+                <div><dt><span data-l="en" lang="en">Planted</span><span data-l="sw" lang="sw" data-review="draft">Imepandwa</span><span data-l="ja" lang="ja" data-review="draft">定植</span></dt><dd><span data-l="en" lang="en">28,000 seedlings, planting completed in 2025</span><span data-l="sw" lang="sw" data-review="draft">Miche 28,000, upandaji ulikamilika mwaka 2025</span><span data-l="ja" lang="ja" data-review="draft">苗木28,000本、2025年に定植完了</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Stage</span><span data-l="sw" lang="sw" data-review="draft">Hatua</span><span data-l="ja" lang="ja" data-review="draft">現状</span></dt><dd><span data-l="en" lang="en">Young trees; harvests are still some years away</span><span data-l="sw" lang="sw" data-review="draft">Miti michanga; mavuno bado yako miaka kadhaa mbele</span><span data-l="ja" lang="ja" data-review="draft">若木の段階で、収穫はまだ数年先</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Experience</span><span data-l="sw" lang="sw" data-review="draft">Uzoefu</span><span data-l="ja" lang="ja" data-review="draft">グループの経験</span></dt><dd><span data-l="en" lang="en">The OSTI group has grown macadamia in Rwanda since 2013</span><span data-l="sw" lang="sw" data-review="draft">Kundi la OSTI limelima makadamia nchini Rwanda tangu mwaka 2013</span><span data-l="ja" lang="ja" data-review="draft">OSTIグループは2013年からルワンダでマカダミアを栽培</span></dd></div>
+              </dl>
             </div>
           </div>
         </article>
 
+        <!-- Beekeeping: TANJA decks for visitors (NAS F4 slide 19, F5 slide 26: pollination of avocado and macadamia; migratory hives
+             that also pollinate neighbouring farms), TANJA Profile (F1: trial / initial stage). VERIFY the stage wording with the owner. -->
         <article class="wwd-detail" id="beekeeping">
-          <div class="media media--3x2 media--placeholder wwd-detail__media" data-slot="10" aria-hidden="true"><span class="media__slot">10</span><span class="media__ph-text"><span data-l="en" lang="en">Photo to be added</span><span data-l="sw" lang="sw" data-review="draft">Picha itaongezwa</span><span data-l="ja" lang="ja" data-review="draft">写真は追加予定</span></span></div>
+          <figure class="media media--3x2 wwd-detail__media">
+            <picture>
+              <source srcset="assets/images/10-beekeeping.webp" type="image/webp">
+              <img src="assets/images/10-beekeeping.jpg" width="640" height="800" loading="lazy" decoding="async"
+                   alt="A hive frame covered in honeybees, held above the hive boxes."
+                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Fremu ya mzinga iliyojaa nyuki, ikiwa imeinuliwa juu ya masanduku ya mizinga."
+                   data-alt-ja="巣箱の上に持ち上げられた、ミツバチがびっしりとついた巣枠。">
+            </picture>
+          </figure>
           <div class="wwd-detail__body">
             <h3 class="wwd-detail__title"><span data-l="en" lang="en">Beekeeping</span><span data-l="sw" lang="sw" data-review="draft">Ufugaji Nyuki</span><span data-l="ja" lang="ja" data-review="draft">養蜂</span></h3>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Overview</span><span data-l="sw" lang="sw" data-review="draft">Muhtasari</span><span data-l="ja" lang="ja" data-review="draft">概要</span></h4>
-              <p><span data-l="en" lang="en">Beekeeping is one of TANJA’s farm activities.</span><span data-l="sw" lang="sw" data-review="draft">Ufugaji nyuki ni mojawapo ya shughuli za shamba la TANJA.</span><span data-l="ja" lang="ja" data-review="draft">養蜂は、TANJAの農園活動のひとつです。</span></p>
-            </div>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">More detail</span><span data-l="sw" lang="sw" data-review="draft">Maelezo Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳細</span></h4>
-              <p class="tbc" data-placeholder="beekeeping-more-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
+              <h4><span data-l="en" lang="en">Key facts</span><span data-l="sw" lang="sw" data-review="draft">Mambo muhimu</span><span data-l="ja" lang="ja" data-review="draft">主な事実</span></h4>
+              <dl class="keyfacts">
+                <div><dt><span data-l="en" lang="en">Role</span><span data-l="sw" lang="sw" data-review="draft">Kazi yake</span><span data-l="ja" lang="ja" data-review="draft">役割</span></dt><dd><span data-l="en" lang="en">Pollinating the avocado and macadamia</span><span data-l="sw" lang="sw" data-review="draft">Kuchavusha parachichi na makadamia</span><span data-l="ja" lang="ja" data-review="draft">アボカドとマカダミアの受粉</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Method</span><span data-l="sw" lang="sw" data-review="draft">Mbinu</span><span data-l="ja" lang="ja" data-review="draft">方法</span></dt><dd><span data-l="en" lang="en">Hives that move between sites, which also helps pollinate neighbouring farms</span><span data-l="sw" lang="sw" data-review="draft">Mizinga inayohamishwa kati ya maeneo, jambo linalosaidia pia kuchavusha mashamba ya jirani</span><span data-l="ja" lang="ja" data-review="draft">巣箱を移動させる養蜂で、近隣農家の受粉にも役立てる</span></dd></div>
+                <div><dt><span data-l="en" lang="en">Stage</span><span data-l="sw" lang="sw" data-review="draft">Hatua</span><span data-l="ja" lang="ja" data-review="draft">現状</span></dt><dd><span data-l="en" lang="en">Early stage</span><span data-l="sw" lang="sw" data-review="draft">Hatua za mwanzo</span><span data-l="ja" lang="ja" data-review="draft">初期段階</span></dd></div>
+              </dl>
             </div>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- ============================================================ SUSTAINABILITY DETAIL -->
-    <section class="section tl-scope" id="sustainability-detail" aria-labelledby="sustainability-detail-title">
+    <!-- ================================================================ SUSTAINABILITY -->
+    <section class="detail-group tl-scope" aria-labelledby="sustainability-detail-title">
       <p class="tl-mark" role="note"><span data-l="en" lang="en">Draft translation</span><span data-l="sw" lang="sw" data-review="draft">Tafsiri ya rasimu</span><span data-l="ja" lang="ja" data-review="draft">翻訳は下書き</span></p>
       <div class="container">
         <h2 class="group__title" id="sustainability-detail-title"><span data-l="en" lang="en">Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">サステナビリティ</span></h2>
 
+        <!-- Carbon Credit: O-ics 2024-08 (three-stone fire, ICS project, stakeholder meeting 2024-07-26, 100+ participants, certification
+             "planned"), O-ny2026 (freeing women from daily firewood collection), O-solar 2025-07 (solar PPA). Credits: never claim any. -->
         <article class="wwd-detail" id="carbon">
-          <div class="media media--3x2 media--placeholder wwd-detail__media" data-slot="07" aria-hidden="true"><span class="media__slot">07</span><span class="media__ph-text"><span data-l="en" lang="en">Photo to be added</span><span data-l="sw" lang="sw" data-review="draft">Picha itaongezwa</span><span data-l="ja" lang="ja" data-review="draft">写真は追加予定</span></span></div>
+          <figure class="media media--3x2 wwd-detail__media">
+            <picture>
+              <source srcset="assets/images/07-carbon-700.webp 700w, assets/images/07-carbon.webp 1100w" sizes="(min-width: 48em) 50vw, 100vw" type="image/webp">
+              <img src="assets/images/07-carbon.jpg" width="1100" height="733" loading="lazy" decoding="async"
+                   alt="Green forest on the hills around the farm."
+                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Msitu wa kijani kwenye vilima vinavyozunguka shamba."
+                   data-alt-ja="農園を囲む丘の緑の森。">
+            </picture>
+          </figure>
           <div class="wwd-detail__body">
-            <h3 class="wwd-detail__title"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Mkopo wa Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></h3>
+            <h3 class="wwd-detail__title"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Hati za Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></h3>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Overview</span><span data-l="sw" lang="sw" data-review="draft">Muhtasari</span><span data-l="ja" lang="ja" data-review="draft">概要</span></h4>
-              <p><span data-l="en" lang="en">Carbon Credit is one of TANJA’s project areas.</span><span data-l="sw" lang="sw" data-review="draft">Mkopo wa Kaboni ni mojawapo ya maeneo ya miradi ya TANJA.</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジットは、TANJAのプロジェクト分野のひとつです。</span></p>
+              <h4><span data-l="en" lang="en">The project</span><span data-l="sw" lang="sw" data-review="draft">Mradi</span><span data-l="ja" lang="ja" data-review="draft">プロジェクト</span></h4>
+              <p><span data-l="en" lang="en">Most rural households here cook on a three-stone fire, which burns a great deal of firewood. The smoke harms eyes and lungs, and collecting wood is heavy daily work that falls mostly on women. TANJA’s project aims to bring improved cookstoves to households around the farm: they need far less wood, which means less smoke, less CO₂ and less pressure on the forest.</span><span data-l="sw" lang="sw" data-review="draft">Kaya nyingi za vijijini hapa hupika kwa jiko la mafiga matatu, linalotumia kuni nyingi sana. Moshi huathiri macho na mapafu, na kutafuta kuni ni kazi nzito ya kila siku ambayo kwa kiasi kikubwa hufanywa na wanawake. Mradi wa TANJA unalenga kusambaza majiko banifu kwa kaya zinazozunguka shamba: yanahitaji kuni kidogo sana, hivyo moshi mdogo, hewa ukaa (CO₂) kidogo na shinikizo dogo kwa misitu.</span><span data-l="ja" lang="ja" data-review="draft">このあたりの農村では、多くの家庭が三石かまどで調理しており、大量の薪を使います。煙は目や呼吸器を傷め、毎日の薪集めは主に女性が担う重い仕事です。TANJAのプロジェクトは、農園の周りの家庭に改良型のかまどを広めるものです。薪がずっと少なくて済むため、煙もCO₂も減り、森への負担も軽くなります。</span></p>
             </div>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">More detail</span><span data-l="sw" lang="sw" data-review="draft">Maelezo Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳細</span></h4>
-              <p class="tbc" data-placeholder="carbon-more-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
+              <h4><span data-l="en" lang="en">Listening first</span><span data-l="sw" lang="sw" data-review="draft">Kusikiliza kwanza</span><span data-l="ja" lang="ja" data-review="draft">地域の声を聞く</span></h4>
+              <p><span data-l="en" lang="en">In July 2024, TANJA held a stakeholder meeting on the project in Karatu District. More than 100 people took part, including regional and ward officials, village leaders, women’s groups and NGOs.</span><span data-l="sw" lang="sw" data-review="draft">Julai 2024, TANJA ilifanya mkutano wa wadau kuhusu mradi huu katika Wilaya ya Karatu. Zaidi ya watu 100 walishiriki, wakiwemo maafisa wa mkoa na kata, viongozi wa vijiji, vikundi vya wanawake na mashirika yasiyo ya kiserikali.</span><span data-l="ja" lang="ja" data-review="draft">2024年7月、TANJAはカラトゥ県でこのプロジェクトのステークホルダー会議を開きました。州や区の行政関係者、村の代表、女性グループ、NGOなど、100人を超える人が参加しました。</span></p>
+            </div>
+            <div class="wwd-detail__section">
+              <h4><span data-l="en" lang="en">Status</span><span data-l="sw" lang="sw" data-review="draft">Hali</span><span data-l="ja" lang="ja" data-review="draft">現状</span></h4>
+              <p><span data-l="en" lang="en">As of late 2025, the project was being set up with the aim of obtaining carbon credits.</span><span data-l="sw" lang="sw" data-review="draft">Kufikia mwishoni mwa 2025, mradi ulikuwa ukiandaliwa kwa lengo la kupata hati za kaboni.</span><span data-l="ja" lang="ja" data-review="draft">2025年末の時点では、カーボンクレジットの取得を目指してプロジェクトを組み立てている段階でした。</span></p>
+            </div>
+            <div class="wwd-detail__section">
+              <h4><span data-l="en" lang="en">Clean energy on the farm</span><span data-l="sw" lang="sw" data-review="draft">Nishati safi shambani</span><span data-l="ja" lang="ja" data-review="draft">農園の再生可能エネルギー</span></h4>
+              <p><span data-l="en" lang="en">Since July 2025, solar panels and battery storage on the farm have supplied power under a ten-year on-site agreement, so that frequent power cuts no longer stop coffee processing.</span><span data-l="sw" lang="sw" data-review="draft">Tangu Julai 2025, paneli za jua na betri za kuhifadhi umeme shambani zimekuwa zikitoa umeme chini ya mkataba wa miaka kumi, ili kukatika kwa umeme mara kwa mara kusisimamishe tena uchakataji wa kahawa.</span><span data-l="ja" lang="ja" data-review="draft">2025年7月からは、農園に設置した太陽光パネルと蓄電池が、10年契約のオンサイトPPAで電力を供給しています。頻繁な停電でコーヒーの加工が止まる事態を防ぐための設備です。</span></p>
             </div>
           </div>
         </article>
 
+        <!-- Lunch: NAS F11 / F10 (reasons, two secondary schools, every student, 2024–25 and 2025–26), F4 slide 22 (primary schools
+             planned for 2026), F16 / F5 slide 28 (worker lunch: porridge and makande). Partner NOT named (VERIFY with TANJA). -->
         <article class="wwd-detail" id="school">
-          <div class="media media--3x2 media--placeholder wwd-detail__media" data-slot="08" aria-hidden="true"><span class="media__slot">08</span><span class="media__ph-text"><span data-l="en" lang="en">Photo to be added</span><span data-l="sw" lang="sw" data-review="draft">Picha itaongezwa</span><span data-l="ja" lang="ja" data-review="draft">写真は追加予定</span></span></div>
+          <figure class="media media--3x2 wwd-detail__media">
+            <picture>
+              <source srcset="assets/images/08-lunch-700.webp 700w, assets/images/08-lunch.webp 1000w" sizes="(min-width: 48em) 50vw, 100vw" type="image/webp">
+              <img src="assets/images/08-lunch.jpg" width="1000" height="667" loading="lazy" decoding="async" style="--focal: 60% 55%"
+                   alt="An open hand holding white maize kernels."
+                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Kiganja kilichofunguliwa kikiwa na punje za mahindi meupe."
+                   data-alt-ja="白いトウモロコシの粒をのせた手のひら。">
+            </picture>
+          </figure>
           <div class="wwd-detail__body">
             <h3 class="wwd-detail__title"><span data-l="en" lang="en">Lunch</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana</span><span data-l="ja" lang="ja" data-review="draft">ランチ</span></h3>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Overview</span><span data-l="sw" lang="sw" data-review="draft">Muhtasari</span><span data-l="ja" lang="ja" data-review="draft">概要</span></h4>
-              <p><span data-l="en" lang="en">Lunch is one of TANJA’s project areas.</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana ni mojawapo ya maeneo ya miradi ya TANJA.</span><span data-l="ja" lang="ja" data-review="draft">ランチは、TANJAのプロジェクト分野のひとつです。</span></p>
+              <h4><span data-l="en" lang="en">Why</span><span data-l="sw" lang="sw" data-review="draft">Kwa nini</span><span data-l="ja" lang="ja" data-review="draft">背景</span></h4>
+              <p><span data-l="en" lang="en">In public secondary schools here, school meals depend on what parents can pay, and after a dry year many families could not cover them. The young people who will shape this area’s future should be able to concentrate on learning.</span><span data-l="sw" lang="sw" data-review="draft">Katika shule za sekondari za umma hapa, chakula cha shule hutegemea uwezo wa wazazi kulipa, na baada ya mwaka wa ukame familia nyingi hazikuweza kumudu. Vijana watakaojenga mustakabali wa eneo hili wanapaswa kuweza kujikita katika masomo.</span><span data-l="ja" lang="ja" data-review="draft">この地域の公立中等学校では、給食を保護者の負担に頼っています。雨の少ない年には、多くの家庭が負担しきれませんでした。この地域の将来を担う子どもたちが、学ぶことに集中できる環境をつくるのが目的です。</span></p>
             </div>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">More detail</span><span data-l="sw" lang="sw" data-review="draft">Maelezo Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳細</span></h4>
-              <p class="tbc" data-placeholder="school-more-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
+              <h4><span data-l="en" lang="en">What we do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">取り組み</span></h4>
+              <p><span data-l="en" lang="en">TANJA and a partner company have provided lunch for every student at the two secondary schools near the farm, in the 2024–25 and 2025–26 school periods. Support for primary schools is planned next.</span><span data-l="sw" lang="sw" data-review="draft">TANJA pamoja na kampuni mshirika zimetoa chakula cha mchana kwa wanafunzi wote wa shule mbili za sekondari zilizo jirani na shamba, katika vipindi vya 2024–25 na 2025–26. Msaada kwa shule za msingi umepangwa kufuata.</span><span data-l="ja" lang="ja" data-review="draft">農園の近くにある2つの中等学校で、2024〜25年と2025〜26年の期間、協力企業とともに全校生徒に給食を届けました。次の対象として、小学校への支援を計画中です。</span></p>
+              <p><span data-l="en" lang="en">On the farm itself, workers are now served a daily meal of porridge and makande.</span><span data-l="sw" lang="sw" data-review="draft">Shambani kwenyewe, wafanyakazi sasa hupewa mlo wa kila siku wa uji na makande.</span><span data-l="ja" lang="ja" data-review="draft">いま農園で働く人たちに毎日出している食事は、ポリッジ（粥）とマカンデ（トウモロコシと豆の煮込み）です。</span></p>
             </div>
           </div>
         </article>
 
+        <!-- Cattle: NAS F15 (purpose: herd productivity, breeding, calf care; manure applied to avocado and coffee fields), F1 slide 9 and
+             F4 slide 19 (meat, milk, biogas — plans). No herd numbers (sources conflict). -->
         <article class="wwd-detail" id="cattle">
-          <div class="media media--3x2 media--placeholder wwd-detail__media" data-slot="11" aria-hidden="true"><span class="media__slot">11</span><span class="media__ph-text"><span data-l="en" lang="en">Photo to be added</span><span data-l="sw" lang="sw" data-review="draft">Picha itaongezwa</span><span data-l="ja" lang="ja" data-review="draft">写真は追加予定</span></span></div>
+          <figure class="media media--3x2 wwd-detail__media">
+            <picture>
+              <source srcset="assets/images/11-cattle-700.webp 700w, assets/images/11-cattle.webp 1100w" sizes="(min-width: 48em) 50vw, 100vw" type="image/webp">
+              <img src="assets/images/11-cattle.jpg" width="1100" height="733" loading="lazy" decoding="async"
+                   alt="A cow standing on bare ground beside a wooden shed."
+                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Ng’ombe amesimama kwenye ardhi tupu kando ya banda la mbao."
+                   data-alt-ja="木の小屋のそばの土の上に立つ牛。">
+            </picture>
+          </figure>
           <div class="wwd-detail__body">
             <h3 class="wwd-detail__title"><span data-l="en" lang="en">Cattle</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe</span><span data-l="ja" lang="ja" data-review="draft">牛</span></h3>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Overview</span><span data-l="sw" lang="sw" data-review="draft">Muhtasari</span><span data-l="ja" lang="ja" data-review="draft">概要</span></h4>
-              <p><span data-l="en" lang="en">Cattle is one of TANJA’s project areas.</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe ni mojawapo ya maeneo ya miradi ya TANJA.</span><span data-l="ja" lang="ja" data-review="draft">牛は、TANJAのプロジェクト分野のひとつです。</span></p>
+              <h4><span data-l="en" lang="en">Today</span><span data-l="sw" lang="sw" data-review="draft">Leo</span><span data-l="ja" lang="ja" data-review="draft">いま</span></h4>
+              <p><span data-l="en" lang="en">TANJA keeps a herd of cattle and works on breeding and calf care. Their manure is composted and goes back to the avocado and coffee fields.</span><span data-l="sw" lang="sw" data-review="draft">TANJA inafuga kundi la ng’ombe na inashughulikia uzalishaji na utunzaji wa ndama. Samadi yao huozeshwa kuwa mbolea na kurudishwa kwenye mashamba ya parachichi na kahawa.</span><span data-l="ja" lang="ja" data-review="draft">TANJAでは牛を飼育し、繁殖と子牛の世話に取り組んでいます。牛ふんは堆肥にして、アボカドやコーヒーの畑に戻しています。</span></p>
             </div>
             <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">More detail</span><span data-l="sw" lang="sw" data-review="draft">Maelezo Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳細</span></h4>
-              <p class="tbc" data-placeholder="cattle-more-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
+              <h4><span data-l="en" lang="en">Next</span><span data-l="sw" lang="sw" data-review="draft">Kinachofuata</span><span data-l="ja" lang="ja" data-review="draft">これから</span></h4>
+              <p><span data-l="en" lang="en">Meat, milk and biogas are at the planning stage.</span><span data-l="sw" lang="sw" data-review="draft">Nyama, maziwa na biogesi bado ziko katika hatua ya mipango.</span><span data-l="ja" lang="ja" data-review="draft">肉や牛乳、バイオガスへの活用は計画段階です。</span></p>
             </div>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- =================================================================== CAFE DETAIL -->
-    <section class="section tl-scope" id="cafe-detail" aria-labelledby="cafe-detail-title">
+    <!-- ================================================================ CAFE -->
+    <section class="detail-group tl-scope" aria-labelledby="cafe-detail-title">
       <p class="tl-mark" role="note"><span data-l="en" lang="en">Draft translation</span><span data-l="sw" lang="sw" data-review="draft">Tafsiri ya rasimu</span><span data-l="ja" lang="ja" data-review="draft">翻訳は下書き</span></p>
       <div class="container">
         <h2 class="group__title" id="cafe-detail-title"><span data-l="en" lang="en">Cafe</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></h2>
-        <!-- No public description exists yet — see docs/CONTENT_GAPS_2026-09-25.md. Title + placeholder only, matching the homepage. -->
-        <article class="wwd-detail" id="cafe">
-          <div class="media media--4x3 media--placeholder wwd-detail__media" data-slot="12" aria-hidden="true"><span class="media__slot">12</span><span class="media__ph-text"><span data-l="en" lang="en">Photo to be added</span><span data-l="sw" lang="sw" data-review="draft">Picha itaongezwa</span><span data-l="ja" lang="ja" data-review="draft">写真は追加予定</span></span></div>
+        <article class="wwd-detail" id="cafe" style="border-top: 0">
+          <div class="cafe__panel wwd-detail__media">
+            <p class="cafe__title" aria-hidden="true"><span data-l="en" lang="en">Café</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></p>
+          </div>
           <div class="wwd-detail__body">
-            <div class="wwd-detail__section">
-              <p class="tbc" data-placeholder="cafe-more-details"><span data-l="en" lang="en">Details to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は確認中です。</span></p>
-            </div>
+            <h3 class="wwd-detail__title"><span data-l="en" lang="en">Cafe</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></h3>
+            <p class="tbc"><span data-l="en" lang="en">Details will be shared here.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo yatatolewa hapa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は、決まりしだいこちらでお知らせします。</span></p>
           </div>
         </article>
       </div>
     </section>
   </main>
 
-  <!-- ===================================================================== FOOTER (same as index.html; nav hrefs point back to index.html's sections) -->
   <footer class="site-footer tl-scope">
     <p class="tl-mark" role="note"><span data-l="en" lang="en">Draft translation</span><span data-l="sw" lang="sw" data-review="draft">Tafsiri ya rasimu</span><span data-l="ja" lang="ja" data-review="draft">翻訳は下書き</span></p>
     <div class="container site-footer__grid">
-      <p class="brand__mark site-footer__brand">TANJA</p>
-      <nav class="site-footer__nav" aria-labelledby="nav-footer-label" data-mirror-nav="#site-nav">
-        <span class="visually-hidden" id="nav-footer-label"><span data-l="en" lang="en">Footer</span><span data-l="sw" lang="sw" data-review="draft">Menyu ya chini</span><span data-l="ja" lang="ja" data-review="draft">フッターメニュー</span></span>
-        <ul>
-          <li><a href="index.html#about"><span data-l="en" lang="en">About</span><span data-l="sw" lang="sw" data-review="draft">Kuhusu Sisi</span><span data-l="ja" lang="ja" data-review="draft">TANJAについて</span></a></li>
-          <li><a href="what-we-do.html"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></a></li>
-          <li><a href="index.html#career"><span data-l="en" lang="en">Career</span><span data-l="sw" lang="sw" data-review="draft">Ajira</span><span data-l="ja" lang="ja" data-review="draft">キャリア</span></a></li>
-          <li><a href="index.html#contact"><span data-l="en" lang="en">Contact</span><span data-l="sw" lang="sw" data-review="draft">Wasiliana Nasi</span><span data-l="ja" lang="ja" data-review="draft">お問い合わせ</span></a></li>
-        </ul>
-      </nav>
+      <div>
+        <p class="site-footer__brand">TANJA</p>
+        <p class="site-footer__place"><span data-l="en" lang="en">Karatu District, Arusha Region, Tanzania</span><span data-l="sw" lang="sw" data-review="draft">Wilaya ya Karatu, Mkoa wa Arusha, Tanzania</span><span data-l="ja" lang="ja" data-review="draft">タンザニア アルーシャ州カラトゥ県</span></p>
+      </div>
       <div class="site-footer__tools">
-        <div class="lang" role="group" aria-label="Language / Lugha / 言語">
-          <button type="button" class="lang__btn" data-set-lang="en" lang="en" aria-label="English" aria-pressed="true">EN</button>
-          <button type="button" class="lang__btn" data-set-lang="sw" lang="sw" aria-label="Kiswahili" aria-pressed="false">SW</button>
-          <button type="button" class="lang__btn" data-set-lang="ja" lang="ja" aria-label="JP 日本語" aria-pressed="false">JP</button>
+        <nav class="site-footer__nav" aria-labelledby="nav-footer-label" data-mirror-nav="#site-nav">
+          <span class="visually-hidden" id="nav-footer-label"><span data-l="en" lang="en">Footer</span><span data-l="sw" lang="sw" data-review="draft">Menyu ya chini</span><span data-l="ja" lang="ja" data-review="draft">フッターメニュー</span></span>
+          <ul>
+            <li><a href="index.html#about"><span data-l="en" lang="en">About</span><span data-l="sw" lang="sw" data-review="draft">Kuhusu Sisi</span><span data-l="ja" lang="ja" data-review="draft">TANJAについて</span></a></li>
+            <li><a href="what-we-do.html"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></a></li>
+            <li><a href="index.html#career"><span data-l="en" lang="en">Career</span><span data-l="sw" lang="sw" data-review="draft">Ajira</span><span data-l="ja" lang="ja" data-review="draft">キャリア</span></a></li>
+            <li><a href="index.html#contact"><span data-l="en" lang="en">Contact</span><span data-l="sw" lang="sw" data-review="draft">Wasiliana Nasi</span><span data-l="ja" lang="ja" data-review="draft">お問い合わせ</span></a></li>
+          </ul>
+        </nav>
+        <div class="lang lang--up" data-lang-menu>
+          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list-foot" aria-label="EN — Language / Lugha / 言語">
+            <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="lang__code" aria-hidden="true">EN</span><svg class="icon lang__chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </button>
+          <ul class="lang__list" id="nav-lang-list-foot" hidden>
+            <li><button type="button" class="lang__opt" data-set-lang="en" lang="en" aria-pressed="true"><span class="lang__name">English</span><small>EN</small></button></li>
+            <li><button type="button" class="lang__opt" data-set-lang="sw" lang="sw" aria-pressed="false"><span class="lang__name">Kiswahili</span><small>SW</small></button></li>
+            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li>
+          </ul>
         </div>
         <ul class="social social--icons" role="list">
           <li><button type="button" class="social__icon" disabled><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg><span class="visually-hidden">Instagram <span data-l="en" lang="en">(link to be confirmed)</span><span data-l="sw" lang="sw" data-review="draft">(kiungo kinathibitishwa)</span><span data-l="ja" lang="ja" data-review="draft">（リンクは確認中）</span></span></button></li>
           <li><button type="button" class="social__icon" disabled><svg class="icon" aria-hidden="true"><use href="#i-facebook"/></svg><span class="visually-hidden">Facebook <span data-l="en" lang="en">(link to be confirmed)</span><span data-l="sw" lang="sw" data-review="draft">(kiungo kinathibitishwa)</span><span data-l="ja" lang="ja" data-review="draft">（リンクは確認中）</span></span></button></li>
         </ul>
       </div>
-      <p class="site-footer__legal" data-placeholder="copyright">© 2026 TANJA Corporation Limited</p>
+      <p class="site-footer__legal">© 2026 TANJA Corporation Limited</p>
     </div>
   </footer>
 </body>
