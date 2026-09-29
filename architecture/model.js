@@ -735,13 +735,10 @@ window.OBJECT_MODEL = {
         "mock": "company",
         "h": 200,
         "htmlId": "our-company",
-        "component": ".about（本文｜写真の非対称）＋ .facts",
+        "component": ".about（本文｜写真の非対称）＋ .estates",
         "slot": "02",
         "slotField": "photo",
-        "placeholders": [
-          "name-meaning"
-        ],
-        "note": "≥1024pxで本文（5列）｜写真（右の窓の端まで）。<1024pxは本文の下に写真。導入の一文を大きく、残りを本文に。事実は表でなく注記の並び（会社名・名前の意味・開始・所在地）"
+        "note": "≥1024pxで本文（5列）｜写真（右の窓の端まで）。<1024pxは本文の下に写真。導入の一文を大きく、残りを本文に。数字の列と会社情報の表は2026-09-29に削除（3つの農園は残す）。社名の由来はどの資料にもなく、書かない"
       },
       "concept": {
         "domain": "company",

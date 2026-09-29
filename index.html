@@ -44,7 +44,9 @@
   HOW THIS FILE IS ORGANISED (read before editing)
   - One page, five visible sections in this order: Home (Hero) → About → What We Do → Career → Contact. Unchanged by the redesign.
     What We Do has three branches: Farm (Coffee, Avocado, Macadamia, Beekeeping), Sustainability (Carbon Credit, Lunch, Cattle,
-    extensible) and Cafe. Every item links to its section on what-we-do.html.
+    extensible) and Cafe. The items are NOT linked to what-we-do.html for now (user instruction 2026-09-29, after the team meeting). To re-link, wrap each
+    title in <a href="what-we-do.html#coffee"> (ids: coffee, avocado, macadamia, beekeeping, carbon, school, cattle, cafe) and restore the
+    "Read more" link under the What We Do lede; the CSS for both is still in styles.css (.crop__title a, .project__title a, .more, .crop__go).
   - FARM uses ONE overall introduction, not one description per crop: requested 2026-09-29 by Naoaki (production owner) with the
     exact wording to publish. The English text is his, verbatim. Do not edit it without him. SW / JP are draft translations.
   - COPY SOURCES: every factual sentence is traced in docs/COPY_DECK.md (English) / docs/COPY_DECK_JA.md (Japanese).
@@ -272,20 +274,9 @@
           <figcaption><span data-l="en" lang="en">The road into the farm</span><span data-l="sw" lang="sw" data-review="draft">Barabara ya kuingia shambani</span><span data-l="ja" lang="ja" data-review="draft">農園へ続く道</span></figcaption>
         </figure>
 
-        <!-- APPROVAL (VERIFY): figures from public OSTI pages (docs/COPY_DECK.md). Sources disagree on the employee count (500+ / 550+ / 660),
-             so the most conservative public figure is shown. PLACEHOLDER: the meaning of the name "TANJA" is not in any source; do not guess. -->
-        <dl class="figures" data-reveal-group>
-          <div class="fact"><dt><span data-l="en" lang="en">Started</span><span data-l="sw" lang="sw" data-review="draft">Ilianza</span><span data-l="ja" lang="ja" data-review="draft">事業開始</span></dt><dd class="fact__value">2023</dd></div>
-          <div class="fact"><dt><span data-l="en" lang="en">Farm land (approx.)</span><span data-l="sw" lang="sw" data-review="draft">Eneo la shamba (takriban)</span><span data-l="ja" lang="ja" data-review="draft">農園面積（約）</span></dt><dd class="fact__value">1,760<small>ha</small></dd></div>
-          <div class="fact"><dt><span data-l="en" lang="en">Elevation</span><span data-l="sw" lang="sw" data-review="draft">Mwinuko</span><span data-l="ja" lang="ja" data-review="draft">標高</span></dt><dd class="fact__value fact__value--range">1,370–1,840<small>m</small></dd></div>
-          <div class="fact"><dt><span data-l="en" lang="en">People at work</span><span data-l="sw" lang="sw" data-review="draft">Wafanyakazi</span><span data-l="ja" lang="ja" data-review="draft">働く人</span></dt><dd class="fact__value">500+</dd></div>
-        </dl>
-        <dl class="facts-list">
-          <div><dt><span data-l="en" lang="en">Company</span><span data-l="sw" lang="sw" data-review="draft">Kampuni</span><span data-l="ja" lang="ja" data-review="draft">会社名</span></dt><dd>TANJA Corporation Limited</dd></div>
-          <div><dt><span data-l="en" lang="en">Location</span><span data-l="sw" lang="sw" data-review="draft">Mahali</span><span data-l="ja" lang="ja" data-review="draft">所在地</span></dt><dd><span data-l="en" lang="en">Karatu District, Arusha Region, Tanzania</span><span data-l="sw" lang="sw" data-review="draft">Wilaya ya Karatu, Mkoa wa Arusha, Tanzania</span><span data-l="ja" lang="ja" data-review="draft">タンザニア アルーシャ州カラトゥ県</span></dd></div>
-          <div><dt><span data-l="en" lang="en">Name meaning</span><span data-l="sw" lang="sw" data-review="draft">Maana ya jina</span><span data-l="ja" lang="ja" data-review="draft">社名の由来</span></dt><dd data-placeholder="name-meaning"><span data-l="en" lang="en">Official wording to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maneno rasmi bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">正式な文言は確認中です。</span></dd></div>
-          <div><dt><span data-l="en" lang="en">Crops</span><span data-l="sw" lang="sw" data-review="draft">Mazao</span><span data-l="ja" lang="ja" data-review="draft">作物</span></dt><dd><span data-l="en" lang="en">Coffee, avocado, macadamia; bees</span><span data-l="sw" lang="sw" data-review="draft">Kahawa, parachichi, makadamia; nyuki</span><span data-l="ja" lang="ja" data-review="draft">コーヒー、アボカド、マカダミア、養蜂</span></dd></div>
-        </dl>
+        <!-- REMOVED 2026-09-29 (user instruction): the row of key figures (2023 / ~1,760 ha / 1,370-1,840 m / 500+) and the company facts
+             list (company, location, name meaning, crops). The figures still appear in docs/COPY_DECK.md if they are wanted again.
+             PLACEHOLDER kept in mind: the meaning of the name "TANJA" is in no source; do not guess. -->
 
         <!-- The three estates (OSTI "Our Farms — Tanzania" page, public). Spelling "Bergfrieden" follows OSTI and the NAS block maps; VERIFY. -->
         <div class="estates">
@@ -330,7 +321,6 @@
           <h2 class="section__title" id="wwd-title"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></h2>
         </div>
         <p class="wwd__lede"><span data-l="en" lang="en">Our work spans the farm, sustainability projects with our neighbours, and a café.</span><span data-l="sw" lang="sw" data-review="draft">Kazi zetu zinajumuisha shamba, miradi ya uendelevu pamoja na majirani zetu, na mkahawa.</span><span data-l="ja" lang="ja" data-review="draft">農園での生産、地域とともに進めるサステナビリティ・プロジェクト、そしてカフェ。</span></p>
-        <p class="wwd__more"><a class="more" href="what-we-do.html"><span data-l="en" lang="en">Read more about our work</span><span data-l="sw" lang="sw" data-review="draft">Soma zaidi kuhusu kazi zetu</span><span data-l="ja" lang="ja" data-review="draft">事業内容の詳細を見る</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
       </div>
 
       <!-- ---------------------------------------------------- FARM
@@ -340,7 +330,7 @@
         <h3 class="group__title"><span data-l="en" lang="en">Farm</span><span data-l="sw" lang="sw" data-review="draft">Shamba</span><span data-l="ja" lang="ja" data-review="draft">農園</span></h3>
 
         <div class="farm-intro" data-reveal>
-          <p class="statement"><span data-l="en" lang="en">Our farms have a history spanning more than a century and lie on the edge of Ngorongoro, where we share water sources with wildlife. Drawing on this heritage and rich natural surroundings, we grow coffee, avocados and macadamias, and keep bees.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu yana historia ya zaidi ya karne moja na yako pembezoni mwa Ngorongoro, ambapo tunashiriki vyanzo vya maji na wanyamapori. Tukitegemea urithi huu na mazingira haya tajiri ya asili, tunalima kahawa, parachichi na makadamia, na tunafuga nyuki.</span><span data-l="ja" lang="ja" data-review="draft">私たちの農園はンゴロンゴロのほとりに広がり、100年を超える歴史をもちます。水源は野生動物と分かち合うものです。受け継いだ歴史と豊かな自然を生かし、コーヒー、アボカド、マカダミアを育て、ミツバチを飼っています。</span></p>
+          <p class="statement"><span data-l="en" lang="en">Our farms have a history spanning more than a century and lie on the edge of Ngorongoro. Drawing on this history and rich natural surroundings, we grow coffee, avocados and macadamias, and keep bees.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu yana historia ya zaidi ya karne moja na yako pembezoni mwa Ngorongoro. Tukitegemea historia hii na mazingira haya tajiri ya asili, tunalima kahawa, parachichi na makadamia, na tunafuga nyuki.</span><span data-l="ja" lang="ja" data-review="draft">私たちの農園はンゴロンゴロのほとりに広がり、100年を超える歴史をもちます。受け継いだ歴史と豊かな自然を生かし、コーヒー、アボカド、マカダミアを育て、ミツバチを飼っています。</span></p>
           <div class="farm-intro__body">
             <p><span data-l="en" lang="en">Our coffee farms hold Rainforest Alliance certification, and our avocado farms hold GLOBALG.A.P. certification.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu ya kahawa yana cheti cha Rainforest Alliance, na mashamba yetu ya parachichi yana cheti cha GLOBALG.A.P.</span><span data-l="ja" lang="ja" data-review="draft">認証は、コーヒー農園がレインフォレスト・アライアンス、アボカド農園がGLOBALG.A.P.です。</span></p>
             <p><span data-l="en" lang="en">We aim to care for the environment, support the wellbeing of the people who work here, and bring joy to those who enjoy the harvests of this rich land.</span><span data-l="sw" lang="sw" data-review="draft">Tunalenga kutunza mazingira, kusaidia ustawi wa watu wanaofanya kazi hapa, na kuleta furaha kwa wale wanaofurahia mavuno ya ardhi hii tajiri.</span><span data-l="ja" lang="ja" data-review="draft">目指すのは、環境を守り、ここで働く人々のウェルビーイングを支え、この豊かな土地の実りを味わう人々に喜びを届けることです。</span></p>
@@ -360,8 +350,7 @@
             </figure>
             <p class="chip">Rainforest Alliance</p>
             <div class="crop__body">
-              <h4 class="crop__title"><a href="what-we-do.html#coffee"><span data-l="en" lang="en">Coffee</span><span data-l="sw" lang="sw" data-review="draft">Kahawa</span><span data-l="ja" lang="ja" data-review="draft">コーヒー</span></a></h4>
-              <p class="crop__go" aria-hidden="true"><span data-l="en" lang="en">More</span><span data-l="sw" lang="sw" data-review="draft">Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳しく</span><svg class="icon"><use href="#i-arrow"/></svg></p>
+              <h4 class="crop__title"><span data-l="en" lang="en">Coffee</span><span data-l="sw" lang="sw" data-review="draft">Kahawa</span><span data-l="ja" lang="ja" data-review="draft">コーヒー</span></h4>
             </div>
           </article>
           <article class="crop" id="avocado">
@@ -376,8 +365,7 @@
             </figure>
             <p class="chip">GLOBALG.A.P.</p>
             <div class="crop__body">
-              <h4 class="crop__title"><a href="what-we-do.html#avocado"><span data-l="en" lang="en">Avocado</span><span data-l="sw" lang="sw" data-review="draft">Parachichi</span><span data-l="ja" lang="ja" data-review="draft">アボカド</span></a></h4>
-              <p class="crop__go" aria-hidden="true"><span data-l="en" lang="en">More</span><span data-l="sw" lang="sw" data-review="draft">Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳しく</span><svg class="icon"><use href="#i-arrow"/></svg></p>
+              <h4 class="crop__title"><span data-l="en" lang="en">Avocado</span><span data-l="sw" lang="sw" data-review="draft">Parachichi</span><span data-l="ja" lang="ja" data-review="draft">アボカド</span></h4>
             </div>
           </article>
           <article class="crop" id="macadamia">
@@ -391,8 +379,7 @@
               </picture>
             </figure>
             <div class="crop__body">
-              <h4 class="crop__title"><a href="what-we-do.html#macadamia"><span data-l="en" lang="en">Macadamia</span><span data-l="sw" lang="sw" data-review="draft">Makadamia</span><span data-l="ja" lang="ja" data-review="draft">マカダミア</span></a></h4>
-              <p class="crop__go" aria-hidden="true"><span data-l="en" lang="en">More</span><span data-l="sw" lang="sw" data-review="draft">Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳しく</span><svg class="icon"><use href="#i-arrow"/></svg></p>
+              <h4 class="crop__title"><span data-l="en" lang="en">Macadamia</span><span data-l="sw" lang="sw" data-review="draft">Makadamia</span><span data-l="ja" lang="ja" data-review="draft">マカダミア</span></h4>
             </div>
           </article>
           <article class="crop" id="beekeeping">
@@ -406,8 +393,7 @@
               </picture>
             </figure>
             <div class="crop__body">
-              <h4 class="crop__title"><a href="what-we-do.html#beekeeping"><span data-l="en" lang="en">Beekeeping</span><span data-l="sw" lang="sw" data-review="draft">Ufugaji Nyuki</span><span data-l="ja" lang="ja" data-review="draft">養蜂</span></a></h4>
-              <p class="crop__go" aria-hidden="true"><span data-l="en" lang="en">More</span><span data-l="sw" lang="sw" data-review="draft">Zaidi</span><span data-l="ja" lang="ja" data-review="draft">詳しく</span><svg class="icon"><use href="#i-arrow"/></svg></p>
+              <h4 class="crop__title"><span data-l="en" lang="en">Beekeeping</span><span data-l="sw" lang="sw" data-review="draft">Ufugaji Nyuki</span><span data-l="ja" lang="ja" data-review="draft">養蜂</span></h4>
             </div>
           </article>
         </div>
@@ -434,7 +420,7 @@
                 </picture>
               </figure>
               <p class="project__n" aria-hidden="true"></p>
-              <h4 class="project__title"><a href="what-we-do.html#carbon"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Hati za Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></a></h4>
+              <h4 class="project__title"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Hati za Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></h4>
               <p><span data-l="en" lang="en">A project to bring improved cookstoves to households around the farm. They need far less firewood than a traditional three-stone fire: less smoke in the kitchen, less CO₂, and less of the daily work of collecting wood. The project aims to obtain carbon credits.</span><span data-l="sw" lang="sw" data-review="draft">Mradi wa kusambaza majiko banifu kwa kaya zinazozunguka shamba. Yanatumia kuni kidogo sana kuliko jiko la mafiga matatu: moshi mdogo jikoni, hewa ukaa (CO₂) kidogo, na kazi ndogo ya kila siku ya kutafuta kuni. Mradi unalenga kupata hati za kaboni.</span><span data-l="ja" lang="ja" data-review="draft">農園の周りの家庭に、改良型のかまどを広めるプロジェクトです。昔ながらの三石かまどに比べて薪がずっと少なくて済み、台所の煙もCO₂も減り、毎日の薪集めの負担も軽くなります。カーボンクレジットの取得も目指しています。</span></p>
             </article>
           </li>
@@ -450,7 +436,7 @@
                 </picture>
               </figure>
               <p class="project__n" aria-hidden="true"></p>
-              <h4 class="project__title"><a href="what-we-do.html#school"><span data-l="en" lang="en">Lunch</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana</span><span data-l="ja" lang="ja" data-review="draft">ランチ</span></a></h4>
+              <h4 class="project__title"><span data-l="en" lang="en">Lunch</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana</span><span data-l="ja" lang="ja" data-review="draft">ランチ</span></h4>
               <p><span data-l="en" lang="en">Since 2024, TANJA and a partner company have provided lunch for every student at the two secondary schools near the farm. In public secondary schools here, school meals depend on what parents can pay. On the farm, workers are now served a meal too.</span><span data-l="sw" lang="sw" data-review="draft">Tangu mwaka 2024, TANJA pamoja na kampuni mshirika zimekuwa zikitoa chakula cha mchana kwa wanafunzi wote wa shule mbili za sekondari zilizo jirani na shamba. Katika shule za sekondari za umma hapa, chakula cha shule hutegemea uwezo wa wazazi kulipa. Shambani, wafanyakazi nao sasa hupewa mlo.</span><span data-l="ja" lang="ja" data-review="draft">対象は農園の近くにある2つの中等学校で、2024年から協力企業とともに全校生徒に給食を届けてきました。この地域の公立中等学校では、給食を保護者の負担に頼っているのが現状です。農園で働く人たちにも、昼食を出し始めました。</span></p>
             </article>
           </li>
@@ -466,7 +452,7 @@
                 </picture>
               </figure>
               <p class="project__n" aria-hidden="true"></p>
-              <h4 class="project__title"><a href="what-we-do.html#cattle"><span data-l="en" lang="en">Cattle</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe</span><span data-l="ja" lang="ja" data-review="draft">牛</span></a></h4>
+              <h4 class="project__title"><span data-l="en" lang="en">Cattle</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe</span><span data-l="ja" lang="ja" data-review="draft">牛</span></h4>
               <p><span data-l="en" lang="en">TANJA also keeps cattle. Their manure goes back to the avocado and coffee fields as compost; meat, milk and biogas are at the planning stage.</span><span data-l="sw" lang="sw" data-review="draft">TANJA pia inafuga ng’ombe. Samadi yao hurudishwa kwenye mashamba ya parachichi na kahawa kama mbolea; nyama, maziwa na biogesi bado ziko katika hatua ya mipango.</span><span data-l="ja" lang="ja" data-review="draft">TANJAでは牛も飼育しています。牛ふんは堆肥としてアボカドやコーヒーの畑に戻り、肉や牛乳、バイオガスへの活用は計画段階です。</span></p>
             </article>
           </li>
@@ -480,7 +466,7 @@
       <div class="wrap cafe" id="cafe">
         <div class="cafe__panel" data-slot="12" data-reveal>
           <div>
-            <h3 class="eyebrow"><a href="what-we-do.html#cafe"><span data-l="en" lang="en">Cafe</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></a></h3>
+            <h3 class="eyebrow"><span data-l="en" lang="en">Cafe</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></h3>
             <p class="cafe__title" aria-hidden="true"><span data-l="en" lang="en">Café</span><span data-l="sw" lang="sw" data-review="draft">Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">カフェ</span></p>
           </div>
           <p class="tbc" data-placeholder="cafe-details"><span data-l="en" lang="en">Details will be shared here.</span><span data-l="sw" lang="sw" data-review="draft">Maelezo yatatolewa hapa.</span><span data-l="ja" lang="ja" data-review="draft">詳細は、決まりしだいこちらでお知らせします。</span></p>

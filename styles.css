@@ -145,7 +145,7 @@ a { color: inherit; }
 button { font: inherit; color: inherit; }
 
 /* The company's voice: serif. Japanese swaps to the platform Mincho (no download). */
-.section__title, .lede, .statement, .crop__title, .project__title, .estate__name, .fact__value, .hero__title,
+.section__title, .lede, .statement, .crop__title, .project__title, .estate__name, .hero__title,
 .brand__mark, .site-footer__brand, .contact-list dd, .cafe__title, .wwd-detail__title {
   font-family: var(--font-serif);
   font-variant-numeric: lining-nums;           /* Cormorant's default old-style figures sink "1920s" below the line */
@@ -572,21 +572,6 @@ html[data-lang="ja"] .about__text .lede { max-width: 30em; }
 .about__body { margin-top: var(--sp-5); color: var(--c-on-surface-2); max-width: var(--measure); }
 .about__photo { grid-column: full-start / full-end; border-radius: 0; }
 
-/* Key figures: large serif numbers on a hairline. */
-.figures { margin-top: clamp(4rem, 2.5rem + 5vw, 8rem); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-6) var(--col-gap); }
-.fact { display: flex; flex-direction: column; padding-top: var(--sp-4); border-top: 1px solid var(--c-on-surface); min-width: 0; }
-.fact dt { overflow-wrap: anywhere; order: 2; margin-top: var(--sp-2); color: var(--c-on-surface-3); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
-html[data-lang="ja"] .fact dt { letter-spacing: 0.06em; font-size: 0.8125rem; }
-.fact__value { order: 1; font-size: clamp(2.25rem, 1.6rem + 2.6vw, 4rem); font-weight: 500; line-height: 1; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; overflow-wrap: anywhere; }
-.fact__value small { font-size: 0.5em; letter-spacing: 0.02em; margin-left: 0.15em; }
-.fact__value--range { font-size: clamp(1.75rem, 1.25rem + 1.9vw, 3rem); white-space: nowrap; padding-top: 0.2em; }
-
-.facts-list { margin-top: var(--sp-7); display: grid; column-gap: var(--col-gap); grid-template-columns: minmax(0, 1fr); }
-.facts-list > div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: var(--sp-4); padding-block: var(--sp-3); border-bottom: 1px solid var(--c-outline-2); }
-.facts-list dt { color: var(--c-on-surface-3); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding-top: 0.25em; }
-html[data-lang="ja"] .facts-list dt { letter-spacing: 0.06em; font-size: 0.8125rem; }
-.facts-list dd { font-weight: 500; overflow-wrap: anywhere; }
-
 /* Three estates */
 .estates { margin-top: clamp(4rem, 2.5rem + 5vw, 8rem); }
 .estates__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-2) var(--sp-4); flex-wrap: wrap; padding-bottom: var(--sp-4); border-bottom: 1px solid var(--c-on-surface); }
@@ -729,7 +714,7 @@ html[data-lang="ja"] .wwd-detail__section h4 { letter-spacing: 0.06em; font-size
 html[data-lang="ja"] .keyfacts dt { letter-spacing: 0.06em; font-size: 0.8125rem; }
 .keyfacts dd { overflow-wrap: anywhere; }
 
-@media (max-width: 30em) { .keyfacts > div, .facts-list > div { grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); } }
+@media (max-width: 30em) { .keyfacts > div { grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); } }
 
 /* ---------- Contact -------------------------------------------------------- */
 .contact { row-gap: var(--sp-7); align-items: start; }
@@ -776,8 +761,6 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
 
 /* ---------- 8. Breakpoints (mobile-first) ---------------------------------- */
 @media (min-width: 37.5em) {          /* 600px */
-  .figures { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .facts-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (min-width: 48em) {            /* 768px: the 12-column grid switches on */
