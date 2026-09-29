@@ -205,8 +205,8 @@
     }
 
     /* ---------- 4. current-section marker ---------- */
-    // The homepage header menu and the detail page's jump bar both mark the section in view.
-    var links = [].slice.call(document.querySelectorAll('.site-nav a[href^="#"], .wwd-jump a[href^="#"]')).filter(function (a) {
+    // The homepage header menu marks the section in view (IntersectionObserver below); the detail page's jump bar has its own scroll-based marker.
+    var links = [].slice.call(document.querySelectorAll('.site-nav a[href^="#"]')).filter(function (a) {
       var id = a.getAttribute('href').slice(1);
       return id && document.getElementById(id);
     });
@@ -225,6 +225,19 @@
         });
       }, { rootMargin: '-25% 0px -55% 0px', threshold: [0, 0.01, 0.25, 0.5, 1] });
       targets.forEach(function (t) { spy.observe(t); });
+    }
+
+    var jumpLinks = [].slice.call(document.querySelectorAll('.wwd-jump a[href^="#"]')).filter(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    if (jumpLinks.length && header) {
+      var jumpBar = document.querySelector('.wwd-jump'), jt = false;
+      var markJump = function () {
+        jt = false;
+        var line = header.getBoundingClientRect().height + jumpBar.getBoundingClientRect().height + 24, best = null;
+        jumpLinks.forEach(function (a) { if (document.getElementById(a.getAttribute('href').slice(1)).getBoundingClientRect().top <= line) best = a; });
+        jumpLinks.forEach(function (a) { if (a === best) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      };
+      window.addEventListener('scroll', function () { if (!jt) { jt = true; window.requestAnimationFrame(markJump); } }, { passive: true });
+      markJump();
     }
 
     /* ---------- 5. footer menu follows the header menu ---------- */
@@ -260,7 +273,7 @@
       var nextBtn = heroEl.querySelector('[data-hero-next]');
       var interval = parseFloat(getComputedStyle(root).getPropertyValue('--hero-interval')) * 1000 || 6000;
       var slideMs = parseFloat(getComputedStyle(root).getPropertyValue('--dur-slide')) || 1100;
-      var timer = null, busy = false, hovering = false, focusing = false, stopped = false;
+      var timer = null, busy = false, hovering = false, focusing = false, stopped = false, offscreen = false;
 
       slides.slice(1).forEach(function (slide) {
         [].forEach.call(slide.querySelectorAll('source[data-srcset]'), function (s) { s.setAttribute('srcset', s.getAttribute('data-srcset')); });
@@ -277,7 +290,7 @@
           b.setAttribute('data-n', (i + 1) + ' / ' + slides.length);
           b.setAttribute('aria-label', (dotsWrap.getAttribute('data-label') || 'Photo') + ' ' + (i + 1) + ' / ' + slides.length);
           if (i === 0) b.setAttribute('aria-current', 'true');
-          b.addEventListener('click', function () { go(i, i > current ? 1 : -1, true); });
+          b.addEventListener('click', function () { var d = i > current ? 1 : -1; whenReady(i, function () { go(i, d, true); }); });
           dotsWrap.appendChild(b);
           dots.push(b);
         });
@@ -289,7 +302,7 @@
         heroEl.classList.remove('is-playing'); void heroEl.offsetWidth; heroEl.classList.add('is-playing');
       };
       var setPlaying = function () {
-        var p = stopped || hovering || focusing || document.hidden;
+        var p = stopped || hovering || focusing || offscreen || document.hidden;
         if (p === paused && timer) return;
         paused = p;
         heroEl.classList.toggle('is-paused', p);
@@ -297,18 +310,37 @@
         else { restartProgress(); restart(); }
       };
 
+      // A photograph is "ready" once it is fetched AND decoded, so the move never stalls on decoding a large image mid-slide.
+      var ready = function (i) { var im = slides[i].querySelector('img'); return !!(im && im.complete && im.naturalWidth); };
+      var prepare = function (i) {
+        var im = slides[i].querySelector('img');
+        if (im && im.decode) im.decode().catch(function () {});
+      };
+      var whenReady = function (i, cb) {
+        if (ready(i)) { cb(); return; }
+        var im = slides[i].querySelector('img'), done = false;
+        var fire = function () { if (!done) { done = true; cb(); } };
+        im.addEventListener('load', fire, { once: true });
+        window.setTimeout(fire, 2500);                            // slow connection: go anyway rather than stay stuck
+      };
+      slides.forEach(function (s, i) { var im = s.querySelector('img'); if (i && im) im.addEventListener('load', function () { if (i === (current + 1) % slides.length) prepare(i); }); });
+
       var go = function (next, dir, manual) {
         if (busy || next === current) return;
         busy = true;
         var from = slides[current], to = slides[next];
+        var fromPic = from.querySelector('picture'), toPic = to.querySelector('picture');
         // Put the incoming slide on the correct side without animating, then animate both.
         to.classList.remove('is-anim');
         to.style.transform = 'translate3d(' + (dir > 0 ? 100 : -100) + '%,0,0)';
         to.style.visibility = 'visible';
+        if (toPic) toPic.style.setProperty('--px', (dir > 0 ? -10 : 10) + '%');
         void to.offsetWidth;                                     // commit the start position
         to.classList.add('is-anim');
         from.classList.add('is-anim', 'is-leaving');
         to.style.transform = '';
+        if (toPic) toPic.style.setProperty('--px', '0%');
+        if (fromPic) fromPic.style.setProperty('--px', (dir > 0 ? 10 : -10) + '%');
         to.classList.add('is-active');
         from.classList.remove('is-active');
         from.style.transform = 'translate3d(' + (dir > 0 ? -100 : 100) + '%,0,0)';
@@ -321,12 +353,18 @@
         window.setTimeout(function () {
           from.classList.remove('is-anim', 'is-leaving');
           from.style.transform = ''; from.style.visibility = '';
+          if (fromPic) fromPic.style.removeProperty('--px');
+          prepare((current + 1) % slides.length);
           to.style.visibility = '';
           busy = false;
         }, slideMs + 50);
         if (manual) restart();
       };
-      var step = function (dir, manual) { go((current + dir + slides.length) % slides.length, dir, manual); };
+      var step = function (dir, manual) {
+        var n = (current + dir + slides.length) % slides.length;
+        if (manual) whenReady(n, function () { go(n, dir, true); });
+        else if (ready(n)) go(n, dir, false);                    // autoplay never shows a photograph that is not loaded yet
+      };
 
       // The pause button (WCAG 2.2.2): a visitor-chosen stop that stays until they press it again.
       var pauseBtn = heroEl.querySelector('[data-hero-pause]');
@@ -344,8 +382,14 @@
       if (prevBtn) prevBtn.addEventListener('click', function () { step(-1, true); });
       if (nextBtn) nextBtn.addEventListener('click', function () { step(1, true); });
 
-      heroEl.addEventListener('mouseenter', function () { hovering = true; setPlaying(); });
-      heroEl.addEventListener('mouseleave', function () { hovering = false; setPlaying(); });
+      // Only a real mouse pointer pauses on hover. Touch browsers fire "mouseenter" on a tap and keep the hover state until the next tap
+      // elsewhere, which would freeze autoplay after any tap on the hero.
+      heroEl.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { hovering = true; setPlaying(); } });
+      heroEl.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { hovering = false; setPlaying(); } });
+      // No point animating (and decoding) photographs nobody can see: pause while the hero is scrolled out of view.
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { offscreen = !en[0].isIntersecting; setPlaying(); }, { threshold: 0.15 }).observe(heroEl);
+      }
       var controls = heroEl.querySelector('.hero__controls');
       if (controls) {
         // Keyboard focus pauses (a keyboard user should not chase a moving target); a mouse click, which also focuses the button, does not.
@@ -374,6 +418,7 @@
       });
       heroEl.addEventListener('pointercancel', function () { sx = sy = null; });
 
+      prepare(1);
       heroEl.classList.add('has-slider');
       restartProgress();
       restart();

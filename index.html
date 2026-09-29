@@ -120,7 +120,7 @@
 
     <!-- =================================================================== 01 HOME = HERO (slot 01)
          A horizontal slider (2026-09-29, direct user request: "several photos side by side, switching automatically every few
-         seconds"). Six slides; each slides in from the right every 6s (--hero-interval in styles.css). No library, no video.
+         seconds"). 8 slides (the avocado photo belongs to What We Do, not the hero; slides 2 and 6 are the previous version's hero and dam photographs); each slides in from the right every 6s (--hero-interval in styles.css). No library, no video.
          - Slide 1 is real from first paint (fetchpriority="high", the LCP image). Slides 2+ carry data-srcset / data-src only,
            so the browser fetches NOTHING for them unless script.js promotes the attributes — which it does only when JS runs
            AND the visitor has not asked for reduced motion. No JS / reduced motion → slide 1 stays, as a still photograph.
@@ -144,10 +144,10 @@
           <picture>
             <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-2-m.webp" type="image/webp">
             <source data-srcset="assets/images/01-hero-2-1200.webp 1200w, assets/images/01-hero-2.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-2.jpg" width="1920" height="1280" decoding="async" style="--focal: 60% 45%"
-                 alt="A green avocado hanging from a branch, the orchard blurred behind."
-                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Parachichi la kijani likining’inia kwenye tawi, shamba likionekana kwa ukungu nyuma."
-                 data-alt-ja="枝から下がる緑のアボカド。背景に果樹園がぼやけて写る。">
+            <img data-src="assets/images/01-hero-2.jpg" width="1920" height="1280" decoding="async" style="--focal: 30% 55%"
+                 alt="Coffee branches with red and green cherries in the foreground and rows of coffee trees on the slope behind."
+                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Matawi ya kahawa yenye matunda mekundu na ya kijani mbele, na safu za miti ya kahawa kwenye mteremko wa nyuma."
+                 data-alt-ja="手前のコーヒーの枝に赤い実と緑の実がつき、奥の斜面にコーヒーの木の列が並んでいる。">
           </picture>
         </figure>
         <figure class="hero__slide" aria-hidden="true">
@@ -155,16 +155,6 @@
             <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-3-m.webp" type="image/webp">
             <source data-srcset="assets/images/01-hero-3-1200.webp 1200w, assets/images/01-hero-3.webp 1920w" sizes="100vw" type="image/webp">
             <img data-src="assets/images/01-hero-3.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 55%"
-                 alt="Coffee covering a slope, with a lined reservoir and trees below and the plain beyond."
-                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Kahawa ikifunika mteremko, na bwawa la maji na miti chini, na uwanda kwa mbali."
-                 data-alt-ja="斜面を覆うコーヒー畑。下に貯水池と木々、遠くに平原。">
-          </picture>
-        </figure>
-        <figure class="hero__slide" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-4-m.webp" type="image/webp">
-            <source data-srcset="assets/images/01-hero-4-1200.webp 1200w, assets/images/01-hero-4.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-4.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 60%"
                  alt="Forested hills and a mountain range under large white clouds."
                  data-review-sw="draft" data-review-ja="draft" data-alt-sw="Vilima vyenye misitu na safu ya milima chini ya mawingu makubwa meupe."
                  data-alt-ja="大きな白い雲の下に、森に覆われた丘と山並み。">
@@ -172,9 +162,19 @@
         </figure>
         <figure class="hero__slide" aria-hidden="true">
           <picture>
+            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-4-m.webp" type="image/webp">
+            <source data-srcset="assets/images/01-hero-4-1200.webp 1200w, assets/images/01-hero-4.webp 1920w" sizes="100vw" type="image/webp">
+            <img data-src="assets/images/01-hero-4.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 50%"
+                 alt="Coffee covering a slope, with a lined reservoir and trees below and the plain beyond."
+                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Kahawa ikifunika mteremko, na bwawa la maji na miti chini, na uwanda kwa mbali."
+                 data-alt-ja="斜面を覆うコーヒー畑。下に貯水池と木々、遠くに平原。">
+          </picture>
+        </figure>
+        <figure class="hero__slide" aria-hidden="true">
+          <picture>
             <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-5-m.webp" type="image/webp">
             <source data-srcset="assets/images/01-hero-5-1200.webp 1200w, assets/images/01-hero-5.webp 1600w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-5.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 58%"
+            <img data-src="assets/images/01-hero-5.jpg" width="1600" height="1067" decoding="async" style="--focal: 50% 50%"
                  alt="An aerial view of long raised drying beds and green-roofed buildings among trees."
                  data-review-sw="draft" data-review-ja="draft" data-alt-sw="Mwonekano kutoka angani wa vitanda virefu vya kukaushia na majengo yenye paa za kijani kati ya miti."
                  data-alt-ja="上空から見た、木々の間に並ぶ長い乾燥棚と緑の屋根の建物。">
@@ -184,10 +184,30 @@
           <picture>
             <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-6-m.webp" type="image/webp">
             <source data-srcset="assets/images/01-hero-6-1200.webp 1200w, assets/images/01-hero-6.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-6.jpg" width="1920" height="1280" decoding="async" style="--focal: 55% 55%"
+            <img data-src="assets/images/01-hero-6.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 58%"
+                 alt="Calm, rippled water between banks of bare red earth, with trees and a wooded hill behind under a blue sky with white clouds."
+                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Maji tulivu yenye mawimbi madogo kati ya kingo za udongo mwekundu usio na nyasi, na miti na kilima chenye miti nyuma, chini ya anga la buluu lenye mawingu meupe."
+                 data-alt-ja="草の少ない赤土の土手に囲まれた、さざ波の立つ静かな水面。奥に木々と樹木に覆われた丘があり、青空に白い雲が浮かんでいる。">
+          </picture>
+        </figure>
+        <figure class="hero__slide" aria-hidden="true">
+          <picture>
+            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-7-m.webp" type="image/webp">
+            <source data-srcset="assets/images/01-hero-7-1200.webp 1200w, assets/images/01-hero-7.webp 1920w" sizes="100vw" type="image/webp">
+            <img data-src="assets/images/01-hero-7.jpg" width="1920" height="1280" decoding="async" style="--focal: 55% 55%"
                  alt="The sun rising behind distant hills, with silhouetted trees against an orange sky."
                  data-review-sw="draft" data-review-ja="draft" data-alt-sw="Jua likichomoza nyuma ya vilima vya mbali, miti ikionekana kama vivuli dhidi ya anga la rangi ya chungwa."
                  data-alt-ja="遠くの丘の向こうから昇る朝日と、橙色の空に浮かぶ木々の影。">
+          </picture>
+        </figure>
+        <figure class="hero__slide" aria-hidden="true">
+          <picture>
+            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-8-m.webp" type="image/webp">
+            <source data-srcset="assets/images/01-hero-8-1200.webp 1200w, assets/images/01-hero-8.webp 1920w" sizes="100vw" type="image/webp">
+            <img data-src="assets/images/01-hero-8.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 60%"
+                 alt="A reservoir with a grassy bank, trees on the far side and white clouds in a blue sky."
+                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Bwawa la maji lenye ukingo wa nyasi, miti upande wa pili na mawingu meupe angani la buluu."
+                 data-alt-ja="草の生えた岸のある貯水池。対岸に木々、青空に白い雲。">
           </picture>
         </figure>
       </div>
@@ -201,14 +221,16 @@
           </p>
         </div>
         <div class="hero__foot">
-          <p class="hero__caption"><span class="hero__count" aria-hidden="true">01 / 06</span>
+          <p class="hero__caption"><span class="hero__count" aria-hidden="true">01 / 08</span>
             <span class="hero__caption-text">
               <span data-cap class="is-active"><span data-l="en" lang="en">Coffee rows looking out over the plain</span><span data-l="sw" lang="sw" data-review="draft">Safu za kahawa zikitazama uwanda</span><span data-l="ja" lang="ja" data-review="draft">平原を見下ろすコーヒーの列</span></span>
-              <span data-cap><span data-l="en" lang="en">Avocado, one of our newer crops</span><span data-l="sw" lang="sw" data-review="draft">Parachichi, mojawapo ya mazao yetu mapya</span><span data-l="ja" lang="ja" data-review="draft">新しい作物のひとつ、アボカド</span></span>
-              <span data-cap><span data-l="en" lang="en">Coffee on the slope, with a reservoir below</span><span data-l="sw" lang="sw" data-review="draft">Kahawa kwenye mteremko, na bwawa la maji chini</span><span data-l="ja" lang="ja" data-review="draft">斜面のコーヒー畑と、その下の貯水池</span></span>
+              <span data-cap><span data-l="en" lang="en">Ripening cherries, with the coffee rows behind</span><span data-l="sw" lang="sw" data-review="draft">Matunda yanayoiva, na safu za kahawa nyuma yake</span><span data-l="ja" lang="ja" data-review="draft">熟していくコーヒーの実と、その奥の畑</span></span>
               <span data-cap><span data-l="en" lang="en">Mt. Oldeani, seen from the farm</span><span data-l="sw" lang="sw" data-review="draft">Mlima Oldeani, ukitazamwa kutoka shambani</span><span data-l="ja" lang="ja" data-review="draft">農園から望むオルデアニ山</span></span>
+              <span data-cap><span data-l="en" lang="en">Coffee on the slope, with a reservoir below</span><span data-l="sw" lang="sw" data-review="draft">Kahawa kwenye mteremko, na bwawa la maji chini</span><span data-l="ja" lang="ja" data-review="draft">斜面のコーヒー畑と、その下の貯水池</span></span>
               <span data-cap><span data-l="en" lang="en">Drying beds, seen from the air</span><span data-l="sw" lang="sw" data-review="draft">Vitanda vya kukaushia, vikionekana kutoka angani</span><span data-l="ja" lang="ja" data-review="draft">上空から見た乾燥棚</span></span>
+              <span data-cap><span data-l="en" lang="en">The dam, completed in 2025</span><span data-l="sw" lang="sw" data-review="draft">Bwawa, lililokamilika mwaka 2025</span><span data-l="ja" lang="ja" data-review="draft">2025年に完成したダム</span></span>
               <span data-cap><span data-l="en" lang="en">The first sunrise of 2025 on the farm</span><span data-l="sw" lang="sw" data-review="draft">Macheo ya kwanza ya mwaka 2025 shambani</span><span data-l="ja" lang="ja" data-review="draft">農園で迎えた2025年最初の朝日</span></span>
+              <span data-cap><span data-l="en" lang="en">A reservoir on the farm</span><span data-l="sw" lang="sw" data-review="draft">Bwawa la maji shambani</span><span data-l="ja" lang="ja" data-review="draft">農園の貯水池</span></span>
             </span>
           </p>
           <div class="hero__controls" role="group" aria-label="Slides" data-label-sw="Picha" data-label-ja="スライド">

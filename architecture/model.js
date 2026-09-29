@@ -302,7 +302,7 @@ window.OBJECT_MODEL = {
       "name": "--ease-slide",
       "group": "motion",
       "ja": "ヒーロースライダーの移動",
-      "value": "cubic-bezier(0.65, 0, 0.35, 1)"
+      "value": "cubic-bezier(0.45, 0, 0.15, 1)"
     },
     {
       "name": "--dur-s",
@@ -326,7 +326,7 @@ window.OBJECT_MODEL = {
       "name": "--dur-slide",
       "group": "motion",
       "ja": "スライドの移動時間",
-      "value": "1100ms"
+      "value": "1400ms"
     },
     {
       "name": "--hero-interval",
@@ -355,6 +355,10 @@ window.OBJECT_MODEL = {
     {
       "query": "(min-width: 37.5em)",
       "ja": "600px：スタッフ4列"
+    },
+    {
+      "query": "(max-width: 30em)",
+      "ja": "<480px：詳細ページの事実表を縦に積む"
     },
     {
       "query": "(max-width: 37.49em)",
@@ -1641,7 +1645,7 @@ window.OBJECT_MODEL = {
           "ratio_mobile": "縦切り出し 660×1166",
           "focal_point": "30% 55%",
           "min_resolution": "2400×1600 / 1080×1920",
-          "derivative": "01-hero-{1..6}{,-1200,-m}"
+          "derivative": "01-hero-{1..8}{,-1200,-m}"
         }
       }
     },
