@@ -290,6 +290,7 @@ html[data-lang="ja"] .lede { font-size: calc(var(--fs-statement) * 0.72); line-h
 .site-header :is(a, button) { scroll-margin-top: calc(-1 * var(--header-h)); }
 
 .brand { display: inline-flex; align-items: center; min-height: var(--touch); text-decoration: none; }
+.brand img { display: block; width: auto; height: 48px; max-width: 180px; object-fit: contain; }
 .brand__mark { font-weight: 600; font-size: 1.625rem; letter-spacing: 0.24em; line-height: 1; margin-right: -0.24em; }
 
 .site-header__tools { display: flex; align-items: center; gap: var(--sp-2); margin-left: auto; }
