@@ -720,29 +720,31 @@ html[data-lang="ja"] .keyfacts dt { letter-spacing: 0.06em; font-size: 0.8125rem
 @media (max-width: 30em) { .keyfacts > div { grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); } }
 
 /* ---------- Contact -------------------------------------------------------- */
-.contact { row-gap: var(--sp-7); align-items: start; }
+.contact { row-gap: var(--sp-8); align-items: start; }
 .contact__lede { margin-top: var(--sp-5); font-size: var(--fs-title); line-height: 1.55; color: rgba(255, 255, 255, 0.84); max-width: 24rem; }
-.contact-list, .social { border-top: 1px solid rgba(255, 255, 255, 0.26); }
-.contact-list > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); padding: var(--sp-5) 0; border-bottom: 1px solid rgba(255, 255, 255, 0.26); }
+.contact__body { display: grid; gap: var(--sp-4); align-content: start; }
+.contact-list { display: grid; gap: var(--sp-3); }
+.contact-list > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); padding: var(--sp-4) var(--sp-5); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: var(--radius-m); background: rgba(255, 255, 255, 0.045); }
 .contact-list dt { color: var(--c-on-inverse-2); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
 html[data-lang="ja"] .contact-list dt { letter-spacing: 0.06em; }
-.contact-list dd { font-size: clamp(1.875rem, 1.2rem + 2.8vw, 3.5rem); font-weight: 500; line-height: 1.1; overflow-wrap: anywhere; font-variant-numeric: lining-nums; }
-.contact-list dd.is-pending { font-size: var(--fs-title-l); color: var(--c-on-inverse-2); font-style: italic; }
+.contact-list dd { font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.25rem); font-weight: 500; line-height: 1.15; overflow-wrap: anywhere; font-variant-numeric: lining-nums; }
+.contact-list dd.is-pending { font-family: var(--font-sans); font-size: 1.125rem; font-weight: 500; color: rgba(255, 255, 255, 0.8); font-style: normal; }
 .contact-list a { display: inline-block; padding-block: 0.3rem; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 calc(100% - 0.2rem) / 100% 1px no-repeat; transition: background-size var(--dur-m) var(--ease); }
 @media (hover: hover) { .contact-list a:hover { background-size: 100% 3px; } }
 
-.social li { border-bottom: 1px solid rgba(255, 255, 255, 0.26); }
+.social { display: grid; gap: var(--sp-2); }
+.social li { min-width: 0; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: var(--radius-m); background: rgba(255, 255, 255, 0.025); }
 .social__link {
-  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-1) var(--sp-4); width: 100%; min-height: 4.5rem; padding: var(--sp-4) 0;
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-4); width: 100%; min-height: 4rem; padding: var(--sp-3) var(--sp-5);
   border: 0; background: transparent; color: inherit; text-align: left; text-decoration: none; cursor: default;
 }
+.social__link .icon { flex: 0 0 auto; width: 1.25rem; height: 1.25rem; }
 .social__name { min-width: 0; font-family: var(--font-serif); font-size: var(--fs-title-l); font-weight: 500; overflow-wrap: anywhere; }
-.social__state { min-width: 0; margin-left: auto; font-size: 0.875rem; color: var(--c-on-inverse-2); text-align: right; overflow-wrap: anywhere; }
-.social__link:disabled { color: rgba(255, 255, 255, 0.72); }
-.section--inverse .note { color: var(--c-on-inverse-2); }
+.social__state { min-width: 0; margin-left: auto; font-size: 0.8125rem; color: var(--c-on-inverse-2); text-align: right; overflow-wrap: anywhere; }
+.social__link:disabled { color: rgba(255, 255, 255, 0.82); }
 a.social__link { cursor: pointer; }
 @media (hover: hover) { a.social__link:hover .social__name { text-decoration: underline; text-underline-offset: 6px; } }
-
+.section--inverse .note { padding-left: var(--sp-4); border-left: 2px solid rgba(231, 185, 164, 0.7); color: var(--c-on-inverse-2); font-size: 0.8125rem; }
 /* ---------- 7. Footer ------------------------------------------------------ */
 .site-footer { position: relative; background: var(--c-inverse); color: var(--c-on-inverse); padding-block: var(--sp-8) calc(var(--sp-6) + env(safe-area-inset-bottom)); --focus: #fff; }
 .site-footer__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); }
