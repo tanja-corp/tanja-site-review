@@ -289,8 +289,8 @@ html[data-lang="ja"] .lede { font-size: calc(var(--fs-statement) * 0.72); line-h
 }
 .site-header :is(a, button) { scroll-margin-top: calc(-1 * var(--header-h)); }
 
-.brand { display: inline-flex; align-items: center; min-height: var(--touch); text-decoration: none; }
-.brand img { display: block; width: auto; height: 48px; max-width: 180px; object-fit: contain; }
+.brand { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; min-height: var(--touch); text-decoration: none; }
+.brand img { display: block; width: 56px; height: 56px; object-fit: contain; transition: filter var(--dur-l) var(--ease); }
 .brand__mark { font-weight: 600; font-size: 1.625rem; letter-spacing: 0.24em; line-height: 1; margin-right: -0.24em; }
 
 .site-header__tools { display: flex; align-items: center; gap: var(--sp-2); margin-left: auto; }
@@ -411,6 +411,7 @@ html:not(.js) .lang { display: none; }
   .site-nav__list { flex-wrap: nowrap; gap: var(--sp-4); }
   .site-header__tools { margin-left: 0; }
   .brand__mark { font-size: 1.875rem; }
+  .brand img { width: 64px; height: 64px; }
 }
 
 /* --- Header over the hero photograph (only when JS is ready, so there is a safe solid fallback) --- */
@@ -420,6 +421,7 @@ html:not(.js) .lang { display: none; }
   -webkit-backdrop-filter: none; backdrop-filter: none;
 }
 .js-ready .site-header:not(.is-solid):not(.is-menu-open) :is(.brand__mark, .site-nav a) { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
+.js-ready .site-header:not(.is-solid):not(.is-menu-open) .brand img { filter: brightness(0) invert(1) drop-shadow(0 1px 8px rgba(0, 0, 0, 0.3)); }
 @media (hover: hover) {
   .js-ready .site-header:not(.is-solid):not(.is-menu-open) .lang__toggle:hover { background: rgba(255, 255, 255, 0.14); }
 }
@@ -825,6 +827,7 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
   .site-header__bar { gap: var(--sp-2) min(var(--sp-4), 16px); }
 }
 @media (max-width: 22.5em) {
+  .brand img { width: 48px; height: 48px; }
   .site-header__bar.container { padding-inline: min(var(--gutter), 5vw); }
   .brand__mark { font-size: min(1.25rem, 6.4vw); }
   .lang__toggle .lang__chev { display: none; }
