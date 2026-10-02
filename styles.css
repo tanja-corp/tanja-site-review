@@ -290,7 +290,7 @@ html[data-lang="ja"] .lede { font-size: calc(var(--fs-statement) * 0.72); line-h
 .site-header :is(a, button) { scroll-margin-top: calc(-1 * var(--header-h)); }
 
 .brand { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; min-height: var(--touch); text-decoration: none; }
-.brand img { display: block; width: 56px; height: 56px; object-fit: contain; transition: filter var(--dur-l) var(--ease); }
+.brand img { display: block; width: 40px; height: 40px; object-fit: contain; transition: filter var(--dur-l) var(--ease); }
 .brand__mark { font-weight: 600; font-size: 1.625rem; letter-spacing: 0.24em; line-height: 1; margin-right: -0.24em; }
 
 .site-header__tools { display: flex; align-items: center; gap: var(--sp-2); margin-left: auto; }
@@ -411,7 +411,7 @@ html:not(.js) .lang { display: none; }
   .site-nav__list { flex-wrap: nowrap; gap: var(--sp-4); }
   .site-header__tools { margin-left: 0; }
   .brand__mark { font-size: 1.875rem; }
-  .brand img { width: 64px; height: 64px; }
+  .brand img { width: 44px; height: 44px; }
 }
 
 /* --- Header over the hero photograph (only when JS is ready, so there is a safe solid fallback) --- */
@@ -827,7 +827,7 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
   .site-header__bar { gap: var(--sp-2) min(var(--sp-4), 16px); }
 }
 @media (max-width: 22.5em) {
-  .brand img { width: 48px; height: 48px; }
+  .brand img { width: 36px; height: 36px; }
   .site-header__bar.container { padding-inline: min(var(--gutter), 5vw); }
   .brand__mark { font-size: min(1.25rem, 6.4vw); }
   .lang__toggle .lang__chev { display: none; }
