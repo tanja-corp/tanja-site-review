@@ -809,8 +809,8 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
   .wwd__head > .wwd__lede { grid-column: col 9 / content-end; grid-row: 1; }
   .wwd__head > .wwd__more { grid-column: col 9 / content-end; grid-row: 2; }
 
-  .farm-intro { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: end; }
-  .sustainability-intro { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: end; }
+  .farm-intro { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: start; }
+  .sustainability-intro { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: start; }
   .farm-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   /* Stagger: the middle card sits lower, so the row reads as a sequence rather than a table. */
@@ -825,7 +825,7 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
   .contact__head { grid-column: col 1 / span 5; }
   .contact__body { grid-column: col 7 / content-end; }
 
-  .detail-group__head { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: end; }
+  .detail-group__head { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: start; }
 }
 
 @media (min-width: 75em) {            /* 1200px */
@@ -873,3 +873,5 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
   .section--inverse { background: none !important; color: #000; border-block: 1px solid #000; }
   [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; }
 }
+
+.farm-intro__badge { display: block; width: clamp(7rem, 5rem + 6vw, 10rem); height: auto; margin-top: var(--sp-4); }
