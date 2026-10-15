@@ -770,6 +770,7 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
 .site-footer .social { border-top: 0; display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 .site-footer .social li { border-bottom: 0; }
 .social__icon { display: inline-flex; align-items: center; justify-content: center; width: var(--touch); height: var(--touch); padding: 0; background: transparent; border: 1px dashed rgba(255, 255, 255, 0.4); border-radius: var(--radius-pill); color: var(--c-on-inverse-2); cursor: default; }
+.social__icon[href] { border-style: solid; cursor: pointer; }
 .social__icon .icon { width: 1.25rem; height: 1.25rem; }
 .site-footer__legal { padding-top: var(--sp-5); border-top: 1px solid rgba(255, 255, 255, 0.14); color: var(--c-on-inverse-2); font-size: 0.8125rem; }
 
