@@ -598,6 +598,14 @@ html[data-lang="ja"] .estate__name { font-size: 1.375rem; }
 .group__title { display: flex; align-items: center; gap: var(--sp-4); color: var(--c-on-surface-2); }
 .group__title::after { content: ""; flex: 1; height: 1px; background: var(--c-outline-2); }
 .group__lede { color: var(--c-on-surface-2); max-width: var(--measure); }
+.sustainability__lede { max-width: none; }
+.sustainability__lede > [data-l] { display: none; }
+html[data-lang="en"] .sustainability__lede > [data-l="en"],
+html[data-lang="sw"] .sustainability__lede > [data-l="sw"],
+html[data-lang="ja"] .sustainability__lede > [data-l="ja"] { display: grid; }
+.sustainability-intro { display: grid; gap: var(--sp-5); }
+.sustainability-intro__body { display: grid; gap: var(--sp-4); color: var(--c-on-surface-2); max-width: var(--measure); }
+.sustainability-intro__body p:first-child { color: var(--c-on-surface); font-weight: 500; }
 
 /* Farm: one overall introduction (the production team's own wording) above four equal photo tiles. */
 .farm-intro { display: grid; gap: var(--sp-5); }
@@ -632,6 +640,7 @@ html[data-lang="ja"] .crop__go { letter-spacing: 0.06em; font-size: 0.75rem; }
 .project-grid > li { counter-increment: project; }
 .project { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; }
 .project .media { --ar: 3 / 2; }
+.project .media.media--4x5 { --ar: 4 / 5; }
 .project__n { margin-top: var(--sp-5); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.16em; color: var(--c-accent); font-variant-numeric: tabular-nums; }
 .project__n::before { content: counter(project, decimal-leading-zero); }
 .project__title { margin-top: var(--sp-2); font-size: var(--fs-title-l); font-weight: 500; line-height: 1.05; }
@@ -800,6 +809,7 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
   .wwd__head > .wwd__more { grid-column: col 9 / content-end; grid-row: 2; }
 
   .farm-intro { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: end; }
+  .sustainability-intro { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: end; }
   .farm-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   /* Stagger: the middle card sits lower, so the row reads as a sequence rather than a table. */
