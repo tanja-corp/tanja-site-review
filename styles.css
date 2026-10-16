@@ -452,7 +452,7 @@ html:not(.js) .lang { display: none; }
     linear-gradient(to top, rgba(var(--c-hero-scrim), 0.78) 0, rgba(var(--c-hero-scrim), 0.32) 34%, rgba(var(--c-hero-scrim), 0) 60%),
     linear-gradient(to right, rgba(var(--c-hero-scrim), 0.35) 0, rgba(var(--c-hero-scrim), 0) 55%);
 }
-.hero__inner { width: 100%; padding-block: 0 clamp(1.5rem, 1rem + 3vw, 3.5rem); display: grid; gap: clamp(1.5rem, 1rem + 2vw, 3rem); }
+.hero__inner { width: 100%; padding-block: 0 clamp(1rem, 0.75rem + 2vw, 2.25rem); display: grid; gap: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
 .hero__inner > * { min-width: 0; }
 .hero__title {
   font-size: min(var(--fs-display), 22vw); font-weight: 500; line-height: 0.82; letter-spacing: 0.06em; margin-left: -0.04em;
@@ -467,7 +467,7 @@ html[data-lang="ja"] .hero__sub { letter-spacing: 0.12em; font-size: 0.875rem; }
 
 /* Controls row (bottom). No captions and no page numbers (2026-10-16 meeting). Controls exist only once script.js has run and motion is allowed;
    without them the row would be an empty hairline, so it is hidden too. */
-.hero__foot { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-4) var(--sp-5); flex-wrap: wrap; padding-top: var(--sp-4); border-top: 1px solid rgba(255, 255, 255, 0.22); }
+.hero__foot { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-4) var(--sp-5); flex-wrap: wrap; padding-top: 0; border-top: 0; }
 .hero:not(.has-slider) .hero__foot { display: none; }
 .hero__controls { display: none; align-items: center; gap: var(--sp-3); }
 .js-ready .hero.has-slider .hero__controls { display: flex; }
@@ -642,8 +642,9 @@ html[data-lang="ja"] .cafe__title { font-size: clamp(2.25rem, 1.6rem + 3vw, 4rem
 .cafe__panel .tbc { color: rgba(243, 238, 227, 0.8); font-size: var(--fs-body-l); max-width: 28rem; }
 
 /* ---------- Career --------------------------------------------------------- */
-.career { row-gap: var(--sp-7); align-items: center; }
-.career__media { grid-column: full-start / full-end; border-radius: 0; }
+.career { row-gap: var(--sp-5); align-items: center; }
+.career__media { grid-column: full-start / full-end; border-radius: 0; --ar: 16 / 9; }
+#staff.section { --section-y: clamp(3.5rem, 2.5rem + 4vw, 7rem); }
 .career__text .lede { margin-top: var(--sp-6); }
 .status {
   margin-top: var(--sp-6); display: flex; align-items: center; gap: var(--sp-3); max-width: var(--measure);
@@ -760,7 +761,7 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
   .cafe__panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; }
 
   .career { row-gap: 0; }
-  .career__media { grid-column: full-start / col 7; grid-row: 1; --ar: 4 / 5; }
+  .career__media { grid-column: full-start / col 7; grid-row: 1; --ar: 16 / 9; }
   .career__text { grid-column: col 8 / content-end; grid-row: 1; }
 
 
@@ -769,7 +770,7 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
 
 @media (min-width: 75em) {            /* 1200px */
   .about__photo { min-height: 42rem; }
-  .career__media { --ar: 1 / 1; }
+  .career__media { --ar: 16 / 9; }
 }
 
 /* Header on narrow phones: keep the bar inside 320–360px. */
