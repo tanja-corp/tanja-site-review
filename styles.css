@@ -455,8 +455,9 @@ html:not(.js) .lang { display: none; }
 .hero__inner { width: 100%; padding-block: 0 clamp(1rem, 0.75rem + 2vw, 2.25rem); display: grid; gap: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
 .hero__inner > * { min-width: 0; }
 .hero__title {
-  font-size: min(var(--fs-display), 22vw); font-weight: 500; line-height: 0.82; letter-spacing: 0.06em; margin-left: -0.04em;
+  font-size: min(calc(var(--fs-display) * 1.5), 32vw); font-weight: 500; line-height: 0.82; letter-spacing: 0.06em; margin-left: -0.04em;
 }
+.hero__copy { transform: translateY(clamp(0.75rem, 0.5rem + 1vw, 1.5rem)); }
 .hero__sub {
   margin-top: var(--sp-5); display: flex; align-items: center; gap: var(--sp-3);
   font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
