@@ -505,7 +505,7 @@ html[data-lang="ja"] .hero__sub { letter-spacing: 0.12em; font-size: 0.875rem; }
 @media (max-width: 59.99em) and (max-height: 34rem) { .js .site-nav a { min-height: 3.25rem; font-size: 1.5rem; } }
 @media (max-height: 34rem) and (orientation: landscape) {
   .hero { height: 100vh; height: 100svh; min-height: 0; }
-  .hero__title { font-size: clamp(3rem, 16vh, 5rem); }
+  .hero__title { font-size: min(clamp(4.5rem, 24vh, 7.5rem), 20vw); }
   .hero__inner { padding-bottom: 1rem; gap: var(--sp-3); }
 }
 
