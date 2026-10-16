@@ -29,7 +29,7 @@
       d.classList.add('js');
       try {
         var l = localStorage.getItem('tanja-lang');
-        if (l === 'sw' || l === 'ja') { d.setAttribute('data-lang', l); d.setAttribute('lang', l); }
+        if (l === 'sw') { d.setAttribute('data-lang', l); d.setAttribute('lang', l); }
       } catch (e) {}
     })();
   </script>
@@ -55,7 +55,7 @@
     <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
     <symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6"/></symbol>
     <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.4 6.6h.01"/></symbol>
-    <symbol id="i-facebook" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM3.56 9h3.56v11.45H3.56zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol>
   </svg>
 
   <a class="skip-link" href="#main">
@@ -64,25 +64,26 @@
 
   <header class="site-header" data-header>
     <div class="site-header__bar container">
-      <a class="brand" href="index.html#home"><span class="brand__mark">TANJA</span></a>
+      <a class="brand" href="index.html#home" aria-label="TANJA home"><img src="assets/images/tanja-logo.png" alt="TANJA"></a>
       <nav class="site-nav" id="site-nav" aria-labelledby="nav-primary-label">
         <span class="visually-hidden" id="nav-primary-label"><span data-l="en" lang="en">Primary</span><span data-l="sw" lang="sw" data-review="draft">Menyu kuu</span><span data-l="ja" lang="ja" data-review="draft">メインメニュー</span></span>
         <ul class="site-nav__list">
           <li><a href="index.html#about"><span data-l="en" lang="en">About</span><span data-l="sw" lang="sw" data-review="draft">Kuhusu Sisi</span><span data-l="ja" lang="ja" data-review="draft">TANJAについて</span></a></li>
           <li><a href="what-we-do.html" aria-current="page"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></a></li>
-          <li><a href="index.html#career"><span data-l="en" lang="en">Career</span><span data-l="sw" lang="sw" data-review="draft">Ajira</span><span data-l="ja" lang="ja" data-review="draft">キャリア</span></a></li>
+          <li><a href="index.html#staff"><span data-l="en" lang="en">Staff</span><span data-l="sw" lang="sw" data-review="draft">Wafanyakazi</span><span data-l="ja" lang="ja" data-review="draft">スタッフ</span></a></li>
           <li><a href="index.html#contact"><span data-l="en" lang="en">Contact</span><span data-l="sw" lang="sw" data-review="draft">Wasiliana Nasi</span><span data-l="ja" lang="ja" data-review="draft">お問い合わせ</span></a></li>
         </ul>
       </nav>
       <div class="site-header__tools">
         <div class="lang" data-lang-menu>
-          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list" aria-label="EN — Language / Lugha / 言語">
+          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list" aria-label="EN — Language / Lugha">
             <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="lang__code" aria-hidden="true">EN</span><svg class="icon lang__chev" aria-hidden="true"><use href="#i-chev"/></svg>
           </button>
           <ul class="lang__list" id="nav-lang-list" hidden>
             <li><button type="button" class="lang__opt" data-set-lang="en" lang="en" aria-pressed="true"><span class="lang__name">English</span><small>EN</small></button></li>
             <li><button type="button" class="lang__opt" data-set-lang="sw" lang="sw" aria-pressed="false"><span class="lang__name">Kiswahili</span><small>SW</small></button></li>
-            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li>
+            <!-- JAPANESE OFF (2026-10-16); to restore see the note in index.html <head>:
+            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li> -->
           </ul>
         </div>
         <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav">
@@ -107,7 +108,6 @@
       </div>
       <div class="container page-hero__inner">
         <p class="wwd-detail__back"><a href="index.html#what-we-do"><svg class="icon" aria-hidden="true"><use href="#i-arrow-l"/></svg><span data-l="en" lang="en">Back to home</span><span data-l="sw" lang="sw" data-review="draft">Rudi mwanzo</span><span data-l="ja" lang="ja" data-review="draft">ホームに戻る</span></a></p>
-        <p class="kicker"><span class="kicker__n">02</span><span><span data-l="en" lang="en">Farm · Sustainability · Cafe</span><span data-l="sw" lang="sw" data-review="draft">Shamba · Uendelevu · Mkahawa</span><span data-l="ja" lang="ja" data-review="draft">農園・サステナビリティ・カフェ</span></span></p>
         <h1 class="section__title" id="wwd-detail-title"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></h1>
         <p class="lede"><span data-l="en" lang="en">The farm and the projects that grow from it.</span><span data-l="sw" lang="sw" data-review="draft">Shamba na miradi inayotokana nalo.</span><span data-l="ja" lang="ja" data-review="draft">農園と、そこから広がるプロジェクト。</span></p>
       </div>
@@ -129,8 +129,6 @@
           <p class="eyebrow"><span data-l="en" lang="en">Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">サステナビリティ</span></p>
           <ul>
             <li><a href="#carbon"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Hati za Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></a></li>
-            <li><a href="#school"><span data-l="en" lang="en">Lunch</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana</span><span data-l="ja" lang="ja" data-review="draft">ランチ</span></a></li>
-            <li><a href="#cattle"><span data-l="en" lang="en">Cattle</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe</span><span data-l="ja" lang="ja" data-review="draft">牛</span></a></li>
           </ul>
         </div>
       </div>
@@ -295,55 +293,8 @@
           </div>
         </article>
 
-        <!-- Lunch: NAS F11 / F10 (reasons, two secondary schools, every student, 2024–25 and 2025–26), F4 slide 22 (primary schools
-             planned for 2026), F16 / F5 slide 28 (worker lunch: porridge and makande). Partner NOT named (VERIFY with TANJA). -->
-        <article class="wwd-detail" id="school">
-          <figure class="media media--4x5 wwd-detail__media">
-            <picture>
-              <img src="assets/images/08-lunch-photo.jpeg" width="1920" height="2560" loading="lazy" decoding="async" style="--focal: 50% 50%"
-                   alt="Farm workers gathered around buckets among the coffee plants."
-                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Wafanyakazi wa shamba wamekusanyika karibu na ndoo katikati ya mimea ya kahawa."
-                   data-alt-ja="コーヒーの木々の間で、バケツを囲む農園の人々。">
-            </picture>
-          </figure>
-          <div class="wwd-detail__body">
-            <h3 class="wwd-detail__title"><span data-l="en" lang="en">Lunch</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana</span><span data-l="ja" lang="ja" data-review="draft">ランチ</span></h3>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Why</span><span data-l="sw" lang="sw" data-review="draft">Kwa nini</span><span data-l="ja" lang="ja" data-review="draft">背景</span></h4>
-              <p><span data-l="en" lang="en">In public secondary schools here, school meals depend on what parents can pay, and after a dry year many families could not cover them. The young people who will shape this area’s future should be able to concentrate on learning.</span><span data-l="sw" lang="sw" data-review="draft">Katika shule za sekondari za umma hapa, chakula cha shule hutegemea uwezo wa wazazi kulipa, na baada ya mwaka wa ukame familia nyingi hazikuweza kumudu. Vijana watakaojenga mustakabali wa eneo hili wanapaswa kuweza kujikita katika masomo.</span><span data-l="ja" lang="ja" data-review="draft">この地域の公立中等学校では、給食を保護者の負担に頼っています。雨の少ない年には、多くの家庭が負担しきれませんでした。この地域の将来を担う子どもたちが、学ぶことに集中できる環境をつくるのが目的です。</span></p>
-            </div>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">What we do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">取り組み</span></h4>
-              <p><span data-l="en" lang="en">TANJA and a partner company have provided lunch for every student at the two secondary schools near the farm, in the 2024–25 and 2025–26 school periods. Support for primary schools is planned next.</span><span data-l="sw" lang="sw" data-review="draft">TANJA pamoja na kampuni mshirika zimetoa chakula cha mchana kwa wanafunzi wote wa shule mbili za sekondari zilizo jirani na shamba, katika vipindi vya 2024–25 na 2025–26. Msaada kwa shule za msingi umepangwa kufuata.</span><span data-l="ja" lang="ja" data-review="draft">農園の近くにある2つの中等学校で、2024〜25年と2025〜26年の期間、協力企業とともに全校生徒に給食を届けました。次の対象として、小学校への支援を計画中です。</span></p>
-              <p><span data-l="en" lang="en">On the farm itself, workers are now served a daily meal of porridge and makande.</span><span data-l="sw" lang="sw" data-review="draft">Shambani kwenyewe, wafanyakazi sasa hupewa mlo wa kila siku wa uji na makande.</span><span data-l="ja" lang="ja" data-review="draft">いま農園で働く人たちに毎日出している食事は、ポリッジ（粥）とマカンデ（トウモロコシと豆の煮込み）です。</span></p>
-            </div>
-          </div>
-        </article>
-
-        <!-- Cattle: NAS F15 (purpose: herd productivity, breeding, calf care; manure applied to avocado and coffee fields), F1 slide 9 and
-             F4 slide 19 (meat, milk, biogas — plans). No herd numbers (sources conflict). -->
-        <article class="wwd-detail" id="cattle">
-          <figure class="media media--4x5 wwd-detail__media">
-            <picture>
-              <source srcset="assets/images/11-cattle-700.webp 700w, assets/images/11-cattle.webp 1100w" sizes="(min-width: 48em) 50vw, 100vw" type="image/webp">
-              <img src="assets/images/11-cattle.jpg" width="1100" height="733" loading="lazy" decoding="async"
-                   alt="A cow standing on bare ground beside a wooden shed."
-                   data-review-sw="draft" data-review-ja="draft" data-alt-sw="Ng’ombe amesimama kwenye ardhi tupu kando ya banda la mbao."
-                   data-alt-ja="木の小屋のそばの土の上に立つ牛。">
-            </picture>
-          </figure>
-          <div class="wwd-detail__body">
-            <h3 class="wwd-detail__title"><span data-l="en" lang="en">Cattle</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe</span><span data-l="ja" lang="ja" data-review="draft">牛</span></h3>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Today</span><span data-l="sw" lang="sw" data-review="draft">Leo</span><span data-l="ja" lang="ja" data-review="draft">いま</span></h4>
-              <p><span data-l="en" lang="en">TANJA keeps a herd of cattle and works on breeding and calf care. Their manure is composted and goes back to the avocado and coffee fields.</span><span data-l="sw" lang="sw" data-review="draft">TANJA inafuga kundi la ng’ombe na inashughulikia uzalishaji na utunzaji wa ndama. Samadi yao huozeshwa kuwa mbolea na kurudishwa kwenye mashamba ya parachichi na kahawa.</span><span data-l="ja" lang="ja" data-review="draft">TANJAでは牛を飼育し、繁殖と子牛の世話に取り組んでいます。牛ふんは堆肥にして、アボカドやコーヒーの畑に戻しています。</span></p>
-            </div>
-            <div class="wwd-detail__section">
-              <h4><span data-l="en" lang="en">Next</span><span data-l="sw" lang="sw" data-review="draft">Kinachofuata</span><span data-l="ja" lang="ja" data-review="draft">これから</span></h4>
-              <p><span data-l="en" lang="en">Meat, milk and biogas are at the planning stage.</span><span data-l="sw" lang="sw" data-review="draft">Nyama, maziwa na biogesi bado ziko katika hatua ya mipango.</span><span data-l="ja" lang="ja" data-review="draft">肉や牛乳、バイオガスへの活用は計画段階です。</span></p>
-            </div>
-          </div>
-        </article>
+        <!-- REMOVED 2026-10-16 (meeting): the Lunch (#school) and Cattle (#cattle) write-ups. They are farming activity, not projects. The full text is in the
+             git history of this file (commit 2e2192a) and the homepage versions are kept in docs/COPY_DECK.md of tanja-corporate-site. -->
       </div>
     </section>
 
@@ -354,7 +305,8 @@
     <div class="container site-footer__grid">
       <div>
         <p class="site-footer__brand">TANJA</p>
-        <p class="site-footer__place"><span data-l="en" lang="en">Karatu District, Arusha Region, Tanzania</span><span data-l="sw" lang="sw" data-review="draft">Wilaya ya Karatu, Mkoa wa Arusha, Tanzania</span><span data-l="ja" lang="ja" data-review="draft">タンザニア アルーシャ州カラトゥ県</span></p>
+        <!-- TEMPORARY: shared office@ mailbox until the inquiry-only address exists (see index.html footer). Change href and text together. -->
+        <p class="site-footer__mail"><a href="mailto:office@tanja.co.tz">office@tanja.co.tz</a></p>
       </div>
       <div class="site-footer__tools">
         <nav class="site-footer__nav" aria-labelledby="nav-footer-label" data-mirror-nav="#site-nav">
@@ -362,23 +314,24 @@
           <ul>
             <li><a href="index.html#about"><span data-l="en" lang="en">About</span><span data-l="sw" lang="sw" data-review="draft">Kuhusu Sisi</span><span data-l="ja" lang="ja" data-review="draft">TANJAについて</span></a></li>
             <li><a href="what-we-do.html"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></a></li>
-            <li><a href="index.html#career"><span data-l="en" lang="en">Career</span><span data-l="sw" lang="sw" data-review="draft">Ajira</span><span data-l="ja" lang="ja" data-review="draft">キャリア</span></a></li>
+            <li><a href="index.html#staff"><span data-l="en" lang="en">Staff</span><span data-l="sw" lang="sw" data-review="draft">Wafanyakazi</span><span data-l="ja" lang="ja" data-review="draft">スタッフ</span></a></li>
             <li><a href="index.html#contact"><span data-l="en" lang="en">Contact</span><span data-l="sw" lang="sw" data-review="draft">Wasiliana Nasi</span><span data-l="ja" lang="ja" data-review="draft">お問い合わせ</span></a></li>
           </ul>
         </nav>
         <div class="lang lang--up" data-lang-menu>
-          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list-foot" aria-label="EN — Language / Lugha / 言語">
+          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list-foot" aria-label="EN — Language / Lugha">
             <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="lang__code" aria-hidden="true">EN</span><svg class="icon lang__chev" aria-hidden="true"><use href="#i-chev"/></svg>
           </button>
           <ul class="lang__list" id="nav-lang-list-foot" hidden>
             <li><button type="button" class="lang__opt" data-set-lang="en" lang="en" aria-pressed="true"><span class="lang__name">English</span><small>EN</small></button></li>
             <li><button type="button" class="lang__opt" data-set-lang="sw" lang="sw" aria-pressed="false"><span class="lang__name">Kiswahili</span><small>SW</small></button></li>
-            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li>
+            <!-- JAPANESE OFF (2026-10-16); to restore see the note in index.html <head>:
+            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li> -->
           </ul>
         </div>
         <ul class="social social--icons" role="list">
-          <li><button type="button" class="social__icon" disabled><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg><span class="visually-hidden">Instagram <span data-l="en" lang="en">(link to be confirmed)</span><span data-l="sw" lang="sw" data-review="draft">(kiungo kinathibitishwa)</span><span data-l="ja" lang="ja" data-review="draft">（リンクは確認中）</span></span></button></li>
-          <li><button type="button" class="social__icon" disabled><svg class="icon" aria-hidden="true"><use href="#i-facebook"/></svg><span class="visually-hidden">Facebook <span data-l="en" lang="en">(link to be confirmed)</span><span data-l="sw" lang="sw" data-review="draft">(kiungo kinathibitishwa)</span><span data-l="ja" lang="ja" data-review="draft">（リンクは確認中）</span></span></button></li>
+          <li><a class="social__icon" href="https://www.instagram.com/tanja20232026?srtk=MTlkN2I4dXF1bm14dg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg><span class="visually-hidden">Instagram</span></a></li>
+          <li><a class="social__icon" href="https://www.linkedin.com/in/tanja-ltd-a10106444" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg><span class="visually-hidden">LinkedIn</span></a></li>
         </ul>
       </div>
       <p class="site-footer__legal">© 2026 TANJA Corporation Limited</p>

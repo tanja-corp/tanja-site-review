@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title data-review-sw="draft" data-review-ja="draft" data-sw="TANJA — Mashamba ya Oldeani, Karatu, Arusha, Tanzania" data-ja="TANJA — タンザニア、アルーシャ州カラトゥ県オルデアニの農園">TANJA — Farms in Oldeani, Karatu, Arusha, Tanzania</title>
+  <title data-review-sw="draft" data-review-ja="draft" data-sw="TANJA — Mashamba ya kahawa pembezoni mwa Ngorongoro, Tanzania" data-ja="TANJA — タンザニア、ンゴロンゴロのほとりのコーヒー農園">TANJA — Coffee farms on the edge of Ngorongoro, Tanzania</title>
   <meta name="description" data-review-sw="draft" data-review-ja="draft"
         content="TANJA Corporation Limited farms three century-old estates in Karatu District, northern Tanzania: coffee, avocado, macadamia and bees, with projects for the surrounding community."
         data-sw="TANJA Corporation Limited inalima mashamba matatu yenye historia ya zaidi ya karne moja katika Wilaya ya Karatu, kaskazini mwa Tanzania: kahawa, parachichi, makadamia na nyuki, pamoja na miradi kwa ajili ya jamii inayozunguka."
@@ -12,7 +12,7 @@
   <!-- Link previews (WhatsApp and LinkedIn). Absolute URLs point at the review host; change them when the site moves to its real domain. -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TANJA">
-  <meta property="og:title" content="TANJA — Farms in Oldeani, Karatu, Arusha, Tanzania">
+  <meta property="og:title" content="TANJA — Coffee farms on the edge of Ngorongoro, Tanzania">
   <meta property="og:description" content="Coffee, avocado, macadamia and bees on three century-old estates in Karatu District, northern Tanzania.">
   <meta property="og:url" content="https://tanja-corp.github.io/tanja-site-review/">
   <meta property="og:image" content="https://tanja-corp.github.io/tanja-site-review/assets/images/01-hero-1-1200.jpg">
@@ -22,15 +22,17 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
-  <!-- Language boot: runs before first paint so a returning SW/JP visitor never sees an English flash.
-       English is the default. The choice is remembered in localStorage (wrapped in try/catch; storage can be blocked). -->
+  <!-- Language boot: runs before first paint so a returning Swahili visitor never sees an English flash.
+       English is the default. The choice is remembered in localStorage (wrapped in try/catch; storage can be blocked).
+       JAPANESE IS OFF (2026-10-16 meeting: English and Swahili only for the public launch). To bring it back: add 'ja' to the test below,
+       add 'ja' to LANGS in script.js, and restore the two Japanese <li> items in the language menus (kept as comments). -->
   <script>
     (function () {
       var d = document.documentElement;
       d.classList.add('js');
       try {
         var l = localStorage.getItem('tanja-lang');
-        if (l === 'sw' || l === 'ja') { d.setAttribute('data-lang', l); d.setAttribute('lang', l); }
+        if (l === 'sw') { d.setAttribute('data-lang', l); d.setAttribute('lang', l); }
       } catch (e) {}
     })();
   </script>
@@ -42,11 +44,14 @@
   TANJA Web V2 — static prototype (HTML / CSS / JS only, no build step). Redesigned 2026-09-29 ("estate editorial").
 
   HOW THIS FILE IS ORGANISED (read before editing)
-  - One page, five visible sections in this order: Home (Hero) → About → What We Do → Staff → Contact. Unchanged by the redesign.
-    What We Do has three branches: Farm (Coffee, Avocado, Macadamia, Beekeeping), Sustainability (Carbon Credit, Lunch, Cattle,
-    extensible) and Cafe. The items are NOT linked to what-we-do.html for now (user instruction 2026-09-29, after the team meeting). To re-link, wrap each
-    title in <a href="what-we-do.html#coffee"> (ids: coffee, avocado, macadamia, beekeeping, carbon, school, cattle, cafe) and restore the
-    "Read more" link under the What We Do lede; the CSS for both is still in styles.css (.crop__title a, .project__title a, .more, .crop__go).
+  - One page, four visible sections in this order: Home (Hero) → About → What We Do → Staff, then the footer, which is also the Contact point
+    (2026-10-16 meeting: the Contact section was removed and its content moved into the footer, id="contact").
+    A Mission / Vision / Values section is prepared BEFORE About (id="mission") but is hidden until the wording is decided.
+    What We Do has two branches: Farm (Coffee, Avocado, Macadamia, Beekeeping) and Sustainability (Carbon Credit; extensible).
+    Lunch and Cattle were taken out of Sustainability on 2026-10-16: they belong to farming activity, not to a project. Their text is kept in docs/COPY_DECK.md.
+    The items are NOT linked to what-we-do.html for now (user instruction 2026-09-29, after the team meeting). To re-link, wrap each
+    title in <a href="what-we-do.html#coffee"> (ids: coffee, avocado, macadamia, beekeeping, carbon) and restore the
+    "Read more" link under the What We Do heading; the CSS for both is still in styles.css (.crop__title a, .project__title a, .more, .crop__go).
   - FARM uses ONE overall introduction, not one description per crop: requested 2026-09-29 by Naoaki (production owner) with the
     exact wording to publish. The English text is his, verbatim. Do not edit it without him. SW / JP are draft translations.
   - COPY SOURCES: every factual sentence is traced in docs/COPY_DECK.md (English) / docs/COPY_DECK_JA.md (Japanese).
@@ -54,7 +59,8 @@
     The three variants must always say the same thing. English is shown by default; script.js switches html[data-lang].
   - TRANSLATION REVIEW STATE lives on each SW / JP string: data-review="draft" (default) or "reviewed". A small marker ("Draft translation")
     shows at the top of a section while it still holds a draft string in the active language. Machine count: node architecture/check.js.
-  - LANGUAGE MENU: one button (globe + current code) opens a list of the three languages. The header and footer menus stay in step.
+  - LANGUAGE MENU: one button (globe + current code) opens a list of the languages (English and Kiswahili; Japanese is switched off, see the boot script
+    in <head>). The header and footer menus stay in step. All Japanese strings stay in the page so it can be switched on again.
   - LAYOUT GRID: every composed block is <div class="wrap …">, a 12-column grid with an edge track on each side, so a photograph can run
     to the window edge (grid-column: … / full-end) while text stays on the columns.
   - BACKGROUNDS alternate BY THEMSELVES (main > .section:nth-of-type(odd) is tinted; the hero counts as the first <section>).
@@ -102,13 +108,14 @@
       <div class="site-header__tools">
         <!-- LANGUAGE MENU: one tap on the button opens the list; one tap on a language applies it. Language names are written in their own language. -->
         <div class="lang" data-lang-menu>
-          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list" aria-label="EN — Language / Lugha / 言語">
+          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list" aria-label="EN — Language / Lugha">
             <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="lang__code" aria-hidden="true">EN</span><svg class="icon lang__chev" aria-hidden="true"><use href="#i-chev"/></svg>
           </button>
           <ul class="lang__list" id="nav-lang-list" hidden>
             <li><button type="button" class="lang__opt" data-set-lang="en" lang="en" aria-pressed="true"><span class="lang__name">English</span><small>EN</small></button></li>
             <li><button type="button" class="lang__opt" data-set-lang="sw" lang="sw" aria-pressed="false"><span class="lang__name">Kiswahili</span><small>SW</small></button></li>
-            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li>
+            <!-- JAPANESE OFF (2026-10-16). To restore, uncomment this item and see the note in <head>:
+            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li> -->
           </ul>
         </div>
         <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav">
@@ -123,12 +130,13 @@
 
     <!-- =================================================================== 01 HOME = HERO (slot 01)
          A horizontal slider (2026-09-29, direct user request: "several photos side by side, switching automatically every few
-         seconds"). 8 slides (the avocado photo belongs to What We Do, not the hero; slides 2 and 6 are the previous version's hero and dam photographs); each slides in from the right every 6s (--hero-interval in styles.css). No library, no video.
+         seconds"). Cut from 8 to 4 slides on 2026-10-16 (meeting: "three to four is enough"; no captions, no page numbers): coffee rows, ripening
+         cherries, drying beds, and the workers group photograph. Each slide enters from the right every 6s (--hero-interval in styles.css). No library, no video.
+         The other five photographs (mountain, slope with reservoir, dam, sunrise, reservoir) are not shown but their files are kept in assets/images.
          - Slide 1 is real from first paint (fetchpriority="high", the LCP image). Slides 2+ carry data-srcset / data-src only,
            so the browser fetches NOTHING for them unless script.js promotes the attributes — which it does only when JS runs
            AND the visitor has not asked for reduced motion. No JS / reduced motion → slide 1 stays, as a still photograph.
-         - Only slide 1 carries this section's data-slot="01"; the other slides are further photographs of the same slot.
-         - Captions come from each photograph's source caption (docs/PHOTO_MANIFEST.md, slot 01). -->
+         - Only slide 1 carries this section's data-slot="01"; the other slides are further photographs of the same slot. -->
     <section class="hero" id="home" aria-labelledby="hero-title" data-slot="01">
       <div class="hero__media" data-hero-rotate role="region" aria-roledescription="carousel" aria-label="TANJA farm photographs" data-label-sw="Picha za shamba la TANJA" data-label-ja="TANJA農園の写真">
         <figure class="hero__slide is-active" aria-hidden="false">
@@ -155,26 +163,6 @@
         </figure>
         <figure class="hero__slide" aria-hidden="true">
           <picture>
-            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-3-m.webp" type="image/webp">
-            <source data-srcset="assets/images/01-hero-3-1200.webp 1200w, assets/images/01-hero-3.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-3.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 55%"
-                 alt="Forested hills and a mountain range under large white clouds."
-                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Vilima vyenye misitu na safu ya milima chini ya mawingu makubwa meupe."
-                 data-alt-ja="大きな白い雲の下に、森に覆われた丘と山並み。">
-          </picture>
-        </figure>
-        <figure class="hero__slide" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-4-m.webp" type="image/webp">
-            <source data-srcset="assets/images/01-hero-4-1200.webp 1200w, assets/images/01-hero-4.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-4.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 50%"
-                 alt="Coffee covering a slope, with a lined reservoir and trees below and the plain beyond."
-                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Kahawa ikifunika mteremko, na bwawa la maji na miti chini, na uwanda kwa mbali."
-                 data-alt-ja="斜面を覆うコーヒー畑。下に貯水池と木々、遠くに平原。">
-          </picture>
-        </figure>
-        <figure class="hero__slide" aria-hidden="true">
-          <picture>
             <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-5-m.webp" type="image/webp">
             <source data-srcset="assets/images/01-hero-5-1200.webp 1200w, assets/images/01-hero-5.webp 1600w" sizes="100vw" type="image/webp">
             <img data-src="assets/images/01-hero-5.jpg" width="1600" height="1067" decoding="async" style="--focal: 50% 50%"
@@ -184,33 +172,13 @@
           </picture>
         </figure>
         <figure class="hero__slide" aria-hidden="true">
+          <!-- Workers group photograph (2026-10-16 meeting). This is a 1025 px wide copy: replace 01-hero-9.jpg / .webp with the original (same names, update width / height) when it is available. -->
           <picture>
-            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-6-m.webp" type="image/webp">
-            <source data-srcset="assets/images/01-hero-6-1200.webp 1200w, assets/images/01-hero-6.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-6.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 58%"
-                 alt="Calm, rippled water between banks of bare red earth, with trees and a wooded hill behind under a blue sky with white clouds."
-                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Maji tulivu yenye mawimbi madogo kati ya kingo za udongo mwekundu usio na nyasi, na miti na kilima chenye miti nyuma, chini ya anga la buluu lenye mawingu meupe."
-                 data-alt-ja="草の少ない赤土の土手に囲まれた、さざ波の立つ静かな水面。奥に木々と樹木に覆われた丘があり、青空に白い雲が浮かんでいる。">
-          </picture>
-        </figure>
-        <figure class="hero__slide" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-7-m.webp" type="image/webp">
-            <source data-srcset="assets/images/01-hero-7-1200.webp 1200w, assets/images/01-hero-7.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-7.jpg" width="1920" height="1280" decoding="async" style="--focal: 55% 55%"
-                 alt="The sun rising behind distant hills, with silhouetted trees against an orange sky."
-                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Jua likichomoza nyuma ya vilima vya mbali, miti ikionekana kama vivuli dhidi ya anga la rangi ya chungwa."
-                 data-alt-ja="遠くの丘の向こうから昇る朝日と、橙色の空に浮かぶ木々の影。">
-          </picture>
-        </figure>
-        <figure class="hero__slide" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-8-m.webp" type="image/webp">
-            <source data-srcset="assets/images/01-hero-8-1200.webp 1200w, assets/images/01-hero-8.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-8.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 60%"
-                 alt="A reservoir with a grassy bank, trees on the far side and white clouds in a blue sky."
-                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Bwawa la maji lenye ukingo wa nyasi, miti upande wa pili na mawingu meupe angani la buluu."
-                 data-alt-ja="草の生えた岸のある貯水池。対岸に木々、青空に白い雲。">
+            <source data-srcset="assets/images/01-hero-9.webp" type="image/webp">
+            <img data-src="assets/images/01-hero-9.jpg" width="1025" height="582" decoding="async" style="--focal: 50% 80%"
+                 alt="A large group of TANJA workers standing together in front of tall slender trees under a cloudy sky, with a wooden table in the foreground."
+                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Kundi kubwa la wafanyakazi wa TANJA wamesimama pamoja mbele ya miti mirefu myembamba chini ya anga lenye mawingu, na meza ya mbao mbele."
+                 data-alt-ja="背の高い細い木々と曇り空の下に、TANJAの大勢のワーカーが集まっている。手前に木のテーブル。">
           </picture>
         </figure>
       </div>
@@ -218,23 +186,13 @@
       <div class="hero__inner container">
         <div>
           <h1 class="hero__title" id="hero-title">TANJA</h1>
+          <!-- TENTATIVE (2026-10-16 meeting): a keyword that says what TANJA is, instead of a place name. The final line is decided after the
+               mission / vision / values discussion. Location moved to About. -->
           <p class="hero__sub" data-placeholder="hero-line">
-            <span data-l="en" lang="en">Oldeani · Karatu · Arusha, Tanzania</span><span data-l="sw" lang="sw" data-review="draft">Oldeani · Karatu · Arusha, Tanzania</span><span data-l="ja" lang="ja" data-review="draft">タンザニア・アルーシャ州・カラトゥ県・オルデアニ</span>
+            <span data-l="en" lang="en">Coffee farms on the edge of Ngorongoro</span><span data-l="sw" lang="sw" data-review="draft">Mashamba ya kahawa pembezoni mwa Ngorongoro</span><span data-l="ja" lang="ja" data-review="draft">ンゴロンゴロのほとりのコーヒー農園</span>
           </p>
         </div>
         <div class="hero__foot">
-          <p class="hero__caption"><span class="hero__count" aria-hidden="true">01 / 08</span>
-            <span class="hero__caption-text">
-              <span data-cap class="is-active"><span data-l="en" lang="en">Coffee fields overlooking the plain</span><span data-l="sw" lang="sw" data-review="draft">Mashamba ya kahawa yanayotazama uwanda</span><span data-l="ja" lang="ja" data-review="draft">平原を望むコーヒー農園</span></span>
-              <span data-cap><span data-l="en" lang="en">Ripe coffee cherries among the hillside rows</span><span data-l="sw" lang="sw" data-review="draft">Matunda mekundu ya kahawa yakikomaa katikati ya safu za shambani</span><span data-l="ja" lang="ja" data-review="draft">斜面のコーヒー畑で色づくコーヒーチェリー</span></span>
-              <span data-cap><span data-l="en" lang="en">Mount Oldeani rising above the farm</span><span data-l="sw" lang="sw" data-review="draft">Mlima Oldeani ukisimama juu ya shamba</span><span data-l="ja" lang="ja" data-review="draft">農園の向こうにそびえるオルデアニ山</span></span>
-              <span data-cap><span data-l="en" lang="en">Coffee fields on the hillside above the reservoir</span><span data-l="sw" lang="sw" data-review="draft">Mashamba ya kahawa kwenye mteremko juu ya bwawa</span><span data-l="ja" lang="ja" data-review="draft">貯水池を見下ろす斜面のコーヒー畑</span></span>
-              <span data-cap><span data-l="en" lang="en">Aerial view of the coffee drying beds</span><span data-l="sw" lang="sw" data-review="draft">Mwonekano wa juu wa vitanda vya kukaushia kahawa</span><span data-l="ja" lang="ja" data-review="draft">上空から見たコーヒーの乾燥棚</span></span>
-              <span data-cap><span data-l="en" lang="en">The farm water reservoir, completed in 2025</span><span data-l="sw" lang="sw" data-review="draft">Bwawa la maji la shamba, lililokamilika mwaka 2025</span><span data-l="ja" lang="ja" data-review="draft">2025年に完成した農園の貯水池</span></span>
-              <span data-cap><span data-l="en" lang="en">Sunrise over the farm at the start of 2025</span><span data-l="sw" lang="sw" data-review="draft">Macheo ya kwanza ya mwaka 2025 juu ya shamba</span><span data-l="ja" lang="ja" data-review="draft">2025年初め、農園を照らす日の出</span></span>
-              <span data-cap><span data-l="en" lang="en">The farm reservoir, framed by green banks and open sky</span><span data-l="sw" lang="sw" data-review="draft">Bwawa la maji la shamba, likizungukwa na kingo za kijani na anga pana</span><span data-l="ja" lang="ja" data-review="draft">緑の岸辺と広い空に囲まれた農園の貯水池</span></span>
-            </span>
-          </p>
           <div class="hero__controls" role="group" aria-label="Slides" data-label-sw="Picha" data-label-ja="スライド">
             <button type="button" class="hero__arrow" data-hero-prev><svg class="icon" aria-hidden="true"><use href="#i-arrow-l"/></svg><span class="visually-hidden"><span data-l="en" lang="en">Previous photo</span><span data-l="sw" lang="sw" data-review="draft">Picha iliyotangulia</span><span data-l="ja" lang="ja" data-review="draft">前の写真</span></span></button>
             <div class="hero__dots" data-label="Photo" data-label-sw="Picha" data-label-ja="写真"></div>
@@ -245,21 +203,38 @@
       </div>
     </section>
 
+    <!-- ===================================================================== MISSION / VISION / VALUES (prepared, hidden)
+         2026-10-16 meeting: this block goes BEFORE About. The wording is not decided: it will come from the staff discussion (small groups,
+         representatives, one-hour presentation). DO NOT write it from the Smart Village mission, the OSTI values (Trust / Connect / Challenge)
+         or anything else (CLAUDE.md, "never fabricate mission wording"). To publish: replace the three "Wording to be confirmed" lines, then
+         delete the hidden attribute on the <section>. It is not in the menu on purpose. -->
+    <section class="section tl-scope mvv" id="mission" aria-labelledby="mission-title" hidden>
+      <div class="wrap mvv__wrap">
+        <h2 class="section__title" id="mission-title"><span data-l="en" lang="en">Mission · Vision · Values</span><span data-l="sw" lang="sw" data-review="draft">Dhamira · Dira · Maadili</span><span data-l="ja" lang="ja" data-review="draft">ミッション・ビジョン・バリュー</span></h2>
+        <p class="tbc" data-placeholder="mission-values"><span data-l="en" lang="en">Wording to be confirmed.</span><span data-l="sw" lang="sw" data-review="draft">Maneno rasmi bado yanathibitishwa.</span><span data-l="ja" lang="ja" data-review="draft">正式な文言は確認中です。</span></p>
+      </div>
+    </section>
+
     <!-- ===================================================================== 02 ABOUT (slot 02)
-         Our Company: who TANJA is, when it started, the three estates. Sources for every sentence: docs/COPY_DECK.md.
-         Our Staff and Vision / Mission stay DEFERRED (see the comment after this section). -->
+         Who TANJA is, when it started, where the three estates lie and who invests in it. Sources for every sentence: docs/COPY_DECK.md.
+         No sub-label ("Our Company"): the heading "About" is enough (2026-10-16 meeting, "too many tabs"). -->
     <section class="section tl-scope" id="about" aria-labelledby="about-title">
       <p class="tl-mark" role="note"><span data-l="en" lang="en">Draft translation</span><span data-l="sw" lang="sw" data-review="draft">Tafsiri ya rasimu</span><span data-l="ja" lang="ja" data-review="draft">翻訳は下書き</span></p>
 
       <div class="wrap about">
         <div class="about__text" id="our-company" data-reveal>
-          <p class="kicker"><span class="kicker__n">01</span><span><span data-l="en" lang="en">Our Company</span><span data-l="sw" lang="sw" data-review="draft">Kampuni Yetu</span><span data-l="ja" lang="ja" data-review="draft">会社概要</span></span></p>
           <h2 class="section__title" id="about-title"><span data-l="en" lang="en">About</span><span data-l="sw" lang="sw" data-review="draft">Kuhusu Sisi</span><span data-l="ja" lang="ja" data-review="draft">TANJAについて</span></h2>
           <p class="lede">
             <span data-l="en" lang="en">In 2023, TANJA took over three coffee estates in the highlands of northern Tanzania. Coffee has been grown on these slopes since the 1920s.</span><span data-l="sw" lang="sw" data-review="draft">Mwaka 2023, TANJA ilichukua mashamba matatu ya kahawa katika nyanda za juu za kaskazini mwa Tanzania. Kahawa imelimwa kwenye miteremko hii tangu miaka ya 1920.</span><span data-l="ja" lang="ja" data-review="draft">TANJAは2023年、タンザニア北部の高地にある3つのコーヒー農園を引き継ぎました。この斜面では1920年代からコーヒーが育てられてきました。</span>
           </p>
           <p class="about__body">
             <span data-l="en" lang="en">More than 500 people work on the farm today. With agriculture at the core, TANJA runs the Smart Village Project together with the surrounding community, working towards a carbon-neutral farm and lasting wellbeing for the people who live around it.</span><span data-l="sw" lang="sw" data-review="draft">Leo, zaidi ya watu 500 wanafanya kazi shambani. Kilimo kikiwa ndicho kiini, TANJA inaendesha Mradi wa Smart Village pamoja na jamii inayozunguka, kwa lengo la kuwa na shamba lisilochangia ongezeko la kaboni na ustawi wa kudumu kwa watu wanaoishi jirani.</span><span data-l="ja" lang="ja" data-review="draft">いま農園で働く人は500人を超えます。農業を中核に据えたSmart Village Projectは、地域とともに進める取り組みです。カーボンニュートラルな農園と、周りに暮らす人々の持続的なウェルビーイングを目指しています。</span>
+          </p>
+          <!-- 2026-10-16 meeting: location belongs in About, not in the hero; the three estates get one plain sentence; the Japanese investment is a
+               distinguishing fact worth stating. VERIFY: "invested in by a Japanese company" is the speaker's wording; no source document states it.
+               Replace this whole paragraph when Calliste's About text arrives. -->
+          <p class="about__body">
+            <span data-l="en" lang="en">Our three estates, Bergfrieden, Shah and Tinga Tinga, lie on the southeast slope of Mt. Oldeani in Karatu District, Arusha Region, beside the Ngorongoro Conservation Area. TANJA is invested in by a Japanese company.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu matatu, Bergfrieden, Shah na Tinga Tinga, yako kwenye mteremko wa kusini-mashariki wa Mlima Oldeani katika Wilaya ya Karatu, Mkoa wa Arusha, kando ya Hifadhi ya Ngorongoro. TANJA imewekezwa na kampuni ya Kijapani.</span><span data-l="ja" lang="ja" data-review="draft">3つの農園（バーグフリーデン、シャー、ティンガティンガ）は、アルーシャ州カラトゥ県のオルデアニ山南東斜面、ンゴロンゴロ保全地域のとなりにあります。TANJAは日本企業の出資を受けています。</span>
           </p>
         </div>
         <figure class="media about__photo" data-slot="02">
@@ -278,38 +253,17 @@
              list (company, location, name meaning, crops). The figures still appear in docs/COPY_DECK.md if they are wanted again.
              PLACEHOLDER kept in mind: the meaning of the name "TANJA" is in no source; do not guess. -->
 
-        <!-- The three estates (OSTI "Our Farms — Tanzania" page, public). Spelling "Bergfrieden" follows OSTI and the NAS block maps; VERIFY. -->
-        <div class="estates">
-          <div class="estates__head">
-            <h3 class="estates__title"><span data-l="en" lang="en">Three estates</span><span data-l="sw" lang="sw" data-review="draft">Mashamba matatu</span><span data-l="ja" lang="ja" data-review="draft">3つの農園</span></h3>
-            <p class="estates__note"><span data-l="en" lang="en">On the southeast slope of Mt. Oldeani, beside the Ngorongoro Conservation Area</span><span data-l="sw" lang="sw" data-review="draft">Kwenye mteremko wa kusini-mashariki wa Mlima Oldeani, kando ya Hifadhi ya Ngorongoro</span><span data-l="ja" lang="ja" data-review="draft">オルデアニ山の南東斜面、ンゴロンゴロ保全地域のとなり</span></p>
-          </div>
-          <ul class="estate-list" role="list" data-reveal-group>
-            <li class="estate">
-              <p class="estate__alt">1,580–1,840 m</p>
-              <h4 class="estate__name"><span data-l="en" lang="en">Bergfrieden</span><span data-l="sw" lang="sw" data-review="draft">Bergfrieden</span><span data-l="ja" lang="ja" data-review="draft">バーグフリーデン</span></h4>
-              <p><span data-l="en" lang="en">German for “mountain of peace”. The highest of the three, where wild elephants often pass through.</span><span data-l="sw" lang="sw" data-review="draft">Kwa Kijerumani maana yake ni “mlima wa amani”. Ndilo shamba lililo juu zaidi kati ya matatu, ambapo tembo pori hupita mara kwa mara.</span><span data-l="ja" lang="ja" data-review="draft">ドイツ語で「平和の山」という意味の名をもつ、3つのうち最も標高の高い農園です。野生のゾウがよく通ります。</span></p>
-            </li>
-            <li class="estate">
-              <p class="estate__alt">1,400–1,700 m</p>
-              <h4 class="estate__name"><span data-l="en" lang="en">Shah</span><span data-l="sw" lang="sw" data-review="draft">Shah</span><span data-l="ja" lang="ja" data-review="draft">シャー</span></h4>
-              <p><span data-l="en" lang="en">The largest estate and the centre of daily work, with the wet mill, drying beds and the farm office.</span><span data-l="sw" lang="sw" data-review="draft">Shamba kubwa zaidi na kitovu cha kazi za kila siku, lenye kiwanda cha kuchakata kahawa kwa maji, vitanda vya kukaushia na ofisi ya shamba.</span><span data-l="ja" lang="ja" data-review="draft">最も広く、日々の作業の中心となる農園。ウェットミル、乾燥棚、農園事務所があります。</span></p>
-            </li>
-            <li class="estate">
-              <p class="estate__alt">1,370–1,400 m</p>
-              <h4 class="estate__name"><span data-l="en" lang="en">Tinga Tinga</span><span data-l="sw" lang="sw" data-review="draft">Tinga Tinga</span><span data-l="ja" lang="ja" data-review="draft">ティンガティンガ</span></h4>
-              <p><span data-l="en" lang="en">A quiet estate under shade trees, where coffee cherries ripen slowly.</span><span data-l="sw" lang="sw" data-review="draft">Shamba tulivu chini ya miti ya kivuli, ambapo matunda ya kahawa huiva taratibu.</span><span data-l="ja" lang="ja" data-review="draft">シェードツリーに囲まれた静かな農園で、コーヒーの実はゆっくりと熟していきます。</span></p>
-            </li>
-          </ul>
-        </div>
+        <!-- REMOVED 2026-10-16 (meeting: "the three-estate cards are too heavy; a simple explanation in About is enough"): the Three estates cards
+             (Bergfrieden / Shah / Tinga Tinga with altitudes and descriptions). The estate names and the location now sit in one sentence in the text
+             above. The full cards (OSTI "Our Farms - Tanzania" page, public; spelling "Bergfrieden" follows OSTI; VERIFY) are kept in docs/COPY_DECK.md
+             for the next-layer page. -->
       </div>
     </section>
 
-    <!-- DEFERRED 2026-09-25 / 2026-09-26: two sections removed from the visible homepage, neither deleted from the project.
-         - Vision / Mission (2026-09-25): dropped from the visible build. architecture/model.js keeps "vision-mission" as a ghost object.
-           A candidate sentence exists in three TANJA decks ("Building positive and creative communities with sustainable well-being in
-           Africa through the Smart Village Project") — recorded in docs/COPY_DECK.md, NOT published until the section is reinstated.
-         - Our Staff (2026-09-26): removed at the user's explicit request. architecture/model.js keeps "staff" as a ghost object. -->
+    <!-- DEFERRED: Our Staff as a roster of named people (2026-09-26) is still not shown; the Staff section below is a team statement and a photograph.
+         Mission / Vision / Values: prepared above the About section, hidden until the wording is decided (2026-10-16).
+         A candidate sentence exists in three TANJA decks ("Building positive and creative communities with sustainable well-being in
+         Africa through the Smart Village Project") - recorded in docs/COPY_DECK.md, NOT published. -->
 
     <!-- ================================================================ 03 WHAT WE DO -->
     <section class="section tl-scope" id="what-we-do" aria-labelledby="wwd-title">
@@ -317,10 +271,8 @@
 
       <div class="wrap wwd__head" data-reveal>
         <div class="wwd__title">
-          <p class="kicker"><span class="kicker__n">02</span><span><span data-l="en" lang="en">Farm · Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Shamba · Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">農園・サステナビリティ</span></span></p>
           <h2 class="section__title" id="wwd-title"><span data-l="en" lang="en">What We Do</span><span data-l="sw" lang="sw" data-review="draft">Tunachofanya</span><span data-l="ja" lang="ja" data-review="draft">事業内容</span></h2>
         </div>
-        <p class="wwd__lede"><span data-l="en" lang="en">Our work spans the farm and sustainability projects with our neighbours.</span><span data-l="sw" lang="sw" data-review="draft">Kazi zetu zinajumuisha shamba na miradi ya uendelevu pamoja na majirani zetu.</span><span data-l="ja" lang="ja" data-review="draft">農園での生産と、地域とともに進めるサステナビリティ・プロジェクト。</span></p>
       </div>
 
       <!-- ---------------------------------------------------- FARM
@@ -331,10 +283,16 @@
 
         <div class="farm-intro" data-reveal>
           <p class="statement"><span data-l="en" lang="en">Our farms have a history spanning more than a century and lie on the edge of Ngorongoro. Drawing on this history and rich natural surroundings, we grow coffee, avocados and macadamias, and keep bees.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu yana historia ya zaidi ya karne moja na yako pembezoni mwa Ngorongoro. Tukitegemea historia hii na mazingira haya tajiri ya asili, tunalima kahawa, parachichi na makadamia, na tunafuga nyuki.</span><span data-l="ja" lang="ja" data-review="draft">私たちの農園はンゴロンゴロのほとりに広がり、100年を超える歴史をもちます。受け継いだ歴史と豊かな自然を生かし、コーヒー、アボカド、マカダミアを育て、ミツバチを飼っています。</span></p>
+          <!-- 2026-10-16 meeting: the certification sentence and the two certification chips on the tiles are gone ("reduce them, use the logo somewhere").
+               The certifications now appear only as small marks. Rainforest Alliance (coffee farms) and GLOBALG.A.P. (avocado farms) are Naoaki's statements;
+               the sentence that said so is kept in docs/COPY_DECK.md. PLACEHOLDER: the GLOBALG.A.P. mark is plain text until TANJA supplies the logo file. -->
           <div class="farm-intro__body">
-            <p><span data-l="en" lang="en">Our coffee farms hold Rainforest Alliance certification, and our avocado farms hold GLOBALG.A.P. certification.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu ya kahawa yana cheti cha Rainforest Alliance, na mashamba yetu ya parachichi yana cheti cha GLOBALG.A.P.</span><span data-l="ja" lang="ja" data-review="draft">認証は、コーヒー農園がレインフォレスト・アライアンス、アボカド農園がGLOBALG.A.P.です。</span></p>
             <p><span data-l="en" lang="en">We aim to care for the environment, support the wellbeing of the people who work here, and bring joy to those who enjoy the harvests of this rich land.</span><span data-l="sw" lang="sw" data-review="draft">Tunalenga kutunza mazingira, kusaidia ustawi wa watu wanaofanya kazi hapa, na kuleta furaha kwa wale wanaofurahia mavuno ya ardhi hii tajiri.</span><span data-l="ja" lang="ja" data-review="draft">目指すのは、環境を守り、ここで働く人々のウェルビーイングを支え、この豊かな土地の実りを味わう人々に喜びを届けることです。</span></p>
-          <picture><source srcset="assets/images/rainforest-alliance-certified.webp" type="image/webp"><img class="farm-intro__badge" src="assets/images/rainforest-alliance-certified.png" width="480" height="435" loading="lazy" decoding="async" alt="Rainforest Alliance Certified seal"></picture>
+            <div class="farm-certs" role="group" aria-labelledby="farm-certs-label">
+              <span class="visually-hidden" id="farm-certs-label"><span data-l="en" lang="en">Certifications</span><span data-l="sw" lang="sw" data-review="draft">Vyeti</span><span data-l="ja" lang="ja" data-review="draft">認証</span></span>
+              <picture><source srcset="assets/images/rainforest-alliance-certified.webp" type="image/webp"><img class="farm-certs__logo" src="assets/images/rainforest-alliance-certified.png" width="480" height="435" loading="lazy" decoding="async" alt="Rainforest Alliance Certified seal"></picture>
+              <span class="farm-certs__mark" data-placeholder="globalgap-logo">GLOBALG.A.P.</span>
+            </div>
           </div>
         </div>
 
@@ -349,7 +307,6 @@
                      data-alt-ja="濃い緑の葉の間で赤く熟したコーヒーの実の枝。">
               </picture>
             </figure>
-            <p class="chip">Rainforest Alliance</p>
             <div class="crop__body">
               <h4 class="crop__title"><span data-l="en" lang="en">Coffee</span><span data-l="sw" lang="sw" data-review="draft">Kahawa</span><span data-l="ja" lang="ja" data-review="draft">コーヒー</span></h4>
             </div>
@@ -364,7 +321,6 @@
                      data-alt-ja="枝から下がる一つの緑のアボカド。背景に果樹園がぼやけて写る。">
               </picture>
             </figure>
-            <p class="chip">GLOBALG.A.P.</p>
             <div class="crop__body">
               <h4 class="crop__title"><span data-l="en" lang="en">Avocado</span><span data-l="sw" lang="sw" data-review="draft">Parachichi</span><span data-l="ja" lang="ja" data-review="draft">アボカド</span></h4>
             </div>
@@ -401,61 +357,36 @@
       </div>
 
       <!-- ---------------------------------------------------- SUSTAINABILITY (extensible)
-           Carbon Credit, Lunch and Cattle are the FIRST three entries, not a closed list. Copy + sources: docs/COPY_DECK.md.
-           Deliberately NOT stated: issued credits, partner names, beneficiary counts, herd numbers.
-           CMS: repeatable "Project" entries. To add one, copy an <li> below, change the title, text, photo, the id AND the slot
-           (data-slot="NN"; next free number, plus a row in docs/PHOTO_MANIFEST.md). The number above each title counts itself. -->
+           2026-10-16 meeting: only the improved-cookstove project (Carbon Credit) stays here, with ONE photograph. Lunch and Cattle are part of
+           farming activity, not projects, so their cards and the paragraphs about them were removed (text kept in docs/COPY_DECK.md; they may return
+           under Farm once Naoaki sends wording). Naoaki is also sending new Sustainability sentences: replace the statement below then.
+           Deliberately NOT stated: issued credits, partner names, beneficiary counts.
+           CMS: repeatable "Project" entries. To add one, copy the <li> below, change the title, text, photo, the id AND the slot
+           (data-slot="NN"; next free number, plus a row in docs/PHOTO_MANIFEST.md). A single card is laid out wide (photo left, text right);
+           from the second card on the grid becomes three columns by itself. -->
       <div class="wrap group" id="project">
         <h3 class="group__title"><span data-l="en" lang="en">Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">サステナビリティ</span></h3>
-        <div class="group__lede sustainability__lede"><div class="sustainability-intro" data-l="en" lang="en"><p class="statement sustainability-intro__statement">We believe that living in harmony with nature and growing alongside our community are essential to a sustainable farm.</p><div class="sustainability-intro__body"><p>We keep cattle and return their manure to our fields as compost for some of our crops.</p><p>During harvest season, we provide lunch for farm workers and offer plots of land where they can grow their own food.</p><p>With nearby communities, we are developing an improved cookstove project intended to reduce firewood collection time and exposure to cooking smoke. The project is being prepared for carbon credit registration.</p></div></div><div class="sustainability-intro" data-l="sw" lang="sw" data-review="draft"><p class="statement sustainability-intro__statement">Tunaamini kuwa kuishi kwa kupatana na mazingira na kustawi pamoja na jamii zinazotuzunguka ni muhimu kwa shamba endelevu.</p><div class="sustainability-intro__body"><p>Tunafuga ng’ombe na kurudisha samadi yao mashambani kama mboji kwa baadhi ya mazao yetu.</p><p>Wakati wa mavuno, tunatoa chakula cha mchana kwa wafanyakazi wa shamba na kuwapa viwanja wanavyoweza kutumia kulima chakula chao wenyewe.</p><p>Pamoja na jamii za karibu, tunaandaa mradi wa majiko banifu unaolenga kupunguza muda wa kutafuta kuni na moshi wa kupikia. Mradi unaandaliwa kwa ajili ya usajili wa hati za kaboni.</p></div></div><div class="sustainability-intro" data-l="ja" lang="ja" data-review="draft"><p class="statement sustainability-intro__statement">自然と調和し、地域とともに歩むことが、持続可能な農園にとって大切だと考えています。</p><div class="sustainability-intro__body"><p>牛を飼育し、そのふんを堆肥にして、一部の作物の畑に戻しています。</p><p>収穫期には農園で働く人に昼食を提供し、自分たちの食料を育てられる畑も用意しています。</p><p>近隣の地域とともに、薪集めの時間と調理時の煙への曝露を減らすことを目指した改良型かまどのプロジェクトを進めています。このプロジェクトは、カーボンクレジットの登録に向けて準備中です。</p></div></div></div>
+        <p class="statement sustainability-statement"><span data-l="en" lang="en">We believe that living in harmony with nature and growing alongside our community are essential to a sustainable farm.</span><span data-l="sw" lang="sw" data-review="draft">Tunaamini kuwa kuishi kwa kupatana na mazingira na kustawi pamoja na jamii zinazotuzunguka ni muhimu kwa shamba endelevu.</span><span data-l="ja" lang="ja" data-review="draft">自然と調和し、地域とともに歩むことが、持続可能な農園にとって大切だと考えています。</span></p>
         <ul class="project-grid" role="list" data-reveal-group>
           <li>
             <article class="project" id="carbon">
               <figure class="media media--4x5" data-slot="07">
                 <picture>
-                  <img src="assets/images/07-carbon-stove.jpeg" width="1920" height="2560" loading="lazy" decoding="async" style="--focal: 50% 50%"
+                  <source srcset="assets/images/07-carbon-stove-700.webp 700w, assets/images/07-carbon-stove-1050.webp 1050w" sizes="(min-width: 64em) 40vw, 100vw" type="image/webp">
+                  <img src="assets/images/07-carbon-stove-1050.jpg" srcset="assets/images/07-carbon-stove-700.jpg 700w, assets/images/07-carbon-stove-1050.jpg 1050w" sizes="(min-width: 64em) 40vw, 100vw"
+                       width="1050" height="1400" loading="lazy" decoding="async" style="--focal: 50% 50%"
                        alt="Metal cookstove in use with a pot over a wood fire."
                        data-review-sw="draft" data-review-ja="draft" data-alt-sw="Jiko la chuma likitumika kupika sufuria kwa moto wa kuni."
                        data-alt-ja="薪火で鍋を調理している金属製のかまど。">
                 </picture>
               </figure>
-              <p class="project__n" aria-hidden="true"></p>
-              <h4 class="project__title"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Hati za Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></h4>
-              <p><span data-l="en" lang="en">A project to bring improved cookstoves to households around the farm. They need far less firewood than a traditional three-stone fire: less smoke in the kitchen, less CO₂, and less of the daily work of collecting wood. The project aims to obtain carbon credits.</span><span data-l="sw" lang="sw" data-review="draft">Mradi wa kusambaza majiko banifu kwa kaya zinazozunguka shamba. Yanatumia kuni kidogo sana kuliko jiko la mafiga matatu: moshi mdogo jikoni, hewa ukaa (CO₂) kidogo, na kazi ndogo ya kila siku ya kutafuta kuni. Mradi unalenga kupata hati za kaboni.</span><span data-l="ja" lang="ja" data-review="draft">農園の周りの家庭に、改良型のかまどを広めるプロジェクトです。昔ながらの三石かまどに比べて薪がずっと少なくて済み、台所の煙もCO₂も減り、毎日の薪集めの負担も軽くなります。カーボンクレジットの取得も目指しています。</span></p>
+              <div class="project__body">
+                <h4 class="project__title"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Hati za Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></h4>
+                <p><span data-l="en" lang="en">Improved cookstoves for households around the farm use far less firewood: less smoke, less CO₂ and less time collecting wood. The project aims to obtain carbon credits.</span><span data-l="sw" lang="sw" data-review="draft">Majiko banifu kwa kaya zinazozunguka shamba yanatumia kuni kidogo sana: moshi mdogo, hewa ukaa (CO₂) kidogo na muda mfupi wa kutafuta kuni. Mradi unalenga kupata hati za kaboni.</span><span data-l="ja" lang="ja" data-review="draft">農園の周りの家庭に広める改良型かまどは、薪がずっと少なくて済みます。煙もCO₂も減り、薪集めの時間も短くなります。カーボンクレジットの取得も目指しています。</span></p>
+              </div>
             </article>
           </li>
-          <li>
-            <article class="project" id="school">
-              <figure class="media media--4x5" data-slot="08">
-                <picture>
-                  <img src="assets/images/08-lunch-photo.jpeg" width="1920" height="2560" loading="lazy" decoding="async" style="--focal: 50% 50%"
-                       alt="Farm workers gathered around buckets among the coffee plants."
-                       data-review-sw="draft" data-review-ja="draft" data-alt-sw="Wafanyakazi wa shamba wamekusanyika karibu na ndoo katikati ya mimea ya kahawa."
-                       data-alt-ja="コーヒーの木々の間で、バケツを囲む農園の人々。">
-                </picture>
-              </figure>
-              <p class="project__n" aria-hidden="true"></p>
-              <h4 class="project__title"><span data-l="en" lang="en">Lunch</span><span data-l="sw" lang="sw" data-review="draft">Chakula cha Mchana</span><span data-l="ja" lang="ja" data-review="draft">ランチ</span></h4>
-              <p><span data-l="en" lang="en">Since 2024, TANJA and a partner company have provided lunch for every student at the two secondary schools near the farm. In public secondary schools here, school meals depend on what parents can pay. On the farm, workers are now served a meal too.</span><span data-l="sw" lang="sw" data-review="draft">Tangu mwaka 2024, TANJA pamoja na kampuni mshirika zimekuwa zikitoa chakula cha mchana kwa wanafunzi wote wa shule mbili za sekondari zilizo jirani na shamba. Katika shule za sekondari za umma hapa, chakula cha shule hutegemea uwezo wa wazazi kulipa. Shambani, wafanyakazi nao sasa hupewa mlo.</span><span data-l="ja" lang="ja" data-review="draft">対象は農園の近くにある2つの中等学校で、2024年から協力企業とともに全校生徒に給食を届けてきました。この地域の公立中等学校では、給食を保護者の負担に頼っているのが現状です。農園で働く人たちにも、昼食を出し始めました。</span></p>
-            </article>
-          </li>
-          <li>
-            <article class="project" id="cattle">
-              <figure class="media media--4x5" data-slot="11">
-                <picture>
-                  <source srcset="assets/images/11-cattle-700.webp 700w, assets/images/11-cattle.webp 1100w" sizes="(min-width: 64em) 30vw, (min-width: 48em) 50vw, 100vw" type="image/webp">
-                  <img src="assets/images/11-cattle.jpg" width="1100" height="733" loading="lazy" decoding="async"
-                       alt="A cow standing on bare ground beside a wooden shed."
-                       data-review-sw="draft" data-review-ja="draft" data-alt-sw="Ng’ombe amesimama kwenye ardhi tupu kando ya banda la mbao."
-                       data-alt-ja="木の小屋のそばの土の上に立つ牛。">
-                </picture>
-              </figure>
-              <p class="project__n" aria-hidden="true"></p>
-              <h4 class="project__title"><span data-l="en" lang="en">Cattle</span><span data-l="sw" lang="sw" data-review="draft">Ng’ombe</span><span data-l="ja" lang="ja" data-review="draft">牛</span></h4>
-              <p><span data-l="en" lang="en">TANJA also keeps cattle. Their manure goes back to the avocado and coffee fields as compost; meat, milk and biogas are at the planning stage.</span><span data-l="sw" lang="sw" data-review="draft">TANJA pia inafuga ng’ombe. Samadi yao hurudishwa kwenye mashamba ya parachichi na kahawa kama mbolea; nyama, maziwa na biogesi bado ziko katika hatua ya mipango.</span><span data-l="ja" lang="ja" data-review="draft">TANJAでは牛も飼育しています。牛ふんは堆肥としてアボカドやコーヒーの畑に戻り、肉や牛乳、バイオガスへの活用は計画段階です。</span></p>
-            </article>
-          </li>
-          <!-- ADD PROJECT HERE: copy a <li>…</li> above -->
+          <!-- ADD PROJECT HERE: copy the <li>…</li> above -->
         </ul>
       </div>
 
@@ -474,51 +405,28 @@
           </picture>
         </figure>
         <div class="career__text" data-reveal>
-          <p class="kicker"><span class="kicker__n">03</span><span><span data-l="en" lang="en">Our people</span><span data-l="sw" lang="sw" data-review="draft">Watu wetu</span><span data-l="ja" lang="ja" data-review="draft">私たちの仲間</span></span></p>
           <h2 class="section__title" id="staff-title"><span data-l="en" lang="en">Staff</span><span data-l="sw" lang="sw" data-review="draft">Wafanyakazi</span><span data-l="ja" lang="ja" data-review="draft">スタッフ</span></h2>
-          <p class="lede"><span data-l="en" lang="en">A diverse team of Tanzanian and Japanese professionals committed to advancing sustainable agriculture through innovation, expertise, and quality service.</span><span data-l="sw" lang="sw" data-review="draft">Timu mbalimbali ya wataalamu kutoka Tanzania na Japani, waliojitolea kuendeleza kilimo endelevu kupitia ubunifu, utaalamu na huduma bora.</span><span data-l="ja" lang="ja" data-review="draft">タンザニアと日本の多様な専門家が、革新、専門知識、質の高いサービスを通じて、持続可能な農業の発展に取り組んでいます。</span></p>
-          <p class="career__body"><span data-l="en" lang="en">Our Tanzanian and Japanese staff combine local knowledge and international expertise to support sustainable agriculture and deliver quality solutions.</span><span data-l="sw" lang="sw" data-review="draft">Wafanyakazi wetu wa Tanzania na Japani wanaunganisha maarifa ya eneo husika na utaalamu wa kimataifa ili kusaidia kilimo endelevu na kutoa suluhisho bora.</span><span data-l="ja" lang="ja" data-review="draft">タンザニアと日本のスタッフが、地域の知識と国際的な専門性を組み合わせ、持続可能な農業を支え、質の高い解決策を提供します。</span></p>
+          <!-- 2026-10-16 meeting: no nationalities ("just diversity"; Kenyan colleagues are part of the team too), and no secondary explanation under the lede.
+               The Japanese investment is stated in About instead. -->
+          <p class="lede"><span data-l="en" lang="en">A diverse team of professionals committed to advancing sustainable agriculture through innovation, expertise, and quality service.</span><span data-l="sw" lang="sw" data-review="draft">Timu mbalimbali ya wataalamu waliojitolea kuendeleza kilimo endelevu kupitia ubunifu, utaalamu na huduma bora.</span><span data-l="ja" lang="ja" data-review="draft">多様な専門家が、革新、専門知識、質の高いサービスを通じて、持続可能な農業の発展に取り組んでいます。</span></p>
         </div>
       </div>
     </section>
-    <!-- =================================================================== 05 CONTACT -->
-    <!-- LinkedIn public-profile settings URL supplied for preview. -->
-    <section class="section section--inverse tl-scope" id="contact" aria-labelledby="contact-title">
-      <p class="tl-mark" role="note"><span data-l="en" lang="en">Draft translation</span><span data-l="sw" lang="sw" data-review="draft">Tafsiri ya rasimu</span><span data-l="ja" lang="ja" data-review="draft">翻訳は下書き</span></p>
-      <div class="wrap contact">
-        <header class="contact__head" data-reveal>
-          <p class="kicker"><span class="kicker__n">04</span><span><span data-l="en" lang="en">Get in touch</span><span data-l="sw" lang="sw" data-review="draft">Wasiliana</span><span data-l="ja" lang="ja" data-review="draft">ご連絡</span></span></p>
-          <h2 class="section__title" id="contact-title"><span data-l="en" lang="en">Contact</span><span data-l="sw" lang="sw" data-review="draft">Wasiliana Nasi</span><span data-l="ja" lang="ja" data-review="draft">お問い合わせ</span></h2>
-          <p class="contact__lede"><span data-l="en" lang="en">Questions about the farm, our projects or working together: reach us here.</span><span data-l="sw" lang="sw" data-review="draft">Maswali kuhusu shamba, miradi yetu au kushirikiana nasi: wasiliana nasi hapa.</span><span data-l="ja" lang="ja" data-review="draft">農園やプロジェクトについてのご質問、協業のご相談はこちらへ。</span></p>
-        </header>
-        <div class="contact__body">
-          <dl class="contact-list">
-            <div>
-              <dt><span data-l="en" lang="en">Email</span><span data-l="sw" lang="sw" data-review="draft">Barua pepe</span><span data-l="ja" lang="ja" data-review="draft">メール</span></dt>
-              <dd><a href="mailto:office@tanja.co.tz">office@tanja.co.tz</a></dd>
-            </div>
-            <div>
-              <dt><span data-l="en" lang="en">Phone</span><span data-l="sw" lang="sw" data-review="draft">Simu</span><span data-l="ja" lang="ja" data-review="draft">電話</span></dt>
-              <dd><a href="tel:+255713942157">0713942157</a></dd>
-            </div>
-          </dl>
-          <ul class="social" role="list">
-            <li><a class="social__link" href="https://www.instagram.com/tanja20232026?srtk=MTlkN2I4dXF1bm14dg==" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg><span class="social__name">Instagram</span><span class="social__state"><span data-l="en" lang="en">Visit our profile</span><span data-l="sw" lang="sw" data-review="draft">Tembelea ukurasa wetu</span><span data-l="ja" lang="ja" data-review="draft">公式プロフィールを見る</span></span></a></li>
-            <li><a class="social__link" href="https://www.linkedin.com/in/tanja-ltd-a10106444" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg><span class="social__name">LinkedIn</span><span class="social__state"><span data-l="en" lang="en">Visit our profile</span><span data-l="sw" lang="sw" data-review="draft">Tembelea ukurasa wetu</span><span data-l="ja" lang="ja" data-review="draft">公式プロフィールを見る</span></span></a></li>
-          </ul>
-
-        </div>
-      </div>
-    </section>
+    <!-- REMOVED 2026-10-16 (meeting): the separate Contact section. The footer is now the contact point (id="contact"): one email line plus the
+         Instagram and LinkedIn icons. No phone number for now: an official company number and a WhatsApp account come later. -->
   </main>
 
   <!-- ===================================================================== FOOTER -->
-  <footer class="site-footer tl-scope">
+  <!-- FOOTER = CONTACT POINT (2026-10-16 meeting). The header "Contact" link jumps here (id="contact"). The address line was removed on purpose;
+       the location is now one sentence in About. -->
+  <footer class="site-footer tl-scope" id="contact">
     <p class="tl-mark" role="note"><span data-l="en" lang="en">Draft translation</span><span data-l="sw" lang="sw" data-review="draft">Tafsiri ya rasimu</span><span data-l="ja" lang="ja" data-review="draft">翻訳は下書き</span></p>
     <div class="container site-footer__grid">
       <div>
         <p class="site-footer__brand">TANJA</p>
-        <p class="site-footer__place"><span data-l="en" lang="en">Karatu District, Arusha Region, Tanzania</span><span data-l="sw" lang="sw" data-review="draft">Wilaya ya Karatu, Mkoa wa Arusha, Tanzania</span><span data-l="ja" lang="ja" data-review="draft">タンザニア アルーシャ州カラトゥ県</span></p>
+        <!-- TEMPORARY: office@ is the shared mailbox that the office and the accountants also use. The meeting decided to create an inquiry-only
+             address (Hide) and name one person who checks it every day. When it exists, change BOTH the href and the visible text below. -->
+        <p class="site-footer__mail"><a href="mailto:office@tanja.co.tz">office@tanja.co.tz</a></p>
       </div>
       <div class="site-footer__tools">
         <!-- The list below is copied from the header menu by script.js (data-mirror-nav). This static copy is what a visitor sees with JavaScript off. -->
@@ -532,13 +440,14 @@
           </ul>
         </nav>
         <div class="lang lang--up" data-lang-menu>
-          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list-foot" aria-label="EN — Language / Lugha / 言語">
+          <button type="button" class="lang__toggle" aria-expanded="false" aria-controls="nav-lang-list-foot" aria-label="EN — Language / Lugha">
             <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="lang__code" aria-hidden="true">EN</span><svg class="icon lang__chev" aria-hidden="true"><use href="#i-chev"/></svg>
           </button>
           <ul class="lang__list" id="nav-lang-list-foot" hidden>
             <li><button type="button" class="lang__opt" data-set-lang="en" lang="en" aria-pressed="true"><span class="lang__name">English</span><small>EN</small></button></li>
             <li><button type="button" class="lang__opt" data-set-lang="sw" lang="sw" aria-pressed="false"><span class="lang__name">Kiswahili</span><small>SW</small></button></li>
-            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li>
+            <!-- JAPANESE OFF (2026-10-16). To restore, uncomment (see the note in <head>):
+            <li><button type="button" class="lang__opt" data-set-lang="ja" lang="ja" aria-pressed="false"><span class="lang__name">日本語</span><small>JP</small></button></li> -->
           </ul>
         </div>
         <ul class="social social--icons" role="list">

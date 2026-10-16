@@ -12,7 +12,9 @@
   'use strict';
 
   var STORAGE_KEY = 'tanja-lang';           // same key as the inline boot script in <head>
-  var LANGS = ['en', 'sw', 'ja'];
+  // Japanese is OFF for the public launch (2026-10-16 meeting: English and Kiswahili only). Its strings stay in the HTML. To switch it on again:
+  // add 'ja' here, in the boot script in <head>, and restore the commented Japanese <li> in both language menus.
+  var LANGS = ['en', 'sw'];
   var LABEL = { en: 'EN', sw: 'SW', ja: 'JP' };
   var root = document.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -78,7 +80,7 @@
         var code = m.querySelector('.lang__code');
         if (code) code.textContent = LABEL[lang];
         var t = m.querySelector('.lang__toggle');
-        if (t) t.setAttribute('aria-label', LABEL[lang] + ' — Language / Lugha / 言語');   // starts with the visible code (label in name)
+        if (t) t.setAttribute('aria-label', LABEL[lang] + ' — Language / Lugha');   // starts with the visible code (label in name)
       });
 
       if (titleEl) titleEl.textContent = lang === 'en' ? original.title : (titleEl.getAttribute('data-' + lang) || original.title);
@@ -101,7 +103,6 @@
 
       if (persist) writeLang(lang);
       syncMenuTop();
-      if (typeof syncHeroCaption === 'function') syncHeroCaption();
     };
 
     menus.forEach(function (menu) {
@@ -213,18 +214,26 @@
     var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
     if ('IntersectionObserver' in window && links.length) {
       var visible = {};
-      var spy = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { visible[en.target.id] = en.isIntersecting ? en.intersectionRatio : 0; });
+      // The footer is the Contact point (id="contact") and is too short to reach the middle band below, so at the very bottom of the page it wins.
+      var atBottom = function () { return window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 8; };
+      var markCurrent = function () {
         var best = null, bestRatio = 0;
         targets.forEach(function (t) {
           if ((visible[t.id] || 0) > bestRatio) { best = t.id; bestRatio = visible[t.id]; }
         });
+        if (atBottom() && targets.some(function (t) { return t.id === 'contact'; })) best = 'contact';
         links.forEach(function (a) {
           if (best && a.getAttribute('href') === '#' + best) a.setAttribute('aria-current', 'true');
           else a.removeAttribute('aria-current');
         });
+      };
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { visible[en.target.id] = en.isIntersecting ? en.intersectionRatio : 0; });
+        markCurrent();
       }, { rootMargin: '-25% 0px -55% 0px', threshold: [0, 0.01, 0.25, 0.5, 1] });
       targets.forEach(function (t) { spy.observe(t); });
+      var bt = false;
+      window.addEventListener('scroll', function () { if (!bt) { bt = true; window.requestAnimationFrame(function () { bt = false; markCurrent(); }); } }, { passive: true });
     }
 
     var jumpLinks = [].slice.call(document.querySelectorAll('.wwd-jump a[href^="#"]')).filter(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
@@ -258,14 +267,7 @@
     var heroEl = document.querySelector('.hero');
     var heroMedia = document.querySelector('[data-hero-rotate]');
     var slides = heroMedia ? [].slice.call(heroMedia.querySelectorAll('.hero__slide')) : [];
-    var caps = [].slice.call(document.querySelectorAll('.hero__caption-text [data-cap]'));
-    var countEl = document.querySelector('.hero__count');
-    var current = 0;
-    var syncHeroCaption = function () {
-      caps.forEach(function (c, i) { c.classList.toggle('is-active', i === current); });
-      if (countEl) countEl.textContent = pad(current + 1) + ' / ' + pad(slides.length);
-    };
-    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    var current = 0;      // no captions and no page numbers any more (2026-10-16 meeting)
 
     if (heroEl && heroMedia && slides.length > 1 && !reduceMotion.matches) {
       var dotsWrap = heroEl.querySelector('.hero__dots');
@@ -348,7 +350,6 @@
         from.setAttribute('aria-hidden', 'true');
         if (dots.length) { dots[current].removeAttribute('aria-current'); dots[next].setAttribute('aria-current', 'true'); }
         current = next;
-        syncHeroCaption();
         restartProgress();
         window.setTimeout(function () {
           from.classList.remove('is-anim', 'is-leaving');
@@ -423,7 +424,6 @@
       restartProgress();
       restart();
     }
-    syncHeroCaption();
 
     /* ---------- 7. scroll reveal ---------- */
     // Elements marked data-reveal (or the children of data-reveal-group) fade up once as they enter the window.
@@ -440,7 +440,7 @@
       revealEls.forEach(function (el) { el.classList.add('is-in'); });
     }
 
-    // English is the default; a saved SW/JP choice was already applied by the boot script — sync titles/alts/menus to it.
+    // English is the default; a saved Kiswahili choice was already applied by the boot script — sync titles/alts/menus to it.
     applyLang(readLang() || 'en', false);
 
   } finally {
