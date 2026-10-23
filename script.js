@@ -1,7 +1,7 @@
 /* TANJA Web V2 — script.js
    Progressive enhancement only. The page is fully readable in English with JavaScript off.
-   Jobs: (1) language menu + remembered choice, (2) mobile menu, (3) header over the hero, (4) current-section marker,
-         (5) footer menu copies the header menu, (6) hero slider, (7) scroll reveal.
+   Jobs: (0) skeleton frames until each photograph has loaded, (1) language menu + remembered choice, (2) mobile menu,
+         (3) header over the hero, (4) current-section marker, (5) footer menu copies the header menu, (6) hero slider, (7) scroll reveal, (8) About figures count up.
    No libraries. No network requests of its own: the hero slider only promotes the same-origin photographs already
    referenced in the page (job 6).
 
@@ -31,6 +31,24 @@
     var writeLang = function (lang) {
       try { window.localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* choice just isn't remembered */ }
     };
+
+    /* ---------- 0. skeleton: photographs fade in once loaded ----------
+       Each photograph frame (.media, .hero__slide) shows a travelling sheen until its <img> has loaded (or failed); then the frame gets
+       .is-loaded and the photograph fades in (styles.css, "Skeleton"). Hero slides 2+ have no src until job 6 promotes it, so job 6 watches
+       them then. Kept in its own try: if it throws, the CSS failsafe still shows every photograph after 6s. */
+    var watchImg = function (img) {
+      var frame = img.closest ? img.closest('.media, .hero__slide') : null;
+      if (!frame) return;
+      var done = function () { frame.classList.add('is-loaded'); };
+      if (img.complete) { done(); return; }                     // already loaded (or already failed) before this file ran
+      img.addEventListener('load', done, { once: true });
+      img.addEventListener('error', done, { once: true });
+    };
+    try {
+      [].forEach.call(document.querySelectorAll('.media img, .hero__slide img'), function (img) {
+        if (img.hasAttribute('src')) watchImg(img);
+      });
+    } catch (e) { /* the CSS failsafe takes over */ }
 
     var header = document.querySelector('[data-header]');
     var menuBtn = document.querySelector('.menu-btn');
@@ -259,6 +277,8 @@
     /* ---------- 6. hero slider ----------
        The photographs sit side by side; every few seconds the next one slides in from the right and the current one leaves to
        the left (the last wraps round to the first). Dots, arrows, swipe and the arrow keys move it by hand.
+       2026-10-23: the photographs follow a finger (or a mouse) while it drags, and settle on release: past 20% of the width, or a quick
+       flick, moves on; anything less springs back.
        Slide 1 is real (fetched) from the start; slides 2+ carry data-srcset / data-src, so the browser fetches nothing for them
        unless this code promotes those attributes. That happens only here, only when motion is allowed. A visitor who prefers
        reduced motion, or whose JS fails, sees slide 1 as a still photograph and never downloads the others.
@@ -275,12 +295,12 @@
       var nextBtn = heroEl.querySelector('[data-hero-next]');
       var interval = parseFloat(getComputedStyle(root).getPropertyValue('--hero-interval')) * 1000 || 6000;
       var slideMs = parseFloat(getComputedStyle(root).getPropertyValue('--dur-slide')) || 1100;
-      var timer = null, busy = false, hovering = false, focusing = false, stopped = false, offscreen = false;
+      var timer = null, busy = false, hovering = false, focusing = false, stopped = false, offscreen = false, dragging = false;
 
       slides.slice(1).forEach(function (slide) {
         [].forEach.call(slide.querySelectorAll('source[data-srcset]'), function (s) { s.setAttribute('srcset', s.getAttribute('data-srcset')); });
         var img = slide.querySelector('img[data-src]');
-        if (img) img.setAttribute('src', img.getAttribute('data-src'));
+        if (img) { img.setAttribute('src', img.getAttribute('data-src')); watchImg(img); }
       });
 
       var dots = [];
@@ -304,7 +324,7 @@
         heroEl.classList.remove('is-playing'); void heroEl.offsetWidth; heroEl.classList.add('is-playing');
       };
       var setPlaying = function () {
-        var p = stopped || hovering || focusing || offscreen || document.hidden;
+        var p = stopped || hovering || focusing || offscreen || dragging || document.hidden;
         if (p === paused && timer) return;
         paused = p;
         heroEl.classList.toggle('is-paused', p);
@@ -327,22 +347,25 @@
       };
       slides.forEach(function (s, i) { var im = s.querySelector('img'); if (i && im) im.addEventListener('load', function () { if (i === (current + 1) % slides.length) prepare(i); }); });
 
-      var go = function (next, dir, manual) {
-        if (busy || next === current) return;
+      // dragged: the incoming slide is already on screen where the finger left it, so it animates from there (no parallax start offset).
+      var go = function (next, dir, manual, dragged) {
+        if ((busy && !dragged) || next === current) return;
         busy = true;
         var from = slides[current], to = slides[next];
         var fromPic = from.querySelector('picture'), toPic = to.querySelector('picture');
         // Put the incoming slide on the correct side without animating, then animate both.
-        to.classList.remove('is-anim');
-        to.style.transform = 'translate3d(' + (dir > 0 ? 100 : -100) + '%,0,0)';
-        to.style.visibility = 'visible';
-        if (toPic) toPic.style.setProperty('--px', (dir > 0 ? -10 : 10) + '%');
+        if (!dragged) {
+          to.classList.remove('is-anim');
+          to.style.transform = 'translate3d(' + (dir > 0 ? 100 : -100) + '%,0,0)';
+          to.style.visibility = 'visible';
+          if (toPic) toPic.style.setProperty('--px', (dir > 0 ? -6 : 6) + '%');
+        }
         void to.offsetWidth;                                     // commit the start position
         to.classList.add('is-anim');
         from.classList.add('is-anim', 'is-leaving');
         to.style.transform = '';
         if (toPic) toPic.style.setProperty('--px', '0%');
-        if (fromPic) fromPic.style.setProperty('--px', (dir > 0 ? 10 : -10) + '%');
+        if (fromPic) fromPic.style.setProperty('--px', (dir > 0 ? 6 : -6) + '%');
         to.classList.add('is-active');
         from.classList.remove('is-active');
         from.style.transform = 'translate3d(' + (dir > 0 ? -100 : 100) + '%,0,0)';
@@ -406,18 +429,73 @@
       }
       document.addEventListener('visibilitychange', setPlaying);
 
-      // Swipe (touch and pen): a horizontal drag of 40px or more moves one slide. Vertical scrolling is left to the browser.
-      var sx = null, sy = null;
+      // Drag (touch, pen and mouse). The first 8px decide the axis: vertical is left to the browser (touch-action: pan-y), horizontal
+      // moves the current photograph and its neighbour with the pointer. On release: past 20% of the width or a quick flick moves on,
+      // anything less springs back. Autoplay waits while a drag is in progress.
+      var drag = null;
+      var place = function (el, px) { el.style.transform = 'translate3d(' + px + 'px,0,0)'; };
+      var endDrag = function () {
+        dragging = false;
+        heroEl.classList.remove('is-dragging');
+        setPlaying();
+      };
+      heroEl.addEventListener('dragstart', function (e) { e.preventDefault(); });
       heroEl.addEventListener('pointerdown', function (e) {
-        if (e.pointerType !== 'mouse' && !e.target.closest('button, a')) { sx = e.clientX; sy = e.clientY; }
+        if (busy || !e.isPrimary || (e.pointerType === 'mouse' && e.button !== 0) || e.target.closest('button, a')) return;
+        drag = { x: e.clientX, y: e.clientY, t: Date.now(), id: e.pointerId, axis: null, dx: 0, n: -1, w: heroMedia.clientWidth || 1 };
       });
-      heroEl.addEventListener('pointerup', function (e) {
-        if (sx === null) return;
-        var dx = e.clientX - sx, dy = e.clientY - sy;
-        sx = sy = null;
-        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1, true);
+      heroEl.addEventListener('pointermove', function (e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!drag.axis) {
+          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+          if (drag.axis === 'y') { drag = null; return; }
+          try { heroEl.setPointerCapture(e.pointerId); } catch (x) {}
+          dragging = true;
+          heroEl.classList.add('is-dragging');
+          setPlaying();
+        }
+        var dir = dx < 0 ? 1 : -1;
+        var n = (current + dir + slides.length) % slides.length;
+        if (n !== drag.n) {                                     // the pointer crossed back over the start: swap the neighbour
+          if (drag.n > -1 && drag.n !== current) { slides[drag.n].style.transform = ''; slides[drag.n].style.visibility = ''; }
+          drag.n = n;
+          slides[n].classList.remove('is-anim');
+          slides[n].style.visibility = 'visible';
+          var pic = slides[n].querySelector('picture');
+          if (pic) pic.style.setProperty('--px', '0%');
+        }
+        drag.dx = dx;
+        place(slides[current], dx);
+        place(slides[n], dx + (dir > 0 ? drag.w : -drag.w));
       });
-      heroEl.addEventListener('pointercancel', function () { sx = sy = null; });
+      var release = function (e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        var d = drag; drag = null;
+        if (!dragging) return;
+        endDrag();
+        var dir = d.dx < 0 ? 1 : -1;
+        var v = Math.abs(d.dx) / Math.max(1, Date.now() - d.t);   // px per ms
+        var commit = e.type !== 'pointercancel' && d.n > -1 && (Math.abs(d.dx) > d.w * 0.2 || (Math.abs(d.dx) > 30 && v > 0.45));
+        if (commit) { go(d.n, dir, true, true); return; }
+        // Spring back: the current photograph returns to the middle, the neighbour to its side.
+        if (d.n < 0) { slides[current].style.transform = ''; return; }
+        var from = slides[current], nb = slides[d.n];
+        busy = true;
+        from.classList.add('is-anim'); nb.classList.add('is-anim');
+        from.style.transform = '';
+        nb.style.transform = 'translate3d(' + (dir > 0 ? 100 : -100) + '%,0,0)';
+        window.setTimeout(function () {
+          from.classList.remove('is-anim'); nb.classList.remove('is-anim');
+          nb.style.transform = ''; nb.style.visibility = '';
+          var pic = nb.querySelector('picture');
+          if (pic) pic.style.removeProperty('--px');
+          busy = false;
+        }, slideMs + 50);
+      };
+      heroEl.addEventListener('pointerup', release);
+      heroEl.addEventListener('pointercancel', release);
 
       prepare(1);
       heroEl.classList.add('has-slider');
@@ -438,6 +516,36 @@
       revealEls.forEach(function (el) { ro.observe(el); });
     } else {
       revealEls.forEach(function (el) { el.classList.add('is-in'); });
+    }
+
+    /* ---------- 8. About figures count up ----------
+       Each .facts__num[data-count] holds its final value in the HTML. When the band starts to fade in (same trigger as job 7, so the jump to 0
+       happens while it is still transparent) each number runs up to its value in about 1.4s, easing out, and the original text is put back
+       exactly at the end. Reduced motion, no IntersectionObserver, or no JS: the final numbers simply show. */
+    var factsEl = document.querySelector('.facts');
+    var countEls = factsEl ? [].slice.call(factsEl.querySelectorAll('.facts__num[data-count]')) : [];
+    if (countEls.length && 'IntersectionObserver' in window && !reduceMotion.matches && window.requestAnimationFrame) {
+      var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+      var runCount = function (el, delay) {
+        var to = parseInt(el.getAttribute('data-count'), 10), final = el.textContent, t0 = null, dur = 1400;
+        if (!to) return;
+        el.style.display = 'inline-block';
+        el.style.minWidth = el.offsetWidth + 'px';             // tabular figures + reserved width: the band never reflows mid-count
+        el.textContent = '0';
+        var frame = function (t) {
+          if (t0 === null) t0 = t + delay;
+          var k = Math.max(0, Math.min(1, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
+          if (k < 1) { el.textContent = fmt(Math.round(to * e)); window.requestAnimationFrame(frame); }
+          else { el.textContent = final; el.style.minWidth = ''; el.style.display = ''; }
+        };
+        window.requestAnimationFrame(frame);
+      };
+      var co = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        co.disconnect();
+        countEls.forEach(function (el, i) { runCount(el, 150 + i * 120); });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      co.observe(factsEl);
     }
 
     // English is the default; a saved Kiswahili choice was already applied by the boot script — sync titles/alts/menus to it.
