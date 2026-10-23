@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261016-hero">
+  <link rel="stylesheet" href="styles.css?v=20261023">
   <!-- Language boot: runs before first paint so a returning Swahili visitor never sees an English flash.
        English is the default. The choice is remembered in localStorage (wrapped in try/catch; storage can be blocked).
        JAPANESE IS OFF (2026-10-16 meeting: English and Swahili only for the public launch). To bring it back: add 'ja' to the test below,
@@ -37,7 +37,7 @@
     })();
   </script>
   <!-- If script.js cannot load (flaky connection), drop the .js class so the page falls back to the plain, fully readable layout. -->
-  <script src="script.js" defer onerror="document.documentElement.classList.remove('js')"></script>
+  <script src="script.js?v=20261023" defer onerror="document.documentElement.classList.remove('js')"></script>
 </head>
 
 <!--
@@ -193,9 +193,12 @@
           </p>
         </div>
         <div class="hero__foot">
+          <!-- 2026-10-23: one control bar. Progress segments first (tap one to jump), then previous / pause / next. On phones the arrows step aside
+               (the photographs follow the finger), so the bar holds only the segments and the pause button. -->
           <div class="hero__controls" role="group" aria-label="Slides" data-label-sw="Picha" data-label-ja="スライド">
-            <button type="button" class="hero__arrow" data-hero-prev><svg class="icon" aria-hidden="true"><use href="#i-arrow-l"/></svg><span class="visually-hidden"><span data-l="en" lang="en">Previous photo</span><span data-l="sw" lang="sw" data-review="draft">Picha iliyotangulia</span><span data-l="ja" lang="ja" data-review="draft">前の写真</span></span></button>
             <div class="hero__dots" data-label="Photo" data-label-sw="Picha" data-label-ja="写真"></div>
+            <span class="hero__sep" aria-hidden="true"></span>
+            <button type="button" class="hero__arrow" data-hero-prev><svg class="icon" aria-hidden="true"><use href="#i-arrow-l"/></svg><span class="visually-hidden"><span data-l="en" lang="en">Previous photo</span><span data-l="sw" lang="sw" data-review="draft">Picha iliyotangulia</span><span data-l="ja" lang="ja" data-review="draft">前の写真</span></span></button>
             <button type="button" class="hero__arrow hero__pause" data-hero-pause aria-pressed="false"><svg class="icon icon-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="icon icon-play" aria-hidden="true"><use href="#i-play"/></svg><span class="visually-hidden"><span data-l="en" lang="en">Pause the slideshow</span><span data-l="sw" lang="sw" data-review="draft">Simamisha onyesho la picha</span><span data-l="ja" lang="ja" data-review="draft">スライドを一時停止</span></span></button>
             <button type="button" class="hero__arrow" data-hero-next><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg><span class="visually-hidden"><span data-l="en" lang="en">Next photo</span><span data-l="sw" lang="sw" data-review="draft">Picha inayofuata</span><span data-l="ja" lang="ja" data-review="draft">次の写真</span></span></button>
           </div>
@@ -278,22 +281,16 @@
       <!-- ---------------------------------------------------- FARM
            ONE overall introduction (Naoaki, 2026-09-29, verbatim English) above four equal photo tiles. The tiles carry only a name
            and, where Naoaki's text states one, the certification. No per-crop description on the homepage (his request). -->
-      <div class="wrap group" id="farm">
+      <div class="wrap group group--split" id="farm">
         <h3 class="group__title"><span data-l="en" lang="en">Farm</span><span data-l="sw" lang="sw" data-review="draft">Shamba</span><span data-l="ja" lang="ja" data-review="draft">農園</span></h3>
 
-        <div class="farm-intro" data-reveal>
+        <div class="group__text" data-reveal>
           <p class="statement"><span data-l="en" lang="en">Our farms have a history spanning more than a century and lie on the edge of Ngorongoro. Drawing on this history and rich natural surroundings, we grow coffee, avocados and macadamias, and keep bees.</span><span data-l="sw" lang="sw" data-review="draft">Mashamba yetu yana historia ya zaidi ya karne moja na yako pembezoni mwa Ngorongoro. Tukitegemea historia hii na mazingira haya tajiri ya asili, tunalima kahawa, parachichi na makadamia, na tunafuga nyuki.</span><span data-l="ja" lang="ja" data-review="draft">私たちの農園はンゴロンゴロのほとりに広がり、100年を超える歴史をもちます。受け継いだ歴史と豊かな自然を生かし、コーヒー、アボカド、マカダミアを育て、ミツバチを飼っています。</span></p>
-          <!-- 2026-10-16 meeting: the certification sentence and the two certification chips on the tiles are gone ("reduce them, use the logo somewhere").
-               The certifications now appear only as small marks. Rainforest Alliance (coffee farms) and GLOBALG.A.P. (avocado farms) are Naoaki's statements;
-               the sentence that said so is kept in docs/COPY_DECK.md. PLACEHOLDER: the GLOBALG.A.P. mark is plain text until TANJA supplies the logo file. -->
-          <div class="farm-intro__body">
-            <p><span data-l="en" lang="en">We aim to care for the environment, support the wellbeing of the people who work here, and bring joy to those who enjoy the harvests of this rich land.</span><span data-l="sw" lang="sw" data-review="draft">Tunalenga kutunza mazingira, kusaidia ustawi wa watu wanaofanya kazi hapa, na kuleta furaha kwa wale wanaofurahia mavuno ya ardhi hii tajiri.</span><span data-l="ja" lang="ja" data-review="draft">目指すのは、環境を守り、ここで働く人々のウェルビーイングを支え、この豊かな土地の実りを味わう人々に喜びを届けることです。</span></p>
-            <div class="farm-certs" role="group" aria-labelledby="farm-certs-title">
-              <span class="visually-hidden" id="farm-certs-title"><span data-l="en" lang="en">Certifications</span><span data-l="sw" lang="sw" data-review="draft">Vyeti</span><span data-l="ja" lang="ja" data-review="draft">認証</span></span>
-              <picture><source srcset="assets/images/rainforest-alliance-certified.webp" type="image/webp"><img class="farm-certs__logo" src="assets/images/rainforest-alliance-certified.png" width="480" height="435" loading="lazy" decoding="async" alt="Rainforest Alliance Certified seal"></picture>
-              <span class="farm-certs__mark" data-placeholder="globalgap-logo">GLOBALG.A.P.</span>
-            </div>
-          </div>
+          <!-- 2026-10-16 meeting: the certification sentence and the two certification chips on the tiles are gone.
+               REMOVED 2026-10-23 (user instruction: "the logos can go; lay the text out cleanly"): the Rainforest Alliance seal and the GLOBALG.A.P. text mark.
+               The seal files stay in assets/images (rainforest-alliance-certified.png / .webp). Rainforest Alliance (coffee farms) and GLOBALG.A.P. (avocado farms)
+               are Naoaki's statements; the sentence that said so is kept in docs/COPY_DECK.md. -->
+          <p class="group__body"><span data-l="en" lang="en">We aim to care for the environment, support the wellbeing of the people who work here, and bring joy to those who enjoy the harvests of this rich land.</span><span data-l="sw" lang="sw" data-review="draft">Tunalenga kutunza mazingira, kusaidia ustawi wa watu wanaofanya kazi hapa, na kuleta furaha kwa wale wanaofurahia mavuno ya ardhi hii tajiri.</span><span data-l="ja" lang="ja" data-review="draft">目指すのは、環境を守り、ここで働く人々のウェルビーイングを支え、この豊かな土地の実りを味わう人々に喜びを届けることです。</span></p>
         </div>
 
         <div class="farm-grid" data-reveal-group>
@@ -364,9 +361,9 @@
            CMS: repeatable "Project" entries. To add one, copy the <li> below, change the title, text, photo, the id AND the slot
            (data-slot="NN"; next free number, plus a row in docs/PHOTO_MANIFEST.md). A single card is laid out wide (photo left, text right);
            from the second card on the grid becomes three columns by itself. -->
-      <div class="wrap group" id="project">
+      <div class="wrap group group--split" id="project">
         <h3 class="group__title"><span data-l="en" lang="en">Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">サステナビリティ</span></h3>
-        <p class="statement sustainability-statement"><span data-l="en" lang="en">We believe that living in harmony with nature and growing alongside our community are essential to a sustainable farm.</span><span data-l="sw" lang="sw" data-review="draft">Tunaamini kuwa kuishi kwa kupatana na mazingira na kustawi pamoja na jamii zinazotuzunguka ni muhimu kwa shamba endelevu.</span><span data-l="ja" lang="ja" data-review="draft">自然と調和し、地域とともに歩むことが、持続可能な農園にとって大切だと考えています。</span></p>
+        <p class="statement group__text sustainability-statement"><span data-l="en" lang="en">We believe that living in harmony with nature and growing alongside our community are essential to a sustainable farm.</span><span data-l="sw" lang="sw" data-review="draft">Tunaamini kuwa kuishi kwa kupatana na mazingira na kustawi pamoja na jamii zinazotuzunguka ni muhimu kwa shamba endelevu.</span><span data-l="ja" lang="ja" data-review="draft">自然と調和し、地域とともに歩むことが、持続可能な農園にとって大切だと考えています。</span></p>
         <ul class="project-grid" role="list" data-reveal-group>
           <li>
             <article class="project" id="carbon">
@@ -426,6 +423,7 @@
         <p class="site-footer__brand">TANJA</p>
         <!-- TEMPORARY: office@ is the shared mailbox that the office and the accountants also use. The meeting decided to create an inquiry-only
              address (Hide) and name one person who checks it every day. When it exists, change BOTH the href and the visible text below. -->
+        <p class="site-footer__label"><span data-l="en" lang="en">Contact</span><span data-l="sw" lang="sw" data-review="draft">Wasiliana Nasi</span><span data-l="ja" lang="ja" data-review="draft">お問い合わせ</span></p>
         <p class="site-footer__mail"><a href="mailto:office@tanja.co.tz">office@tanja.co.tz</a></p>
       </div>
       <div class="site-footer__tools">
