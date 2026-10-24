@@ -81,7 +81,7 @@
   --sp-7: 3rem;
   --sp-8: 4.5rem;
   --sp-9: 7rem;
-  --section-y: clamp(3.5rem, 2rem + 6vw, 10.5rem);
+  --section-y: clamp(3.5rem, 2.25rem + 4.5vw, 8rem);
   --gutter: clamp(1.25rem, 0.5rem + 3.2vw, 3rem);
   --col-gap: clamp(1rem, 0.4rem + 2vw, 2rem);
   --container: 84rem;
@@ -457,7 +457,7 @@ html:not(.js) .lang { display: none; }
 .hero::after {                       /* scrim: header (top) and wordmark (bottom-left) stay legible on any photo */
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
-    linear-gradient(to bottom, rgba(var(--c-hero-scrim), 0.72) 0, rgba(var(--c-hero-scrim), 0.62) calc(var(--header-h) * 0.8), rgba(var(--c-hero-scrim), 0.2) calc(var(--header-h) * 1.8), rgba(var(--c-hero-scrim), 0) 32%),
+    linear-gradient(to bottom, rgba(var(--c-hero-scrim), 0.55) 0, rgba(var(--c-hero-scrim), 0.4) var(--header-h), rgba(var(--c-hero-scrim), 0.2) calc(var(--header-h) * 1.7), rgba(var(--c-hero-scrim), 0.07) calc(var(--header-h) * 2.4), rgba(var(--c-hero-scrim), 0) calc(var(--header-h) * 3)),
     linear-gradient(to top, rgba(var(--c-hero-scrim), 0.78) 0, rgba(var(--c-hero-scrim), 0.32) 34%, rgba(var(--c-hero-scrim), 0) 60%),
     linear-gradient(to right, rgba(var(--c-hero-scrim), 0.35) 0, rgba(var(--c-hero-scrim), 0) 55%);
 }
@@ -601,7 +601,6 @@ html[data-lang="ja"] .more { letter-spacing: 0.06em; font-size: 0.875rem; }
 /* 2026-10-23: "readable at a glance". One sentence, one photograph, a band of four figures and three short notes (where / estates / community)
    replace the two paragraphs. Figures in the serif, forest green, with the cherry accent on "+"; labels in the quiet sans. */
 .about { row-gap: var(--sp-6); }
-#about.section { --section-y: clamp(3.5rem, 2.5rem + 4vw, 7rem); }
 .about__text { display: grid; align-content: start; }
 .about__text .lede { margin-top: var(--sp-5); max-width: 24em; font-size: clamp(1.3rem, 0.95rem + 1.4vw, 2.125rem); line-height: 1.28; }
 html[data-lang="ja"] .about__text .lede { max-width: 30em; font-size: clamp(1.0625rem, 0.9rem + 0.8vw, 1.5rem); }
@@ -638,6 +637,12 @@ html[data-lang="ja"] .facts__unit--word { letter-spacing: 0.04em; font-size: 0.8
   grid-row: 1 / span 3; width: 2.25rem; height: 2.25rem; fill: none; stroke: var(--c-primary); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
 }
 .about-note__title { color: var(--c-on-surface-3); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.5; }
+@media (prefers-reduced-motion: no-preference) {
+  .js-ready .about-note__icon { stroke-dasharray: 120; stroke-dashoffset: 120; transition: stroke-dashoffset 1.2s var(--ease-out) 300ms; }
+  .js-ready .about-notes.is-in .about-note__icon { stroke-dashoffset: 0; }
+  .js-ready .about-notes.is-in > :nth-child(2) .about-note__icon { transition-delay: 390ms; }
+  .js-ready .about-notes.is-in > :nth-child(3) .about-note__icon { transition-delay: 480ms; }
+}
 html[data-lang="ja"] .about-note__title { letter-spacing: 0.06em; font-size: 0.8125rem; }
 .about-note__place { font-family: var(--font-serif); font-size: clamp(1.1875rem, 1rem + 0.6vw, 1.5rem); line-height: 1.25; font-weight: 500; text-wrap: balance; }
 html[data-lang="ja"] .about-note__place { font-family: var(--font-ja-serif); font-size: 1.125rem; }
@@ -674,10 +679,10 @@ html[data-lang="ja"] .about-note__place { font-family: var(--font-ja-serif); fon
 
 /* ---------- What We Do ----------------------------------------------------- */
 /* Only the heading is left in this head (the lede sentence was removed on 2026-10-16), so the gap below it is tighter. */
-.wwd__head { row-gap: var(--sp-5); margin-bottom: clamp(2rem, 1.2rem + 3vw, 4rem); align-items: end; }
+.wwd__head { row-gap: var(--sp-5); margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem); align-items: end; }
 
 .group { row-gap: var(--sp-6); }
-.group + .group { margin-top: clamp(5rem, 3rem + 6vw, 10rem); }
+.group + .group { margin-top: clamp(3.5rem, 2.5rem + 3vw, 6rem); }
 .group__title { display: flex; align-items: center; gap: var(--sp-4); color: var(--c-on-surface-2); }
 .group__title::after { content: ""; flex: 1; height: 1px; background: var(--c-outline-2); }
 
@@ -762,7 +767,6 @@ html[data-lang="ja"] .cafe__title { font-size: clamp(2.25rem, 1.6rem + 3vw, 4rem
 /* ---------- Career --------------------------------------------------------- */
 .career { row-gap: var(--sp-5); align-items: center; }
 .career__media { grid-column: col 1 / content-end; --ar: 3 / 2; }   /* 2026-10-23: on the content columns, like every other photograph */
-#staff.section { --section-y: clamp(3.5rem, 2.5rem + 4vw, 7rem); }
 .career__text .lede { margin-top: var(--sp-6); }
 .status {
   margin-top: var(--sp-6); display: flex; align-items: center; gap: var(--sp-3); max-width: var(--measure);
@@ -827,6 +831,14 @@ html[data-lang="ja"] .keyfacts dt { letter-spacing: 0.06em; font-size: 0.8125rem
 .site-footer__label { margin-top: var(--sp-6); color: var(--c-on-inverse-2); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
 html[data-lang="ja"] .site-footer__label { letter-spacing: 0.06em; font-size: 0.8125rem; }
 .site-footer__mail { margin-top: var(--sp-1); font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); font-weight: 500; line-height: 1.3; }
+.site-footer__mail { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--sp-3); }
+.mail-copy { min-height: var(--touch); padding: var(--sp-2) var(--sp-3); border: 1px solid rgba(255,255,255,.35); border-radius: 3px; color: inherit; background: transparent; font: inherit; font-size: .8125rem; cursor: pointer; }
+/* Small press feedback, including touch; static photo tiles keep their existing treatment. */
+:is(button:not(:disabled), .more, .crop__title a, .project__title a):active { opacity: .8; }
+:is(.site-nav a, .site-footer__nav a, .site-footer__mail a):active { background-color: rgba(128,128,128,.15); }
+@media (prefers-reduced-motion: no-preference) {
+  :is(.mail-copy, .lang__toggle, .hero__arrow, .hero__pause, .more):active { transform: scale(.98); }
+}
 .site-footer__mail a { display: inline-flex; align-items: center; min-height: var(--touch); color: var(--c-on-inverse); text-decoration: underline; text-underline-offset: 0.3em; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
 @media (hover: hover) { .site-footer__mail a:hover { text-decoration-thickness: 2px; } }
 .site-footer__nav ul { display: flex; flex-wrap: wrap; gap: 0 var(--sp-5); }
@@ -885,7 +897,7 @@ html[data-lang="ja"] .site-footer__nav a { letter-spacing: 0.06em; font-size: 0.
   .group--split::before { content: ""; grid-column: col 1 / content-end; grid-row: 1; align-self: start; border-top: 1px solid var(--c-outline-2); }
   .group--split > .group__title { grid-column: col 1 / span 3; grid-row: 1; border-top: 0; }
   .group--split > .group__text { grid-column: col 5 / content-end; grid-row: 1; padding-top: var(--sp-4); }
-  .group--split > .farm-grid, .group--split > .project-grid { margin-top: var(--sp-6); }
+  .group--split > .farm-grid, .group--split > .project-grid { margin-top: var(--sp-5); }
 
   .wwd__head > .wwd__title { grid-column: col 1 / span 7; grid-row: 1 / span 2; align-self: end; }
 
