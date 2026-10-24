@@ -1,7 +1,7 @@
 /* TANJA Web V2 — script.js
    Progressive enhancement only. The page is fully readable in English with JavaScript off.
    Jobs: (0) skeleton frames until each photograph has loaded, (1) language menu + remembered choice, (2) mobile menu,
-         (3) header over the hero, (4) current-section marker, (5) footer menu copies the header menu, (6) hero slider, (7) scroll reveal, (8) About figures count up.
+         (3) header over the hero, (4) current-section marker, (5) footer menu copies the header menu, (6) hero slider, (7) scroll reveal, (8) About figures count up, (9) copy contact email.
    No libraries. No network requests of its own: the hero slider only promotes the same-origin photographs already
    referenced in the page (job 6).
 
@@ -519,33 +519,65 @@
     }
 
     /* ---------- 8. About figures count up ----------
-       Each .facts__num[data-count] holds its final value in the HTML. When the band starts to fade in (same trigger as job 7, so the jump to 0
-       happens while it is still transparent) each number runs up to its value in about 1.4s, easing out, and the original text is put back
+       Each .facts__num[data-count] holds its final value in the HTML. Once 35% of the band is visible, wait for each item's reveal,
+       then run up to its value in about 1.6s, easing out. The original text is put back
        exactly at the end. Reduced motion, no IntersectionObserver, or no JS: the final numbers simply show. */
     var factsEl = document.querySelector('.facts');
     var countEls = factsEl ? [].slice.call(factsEl.querySelectorAll('.facts__num[data-count]')) : [];
     if (countEls.length && 'IntersectionObserver' in window && !reduceMotion.matches && window.requestAnimationFrame) {
       var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
       var runCount = function (el, delay) {
-        var to = parseInt(el.getAttribute('data-count'), 10), final = el.textContent, t0 = null, dur = 1400;
+        var to = parseInt(el.getAttribute('data-count'), 10), final = el.textContent, t0 = null, dur = 1600;
         if (!to) return;
         el.style.display = 'inline-block';
         el.style.minWidth = el.offsetWidth + 'px';             // tabular figures + reserved width: the band never reflows mid-count
-        el.textContent = '0';
         var frame = function (t) {
-          if (t0 === null) t0 = t + delay;
+          if (t0 === null) t0 = t;
           var k = Math.max(0, Math.min(1, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
           if (k < 1) { el.textContent = fmt(Math.round(to * e)); window.requestAnimationFrame(frame); }
           else { el.textContent = final; el.style.minWidth = ''; el.style.display = ''; }
         };
-        window.requestAnimationFrame(frame);
+        window.setTimeout(function () { window.requestAnimationFrame(frame); }, delay);
       };
       var co = new IntersectionObserver(function (entries) {
-        if (!entries[0].isIntersecting) return;
+        if (!entries[0].isIntersecting || entries[0].intersectionRatio < 0.35) return;
         co.disconnect();
-        countEls.forEach(function (el, i) { runCount(el, 150 + i * 120); });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        // The generic reveal observer has a different viewport margin; do not let callback order hide the count.
+        factsEl.classList.add('is-in');
+        countEls.forEach(function (el) {
+          var item = el.closest('.facts__item');
+          var style = getComputedStyle(item);
+          var delay = (parseFloat(style.transitionDuration) + parseFloat(style.transitionDelay)) * 1000;
+          runCount(el, delay || 900);
+        });
+      }, { threshold: 0.35 });
       co.observe(factsEl);
+    }
+
+    /* ---------- 9. copy the existing contact address ---------- */
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      [].forEach.call(document.querySelectorAll('.site-footer__mail'), function (mail) {
+        var link = mail.querySelector('a[href^="mailto:"]');
+        if (!link) return;
+        var button = document.createElement('button'), resetTimer;
+        button.type = 'button';
+        button.className = 'mail-copy';
+        button.setAttribute('aria-live', 'polite');
+        var label = function (copied) {
+          button.innerHTML = copied
+            ? '<span data-l="en" lang="en">Copied</span><span data-l="sw" lang="sw" data-review="draft">Imenakiliwa</span><span data-l="ja" lang="ja" data-review="draft">コピーしました</span>'
+            : '<span data-l="en" lang="en">Copy</span><span data-l="sw" lang="sw" data-review="draft">Nakili</span><span data-l="ja" lang="ja" data-review="draft">コピー</span>';
+        };
+        label(false);
+        button.addEventListener('click', function () {
+          navigator.clipboard.writeText(link.getAttribute('href').slice(7)).then(function () {
+            window.clearTimeout(resetTimer);
+            label(true);
+            resetTimer = window.setTimeout(function () { label(false); }, 2000);
+          }).catch(function () { /* Leave the address link available if permission is denied. */ });
+        });
+        mail.appendChild(button);
+      });
     }
 
     // English is the default; a saved Kiswahili choice was already applied by the boot script — sync titles/alts/menus to it.

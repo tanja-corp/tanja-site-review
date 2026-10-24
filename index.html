@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261023">
+  <link rel="stylesheet" href="styles.css?v=20261024">
   <!-- Language boot: runs before first paint so a returning Swahili visitor never sees an English flash.
        English is the default. The choice is remembered in localStorage (wrapped in try/catch; storage can be blocked).
        JAPANESE IS OFF (2026-10-16 meeting: English and Swahili only for the public launch). To bring it back: add 'ja' to the test below,
@@ -37,7 +37,7 @@
     })();
   </script>
   <!-- If script.js cannot load (flaky connection), drop the .js class so the page falls back to the plain, fully readable layout. -->
-  <script src="script.js?v=20261023" defer onerror="document.documentElement.classList.remove('js')"></script>
+  <script src="script.js?v=20261024" defer onerror="document.documentElement.classList.remove('js')"></script>
 </head>
 
 <!--
@@ -248,7 +248,7 @@
         </figure>
 
         <!-- KEY FIGURES: four numbers on one band. A hairline draws across when the band comes into view. -->
-        <dl class="facts" data-reveal>
+        <dl class="facts" data-reveal-group>
           <div class="facts__item">
             <dt class="facts__label"><span data-l="en" lang="en">Began managing the estates</span><span data-l="sw" lang="sw" data-review="draft">Tulianza kusimamia mashamba</span><span data-l="ja" lang="ja" data-review="draft">運営開始</span></dt>
             <dd class="facts__value"><span class="facts__num">2023</span></dd>
