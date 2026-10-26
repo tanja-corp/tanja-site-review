@@ -31,6 +31,8 @@ jobs:
           mkdir -p _site/architecture
           cp index.html what-we-do.html styles.css script.js .nojekyll _site/
           cp -r assets _site/assets
+          mkdir -p _site/demos
+          cp -r demos/sustainability _site/demos/sustainability
           cp architecture/index.html architecture/explorer.css architecture/model.js architecture/model-core.js \
              architecture/layout.js architecture/skins.js architecture/app.js architecture/inspector.js \
              architecture/i18n.js architecture/i18n-en-model.js architecture/i18n-en-inspector.js architecture/i18n-en-app.js _site/architecture/
