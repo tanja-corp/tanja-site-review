@@ -1642,7 +1642,7 @@ window.OBJECT_MODEL = {
           "ratio_mobile": "縦切り出し 660×1166",
           "focal_point": "30% 55%",
           "min_resolution": "2400×1600 / 1080×1920",
-          "derivative": "01-hero-{1..8}{,-1200,-m}"
+          "derivative": "01-hero-{2,5,10}{,-1200,-m}, 01-hero-9"
         }
       }
     },
