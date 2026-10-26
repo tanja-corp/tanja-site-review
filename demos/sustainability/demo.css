@@ -1,0 +1,75 @@
+/* Standalone section study; TANJA's existing tokens and type are imported above. */
+html { scroll-padding-top: 5rem; }
+body { background: var(--c-surface); }
+button, textarea { font: inherit; }
+.demo-header { position: sticky; top: 0; z-index: 5; background: rgba(246, 241, 231, .97); border-bottom: 1px solid var(--c-outline-2); }
+.demo-header__inner { max-width: var(--container); margin: auto; padding: .75rem var(--gutter); display: flex; align-items: center; gap: clamp(1rem, 3vw, 3rem); }
+.demo-brand { display: inline-flex; align-items: center; gap: .35rem; color: var(--c-on-surface); font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-decoration: none; white-space: nowrap; }
+.demo-brand img { object-fit: contain; }
+.demo-header__name { color: var(--c-on-surface-3); font-size: .8rem; margin-right: auto; }
+.demo-nav { display: flex; gap: clamp(.75rem, 2vw, 2rem); }
+.demo-nav a { color: var(--c-on-surface); font-size: .77rem; font-weight: 600; letter-spacing: .06em; text-decoration: none; white-space: nowrap; }
+.demo-nav a:hover, .demo-nav a:focus-visible { text-decoration: underline; text-underline-offset: .3em; }
+.demo-intro { max-width: var(--container); margin: auto; padding: clamp(3rem, 6vw, 6rem) var(--gutter) clamp(3rem, 5vw, 5rem); }
+.demo-intro__eyebrow, .decision__eyebrow { color: var(--c-on-surface-3); font-size: .72rem; font-weight: 700; letter-spacing: .18em; }
+.demo-intro h1 { font-family: var(--font-serif); font-size: clamp(2.7rem, 5.5vw, 5.5rem); font-weight: 500; line-height: .95; margin: 1rem 0 1.25rem; }
+.demo-intro > p:not(.demo-intro__eyebrow) { max-width: 37rem; color: var(--c-on-surface-2); font-size: var(--fs-body-l); line-height: 1.55; }
+.language { display: flex; align-items: center; gap: .5rem; margin-top: 2rem; }
+.language span { color: var(--c-on-surface-3); font-size: .7rem; font-weight: 700; letter-spacing: .15em; margin-right: .5rem; }
+.language button { min-width: 44px; min-height: 44px; border: 1px solid var(--c-outline-2); background: transparent; color: var(--c-on-surface); cursor: pointer; font-size: .8rem; }
+.language button[aria-pressed="true"] { border-color: var(--c-primary); background: var(--c-primary); color: white; }
+.study { border-top: 1px solid var(--c-outline-2); padding: clamp(3rem, 5vw, 5.5rem) var(--gutter) clamp(5rem, 8vw, 8rem); scroll-margin-top: 4rem; }
+.study:nth-of-type(even) { background: var(--c-surface-2); }
+.study__meta, .sustainability { max-width: var(--container); margin: auto; }
+.study__meta { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: clamp(2.5rem, 4vw, 4rem); }
+.study__meta > div { display: flex; align-items: baseline; gap: 1.25rem; }
+.study__number { font-family: var(--font-serif); font-size: 2rem; color: var(--c-clay); }
+.study__meta h2 { font-size: .83rem; text-transform: uppercase; font-weight: 700; letter-spacing: .16em; }
+.study__meta p { color: var(--c-on-surface-3); font-size: .78rem; }
+.sustainability__heading { border-top: 1px solid var(--c-outline-2); padding-top: 1rem; margin-bottom: clamp(2rem, 3vw, 3rem); }
+.sustainability__heading h3 { font-family: var(--font-serif); font-size: clamp(2.2rem, 3vw, 3.25rem); font-weight: 500; line-height: 1.05; }
+.sustainability__content { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 6rem); align-items: start; }
+.sustainability__photo { overflow: hidden; background: var(--c-surface-3); }
+.sustainability__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sustainability--landscape .sustainability__photo { aspect-ratio: 16 / 9; }
+.sustainability--portrait .sustainability__content { grid-template-columns: minmax(0, 4.3fr) minmax(0, 6.7fr); }
+.sustainability--portrait .sustainability__photo { aspect-ratio: 3 / 4; }
+.sustainability__copy { min-width: 0; }
+.sustainability__statement { font-family: var(--font-serif); font-size: clamp(1.8rem, 2.8vw, 2.8rem); font-weight: 500; line-height: 1.08; max-width: 21em; text-wrap: pretty; }
+.sustainability__project { max-width: var(--measure); border-top: 1px solid var(--c-outline-2); margin-top: clamp(1.8rem, 3.5vw, 3.5rem); padding-top: 1.25rem; }
+.sustainability__project h4 { font-family: var(--font-serif); font-size: clamp(1.5rem, 2vw, 2rem); line-height: 1.1; }
+.sustainability__project p { color: var(--c-on-surface-2); font-size: var(--fs-body-l); line-height: 1.65; margin-top: .75rem; }
+html[data-lang="ja"] .sustainability__heading h3, html[data-lang="ja"] .sustainability__statement, html[data-lang="ja"] .sustainability__project h4 { font-family: var(--font-ja-serif); }
+html[data-lang="ja"] .sustainability__heading h3 { font-size: clamp(1.5rem, 2vw, 2.1rem); }
+html[data-lang="ja"] .sustainability__statement { font-size: clamp(1.25rem, 2vw, 1.9rem); line-height: 1.65; font-weight: 600; }
+html[data-lang="ja"] .sustainability__project h4 { font-size: 1.35rem; }
+.decision { max-width: 35rem; padding: 5rem 1.25rem 7rem; margin: auto; }
+.decision h2 { font-family: var(--font-ja-serif); font-size: clamp(1.7rem, 5vw, 2.5rem); font-weight: 500; line-height: 1.3; margin: 1rem 0; }
+.decision > p:not(.decision__eyebrow):not(.decision__status) { color: var(--c-on-surface-2); font-size: .95rem; line-height: 1.7; }
+.decision fieldset { border: 0; padding: 0; margin: 2.5rem 0 1.5rem; }
+.decision legend, .decision__comment { display: block; margin-bottom: .75rem; font-size: .82rem; font-weight: 700; }
+.decision fieldset label { display: flex; align-items: center; gap: .75rem; min-height: 52px; padding: .65rem .8rem; border: 1px solid var(--c-outline-2); margin-bottom: .5rem; cursor: pointer; }
+.decision input { accent-color: var(--c-primary); width: 18px; height: 18px; }
+.decision textarea { display: block; width: 100%; min-height: 9rem; resize: vertical; padding: .85rem; border: 1px solid var(--c-outline); border-radius: 0; background: #fffdf9; color: var(--c-on-surface); font-size: 1rem; line-height: 1.5; }
+.decision__copy { width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: space-between; margin-top: 1.25rem; padding: .85rem 1rem; border: 0; background: var(--c-primary); color: white; cursor: pointer; font-size: .9rem; font-weight: 700; }
+.decision__copy:hover { background: var(--c-inverse); }
+.decision__status { min-height: 1.6rem; padding-top: .5rem; color: var(--c-primary); font-size: .85rem; }
+.decision__source { display: inline-block; margin-top: 2rem; color: var(--c-on-surface-2); font-size: .85rem; text-underline-offset: .3em; }
+:focus-visible { outline: 3px solid var(--c-primary); outline-offset: 3px; }
+@media (max-width: 760px) {
+  .demo-header__name { display: none; }
+  .demo-nav { margin-left: auto; }
+  .study__meta { align-items: start; flex-direction: column; }
+  .sustainability__content, .sustainability--portrait .sustainability__content { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+  .sustainability--portrait .sustainability__photo { max-width: 34rem; }
+  .sustainability__statement { font-size: clamp(1.9rem, 6vw, 2.5rem); }
+  .sustainability__project { margin-top: 1.75rem; }
+}
+@media (max-width: 440px) {
+  .demo-header__inner { gap: .5rem; }
+  .demo-brand span { display: none; }
+  .demo-nav a { font-size: .66rem; }
+  .study { padding-inline: 1.25rem; }
+  .study__meta > div { gap: .75rem; }
+  .sustainability--portrait .sustainability__photo { aspect-ratio: 4 / 5; }
+}
