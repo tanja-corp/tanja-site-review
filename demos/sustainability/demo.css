@@ -36,13 +36,9 @@ button, textarea { font: inherit; }
 .sustainability--portrait .sustainability__photo { aspect-ratio: 3 / 4; }
 .sustainability__copy { min-width: 0; }
 .sustainability__statement { font-family: var(--font-serif); font-size: clamp(1.8rem, 2.8vw, 2.8rem); font-weight: 500; line-height: 1.08; max-width: 21em; text-wrap: pretty; }
-.sustainability__project { max-width: var(--measure); border-top: 1px solid var(--c-outline-2); margin-top: clamp(1.8rem, 3.5vw, 3.5rem); padding-top: 1.25rem; }
-.sustainability__project h4 { font-family: var(--font-serif); font-size: clamp(1.5rem, 2vw, 2rem); line-height: 1.1; }
-.sustainability__project p { color: var(--c-on-surface-2); font-size: var(--fs-body-l); line-height: 1.65; margin-top: .75rem; }
-html[data-lang="ja"] .sustainability__heading h3, html[data-lang="ja"] .sustainability__statement, html[data-lang="ja"] .sustainability__project h4 { font-family: var(--font-ja-serif); }
+html[data-lang="ja"] .sustainability__heading h3, html[data-lang="ja"] .sustainability__statement { font-family: var(--font-ja-serif); }
 html[data-lang="ja"] .sustainability__heading h3 { font-size: clamp(1.5rem, 2vw, 2.1rem); }
 html[data-lang="ja"] .sustainability__statement { font-size: clamp(1.25rem, 2vw, 1.9rem); line-height: 1.65; font-weight: 600; }
-html[data-lang="ja"] .sustainability__project h4 { font-size: 1.35rem; }
 .decision { max-width: 35rem; padding: 5rem 1.25rem 7rem; margin: auto; }
 .decision h2 { font-family: var(--font-ja-serif); font-size: clamp(1.7rem, 5vw, 2.5rem); font-weight: 500; line-height: 1.3; margin: 1rem 0; }
 .decision > p:not(.decision__eyebrow):not(.decision__status) { color: var(--c-on-surface-2); font-size: .95rem; line-height: 1.7; }
@@ -63,7 +59,6 @@ html[data-lang="ja"] .sustainability__project h4 { font-size: 1.35rem; }
   .sustainability__content, .sustainability--portrait .sustainability__content { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
   .sustainability--portrait .sustainability__photo { max-width: 34rem; }
   .sustainability__statement { font-size: clamp(1.9rem, 6vw, 2.5rem); }
-  .sustainability__project { margin-top: 1.75rem; }
 }
 @media (max-width: 440px) {
   .demo-header__inner { gap: .5rem; }

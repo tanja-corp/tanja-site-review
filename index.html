@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261026-portrait">
+  <link rel="stylesheet" href="styles.css?v=20261026-portrait2">
   <!-- Language boot: runs before first paint so a returning Swahili visitor never sees an English flash.
        English is the default. The choice is remembered in localStorage (wrapped in try/catch; storage can be blocked).
        JAPANESE IS OFF (2026-10-16 meeting: English and Swahili only for the public launch). To bring it back: add 'ja' to the test below,
@@ -47,10 +47,10 @@
   - One page, four visible sections in this order: Home (Hero) → About → What We Do → Staff, then the footer, which is also the Contact point
     (2026-10-16 meeting: the Contact section was removed and its content moved into the footer, id="contact").
     A Mission / Vision / Values section is prepared BEFORE About (id="mission") but is hidden until the wording is decided.
-    What We Do has two branches: Farm (Coffee, Avocado, Macadamia, Beekeeping) and Sustainability (Improved Cookstoves; extensible).
+    What We Do has two branches: Farm (Coffee, Avocado, Macadamia, Beekeeping) and Sustainability (portrait photograph and statement).
     Lunch and Cattle were taken out of Sustainability on 2026-10-16: they belong to farming activity, not to a project. Their text is kept in docs/COPY_DECK.md.
     The items are NOT linked to what-we-do.html for now (user instruction 2026-09-29, after the team meeting). To re-link, wrap each
-    title in <a href="what-we-do.html#coffee"> (ids: coffee, avocado, macadamia, beekeeping, cookstoves) and restore the
+    title in <a href="what-we-do.html#coffee"> (ids: coffee, avocado, macadamia, beekeeping) and restore the
     "Read more" link under the What We Do heading; the CSS for both is still in styles.css (.crop__title a, .project__title a, .more, .crop__go).
   - FARM uses ONE overall introduction, not one description per crop: requested 2026-09-29 by Naoaki (production owner) with the
     exact wording to publish. The English text is his, verbatim. Do not edit it without him. SW / JP are draft translations.
@@ -389,14 +389,14 @@
         </div>
       </div>
 
-      <!-- ---------------------------------------------------- SUSTAINABILITY (extensible)
-           The selected portrait photograph sits beside the section statement and improved-cookstove description.
-           Lunch and Cattle remain under farming activity, not this section. CMS: repeatable project entries. -->
+      <!-- ---------------------------------------------------- SUSTAINABILITY
+           The selected portrait photograph sits beside the section statement.
+           Lunch and Cattle remain under farming activity, not this section. -->
       <div class="wrap group group--sustainability" id="project">
         <h3 class="group__title"><span data-l="en" lang="en">Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">サステナビリティ</span></h3>
         <ul class="project-grid" role="list" data-reveal-group>
           <li>
-            <article class="project" id="cookstoves">
+            <article class="project">
               <figure class="media media--4x5" data-slot="07">
                 <img src="assets/images/07-cookstove-portrait.webp" width="1000" height="1333" loading="lazy" decoding="async"
                      alt="A woman placing firewood into an improved cookstove beside a brick wall."
@@ -405,14 +405,9 @@
               </figure>
               <div class="project__body">
                 <p class="sustainability-statement"><span data-l="en" lang="en">We believe that living in harmony with nature and growing alongside our community are essential to a sustainable farm.</span><span data-l="sw" lang="sw" data-review="draft">Tunaamini kuwa kuishi kwa kupatana na mazingira na kustawi pamoja na jamii zinazotuzunguka ni muhimu kwa shamba endelevu.</span><span data-l="ja" lang="ja" data-review="draft">自然と調和し、地域とともに歩むことが、持続可能な農園にとって大切だと考えています。</span></p>
-                <div class="project__detail">
-                  <h4 class="project__title"><span data-l="en" lang="en">Improved Cookstoves</span><span data-l="sw" lang="sw" data-review="draft">Majiko Banifu</span><span data-l="ja" lang="ja" data-review="draft">改良型かまど</span></h4>
-                  <p><span data-l="en" lang="en">Improved cookstoves for households around the farm use less firewood and produce less smoke. They also reduce the time needed to collect wood.</span><span data-l="sw" lang="sw" data-review="draft">Majiko banifu kwa kaya zinazozunguka shamba yanatumia kuni kidogo na kutoa moshi mdogo. Pia yanapunguza muda unaohitajika kutafuta kuni.</span><span data-l="ja" lang="ja" data-review="draft">農園の周りの家庭に広める改良型かまどは、使う薪と煙を減らし、薪集めに必要な時間も短くします。</span></p>
-                </div>
               </div>
             </article>
           </li>
-          <!-- ADD PROJECT HERE: copy the <li>…</li> above -->
         </ul>
       </div>
 
