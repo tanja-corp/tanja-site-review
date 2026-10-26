@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261026">
+  <link rel="stylesheet" href="styles.css?v=20261026-portrait">
   <!-- Language boot: runs before first paint so a returning Swahili visitor never sees an English flash.
        English is the default. The choice is remembered in localStorage (wrapped in try/catch; storage can be blocked).
        JAPANESE IS OFF (2026-10-16 meeting: English and Swahili only for the public launch). To bring it back: add 'ja' to the test below,
@@ -47,10 +47,10 @@
   - One page, four visible sections in this order: Home (Hero) → About → What We Do → Staff, then the footer, which is also the Contact point
     (2026-10-16 meeting: the Contact section was removed and its content moved into the footer, id="contact").
     A Mission / Vision / Values section is prepared BEFORE About (id="mission") but is hidden until the wording is decided.
-    What We Do has two branches: Farm (Coffee, Avocado, Macadamia, Beekeeping) and Sustainability (Carbon Credit; extensible).
+    What We Do has two branches: Farm (Coffee, Avocado, Macadamia, Beekeeping) and Sustainability (Improved Cookstoves; extensible).
     Lunch and Cattle were taken out of Sustainability on 2026-10-16: they belong to farming activity, not to a project. Their text is kept in docs/COPY_DECK.md.
     The items are NOT linked to what-we-do.html for now (user instruction 2026-09-29, after the team meeting). To re-link, wrap each
-    title in <a href="what-we-do.html#coffee"> (ids: coffee, avocado, macadamia, beekeeping, carbon) and restore the
+    title in <a href="what-we-do.html#coffee"> (ids: coffee, avocado, macadamia, beekeeping, cookstoves) and restore the
     "Read more" link under the What We Do heading; the CSS for both is still in styles.css (.crop__title a, .project__title a, .more, .crop__go).
   - FARM uses ONE overall introduction, not one description per crop: requested 2026-09-29 by Naoaki (production owner) with the
     exact wording to publish. The English text is his, verbatim. Do not edit it without him. SW / JP are draft translations.
@@ -390,32 +390,25 @@
       </div>
 
       <!-- ---------------------------------------------------- SUSTAINABILITY (extensible)
-           2026-10-16 meeting: only the improved-cookstove project (Carbon Credit) stays here, with ONE photograph. Lunch and Cattle are part of
-           farming activity, not projects, so their cards and the paragraphs about them were removed (text kept in docs/COPY_DECK.md; they may return
-           under Farm once Naoaki sends wording). Naoaki is also sending new Sustainability sentences: replace the statement below then.
-           Deliberately NOT stated: issued credits, partner names, beneficiary counts.
-           CMS: repeatable "Project" entries. To add one, copy the <li> below, change the title, text, photo, the id AND the slot
-           (data-slot="NN"; next free number, plus a row in docs/PHOTO_MANIFEST.md). A single card is laid out wide (photo left, text right);
-           from the second card on the grid becomes three columns by itself. -->
-      <div class="wrap group group--split" id="project">
+           The selected portrait photograph sits beside the section statement and improved-cookstove description.
+           Lunch and Cattle remain under farming activity, not this section. CMS: repeatable project entries. -->
+      <div class="wrap group group--sustainability" id="project">
         <h3 class="group__title"><span data-l="en" lang="en">Sustainability</span><span data-l="sw" lang="sw" data-review="draft">Uendelevu</span><span data-l="ja" lang="ja" data-review="draft">サステナビリティ</span></h3>
-        <p class="statement group__text sustainability-statement"><span data-l="en" lang="en">We believe that living in harmony with nature and growing alongside our community are essential to a sustainable farm.</span><span data-l="sw" lang="sw" data-review="draft">Tunaamini kuwa kuishi kwa kupatana na mazingira na kustawi pamoja na jamii zinazotuzunguka ni muhimu kwa shamba endelevu.</span><span data-l="ja" lang="ja" data-review="draft">自然と調和し、地域とともに歩むことが、持続可能な農園にとって大切だと考えています。</span></p>
         <ul class="project-grid" role="list" data-reveal-group>
           <li>
-            <article class="project" id="carbon">
+            <article class="project" id="cookstoves">
               <figure class="media media--4x5" data-slot="07">
-                <picture>
-                  <source srcset="assets/images/07-carbon-stove-700.webp 700w, assets/images/07-carbon-stove-1050.webp 1050w" sizes="(min-width: 64em) 40vw, 100vw" type="image/webp">
-                  <img src="assets/images/07-carbon-stove-1050.jpg" srcset="assets/images/07-carbon-stove-700.jpg 700w, assets/images/07-carbon-stove-1050.jpg 1050w" sizes="(min-width: 64em) 40vw, 100vw"
-                       width="1050" height="1400" loading="lazy" decoding="async" style="--focal: 50% 50%"
-                       alt="Metal cookstove in use with a pot over a wood fire."
-                       data-review-sw="draft" data-review-ja="draft" data-alt-sw="Jiko la chuma likitumika kupika sufuria kwa moto wa kuni."
-                       data-alt-ja="薪火で鍋を調理している金属製のかまど。">
-                </picture>
+                <img src="assets/images/07-cookstove-portrait.webp" width="1000" height="1333" loading="lazy" decoding="async"
+                     alt="A woman placing firewood into an improved cookstove beside a brick wall."
+                     data-review-sw="draft" data-review-ja="draft" data-alt-sw="Mwanamke akiweka kuni katika jiko banifu kando ya ukuta wa matofali."
+                     data-alt-ja="レンガの壁のそばで、改良型かまどに薪を入れる女性。">
               </figure>
               <div class="project__body">
-                <h4 class="project__title"><span data-l="en" lang="en">Carbon Credit</span><span data-l="sw" lang="sw" data-review="draft">Hati za Kaboni</span><span data-l="ja" lang="ja" data-review="draft">カーボンクレジット</span></h4>
-                <p><span data-l="en" lang="en">Improved cookstoves for households around the farm use far less firewood: less smoke, less CO₂ and less time collecting wood. The project aims to obtain carbon credits.</span><span data-l="sw" lang="sw" data-review="draft">Majiko banifu kwa kaya zinazozunguka shamba yanatumia kuni kidogo sana: moshi mdogo, hewa ukaa (CO₂) kidogo na muda mfupi wa kutafuta kuni. Mradi unalenga kupata hati za kaboni.</span><span data-l="ja" lang="ja" data-review="draft">農園の周りの家庭に広める改良型かまどは、薪がずっと少なくて済みます。煙もCO₂も減り、薪集めの時間も短くなります。カーボンクレジットの取得も目指しています。</span></p>
+                <p class="sustainability-statement"><span data-l="en" lang="en">We believe that living in harmony with nature and growing alongside our community are essential to a sustainable farm.</span><span data-l="sw" lang="sw" data-review="draft">Tunaamini kuwa kuishi kwa kupatana na mazingira na kustawi pamoja na jamii zinazotuzunguka ni muhimu kwa shamba endelevu.</span><span data-l="ja" lang="ja" data-review="draft">自然と調和し、地域とともに歩むことが、持続可能な農園にとって大切だと考えています。</span></p>
+                <div class="project__detail">
+                  <h4 class="project__title"><span data-l="en" lang="en">Improved Cookstoves</span><span data-l="sw" lang="sw" data-review="draft">Majiko Banifu</span><span data-l="ja" lang="ja" data-review="draft">改良型かまど</span></h4>
+                  <p><span data-l="en" lang="en">Improved cookstoves for households around the farm use less firewood and produce less smoke. They also reduce the time needed to collect wood.</span><span data-l="sw" lang="sw" data-review="draft">Majiko banifu kwa kaya zinazozunguka shamba yanatumia kuni kidogo na kutoa moshi mdogo. Pia yanapunguza muda unaohitajika kutafuta kuni.</span><span data-l="ja" lang="ja" data-review="draft">農園の周りの家庭に広める改良型かまどは、使う薪と煙を減らし、薪集めに必要な時間も短くします。</span></p>
+                </div>
               </div>
             </article>
           </li>
