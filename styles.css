@@ -61,7 +61,7 @@
   --font-ja: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Noto Sans JP", "Noto Sans CJK JP", Meiryo, sans-serif;
   --font-ja-serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Noto Serif CJK JP", serif;
 
-  --fs-display: clamp(4.25rem, 1.8rem + 11vw, 11.5rem);
+  --fs-display: clamp(5rem, 10vw, 10rem);  /* Hero wordmark: grows with the viewport, then stops scaling. */
   /* 2026-10-23: phone minimums lowered (headline 44 -> 34px, statement 26 -> 21px, title 26 -> 20px at 360px) so one phone screen holds more than a heading. */
   --fs-headline: clamp(2.125rem, 1.25rem + 4.2vw, 5.5rem);
   --fs-statement: clamp(1.3rem, 0.9rem + 1.9vw, 2.875rem);
@@ -464,13 +464,10 @@ html:not(.js) .lang { display: none; }
 .hero__inner { width: 100%; padding-block: 0 clamp(1rem, 0.75rem + 2vw, 2.25rem); display: grid; gap: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
 .hero__inner > * { min-width: 0; }
 .hero__title {
-  font-size: min(calc(var(--fs-display) * 1.5), 26vw); font-weight: 500; line-height: 0.82; letter-spacing: 0.06em; margin-left: -0.04em;
+  font-size: var(--fs-display); font-weight: 500; line-height: 0.82; letter-spacing: 0.06em; margin-left: -0.04em;
   /* The tail of the "J" hangs below the 0.82 line box; this keeps it off the line underneath. */
   margin-bottom: 0.08em;
 }
-/* Short laptop screens (1280 x 600 and the like): the size from PR #4/#5 stays, but never more than ~40% of the screen height. */
-.hero__title { font-size: min(calc(var(--fs-display) * 1.5), 26vw, 40vh); }
-@supports (height: 1svh) { .hero__title { font-size: min(calc(var(--fs-display) * 1.5), 26vw, 40svh); } }
 .hero__copy { transform: translateY(clamp(0.75rem, 0.5rem + 1vw, 1.5rem)); }
 /* The subtitle under the wordmark was removed on 2026-10-23 (user instruction). */
 
@@ -530,7 +527,8 @@ html:not(.js) .lang { display: none; }
 @media (max-width: 59.99em) and (max-height: 34rem) { .js .site-nav a { min-height: 3.25rem; font-size: 1.5rem; } }
 @media (max-height: 34rem) and (orientation: landscape) {
   .hero { height: 100vh; height: 100svh; min-height: 0; }
-  .hero__title { font-size: min(clamp(4.5rem, 24vh, 7.5rem), 20vw); }
+  .hero__title { font-size: clamp(3.5rem, min(18vh, 14vw), 7rem); }
+  @supports (height: 1svh) { .hero__title { font-size: clamp(3.5rem, min(18svh, 14vw), 7rem); } }
   .hero__inner { padding-bottom: 1rem; gap: var(--sp-3); }
 }
 
