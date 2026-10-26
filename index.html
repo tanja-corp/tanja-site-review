@@ -15,7 +15,7 @@
   <meta property="og:title" content="TANJA — Coffee farms on the edge of Ngorongoro, Tanzania">
   <meta property="og:description" content="Coffee, avocado, macadamia and bees on three century-old estates in Karatu District, northern Tanzania.">
   <meta property="og:url" content="https://tanja-corp.github.io/tanja-site-review/">
-  <meta property="og:image" content="https://tanja-corp.github.io/tanja-site-review/assets/images/01-hero-1-1200.jpg">
+  <meta property="og:image" content="https://tanja-corp.github.io/tanja-site-review/assets/images/01-hero-2-1200.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="800">
   <meta name="twitter:card" content="summary_large_image">
@@ -132,36 +132,36 @@
   <main id="main">
 
     <!-- =================================================================== 01 HOME = HERO (slot 01)
-         A horizontal slider (2026-09-29, direct user request: "several photos side by side, switching automatically every few
-         seconds"). Cut from 8 to 4 slides on 2026-10-16 (meeting: "three to four is enough"; no captions, no page numbers): coffee rows, ripening
-         cherries, drying beds, and the workers group photograph. Each slide enters from the right every 6s (--hero-interval in styles.css). No library, no video.
-         The other five photographs (mountain, slope with reservoir, dam, sunrise, reservoir) are not shown but their files are kept in assets/images.
-         - Slide 1 is real from first paint (fetchpriority="high", the LCP image). Slides 2+ carry data-srcset / data-src only,
-           so the browser fetches NOTHING for them unless script.js promotes the attributes — which it does only when JS runs
-           AND the visitor has not asked for reduced motion. No JS / reduced motion → slide 1 stays, as a still photograph.
-         - Only slide 1 carries this section's data-slot="01"; the other slides are further photographs of the same slot. -->
+         Four review images remain in the slider: current coffee cherries and rows, the retained Drive group photo, drying beds, and the existing workers group.
+         The wide landscape / acacia photograph shown in the 2026-10-26 screenshot was removed from the hero.
+         Matsui left the first choice unset. The current comparison photo remains first as the technical initial frame; the Drive candidate is included provisionally for review.
+         Candidate 02 (Drive file ID 1kD-yG90LN6hqzFpacHQIb0Ez7ocwFyM3) shows a group holding coffee cherries in front of coffee trees.
+         The source does not establish the occasion, capture date, location, or people's web-publication consent. Confirm those before production use.
+         Later slides are lazy-loaded when motion is allowed; without JavaScript or with reduced motion, the current comparison stays as a still photo.
+         =================================================================== -->
     <section class="hero" id="home" aria-labelledby="hero-title" data-slot="01">
       <div class="hero__media" data-hero-rotate role="region" aria-roledescription="carousel" aria-label="TANJA farm photographs" data-label-sw="Picha za shamba la TANJA" data-label-ja="TANJA農園の写真">
         <figure class="hero__slide is-active" aria-hidden="false">
           <picture>
-            <source media="(max-width: 700px)" srcset="assets/images/01-hero-1-m.webp" type="image/webp">
-            <source media="(max-width: 700px)" srcset="assets/images/01-hero-1-m.jpg" type="image/jpeg">
-            <source srcset="assets/images/01-hero-1-1200.webp 1200w, assets/images/01-hero-1.webp 1920w" sizes="100vw" type="image/webp">
-            <img src="assets/images/01-hero-1.jpg" srcset="assets/images/01-hero-1-1200.jpg 1200w, assets/images/01-hero-1.jpg 1920w" sizes="100vw"
-                 width="1920" height="1280" fetchpriority="high" decoding="async" style="--focal: 40% 55%"
-                 alt="Rows of coffee running down a slope towards a wide plain, with a flat-topped acacia tree and a blue sky."
-                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Safu za kahawa zikishuka kwenye mteremko kuelekea uwanda mpana, na mti wa mgunga wenye kilele bapa na anga la buluu."
-                 data-alt-ja="広い平原へと斜面を下るコーヒーの列。平らな樹冠のアカシアと青空。">
-          </picture>
-        </figure>
-        <figure class="hero__slide" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-2-m.webp" type="image/webp">
-            <source data-srcset="assets/images/01-hero-2-1200.webp 1200w, assets/images/01-hero-2.webp 1920w" sizes="100vw" type="image/webp">
-            <img data-src="assets/images/01-hero-2.jpg" width="1920" height="1280" decoding="async" style="--focal: 30% 55%"
+            <source media="(max-width: 700px)" srcset="assets/images/01-hero-2-m.webp" type="image/webp">
+            <source media="(max-width: 700px)" srcset="assets/images/01-hero-2-m.jpg" type="image/jpeg">
+            <source srcset="assets/images/01-hero-2-1200.webp 1200w, assets/images/01-hero-2.webp 1920w" sizes="100vw" type="image/webp">
+            <img src="assets/images/01-hero-2.jpg" srcset="assets/images/01-hero-2-1200.jpg 1200w, assets/images/01-hero-2.jpg 1920w" sizes="100vw" width="1920" height="1280" fetchpriority="high" decoding="async" style="--focal: 30% 55%"
                  alt="Coffee branches with red and green cherries in the foreground and rows of coffee trees on the slope behind."
                  data-review-sw="draft" data-review-ja="draft" data-alt-sw="Matawi ya kahawa yenye matunda mekundu na ya kijani mbele, na safu za miti ya kahawa kwenye mteremko wa nyuma."
                  data-alt-ja="手前のコーヒーの枝に赤い実と緑の実がつき、奥の斜面にコーヒーの木の列が並んでいる。">
+          </picture>
+        </figure>
+        <!-- Candidate 02; see architecture/photo-review-20261026.md. -->
+        <figure class="hero__slide" aria-hidden="true">
+          <picture>
+            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-10-m.webp" type="image/webp">
+            <source media="(max-width: 700px)" data-srcset="assets/images/01-hero-10-m.jpg" type="image/jpeg">
+            <source data-srcset="assets/images/01-hero-10-1200.webp 1200w, assets/images/01-hero-10.webp 1920w" sizes="100vw" type="image/webp">
+            <img data-src="assets/images/01-hero-10.jpg" width="1920" height="1280" decoding="async" style="--focal: 50% 50%"
+                 alt="A group of people hold coffee cherries together, with coffee trees behind them."
+                 data-review-sw="draft" data-review-ja="draft" data-alt-sw="Kikundi cha watu wakiwa wameshika matunda ya kahawa, huku miti ya kahawa ikionekana nyuma yao."
+                 data-alt-ja="複数人がコーヒーの実を手に持ち、背後にはコーヒーの木が見える。">
           </picture>
         </figure>
         <figure class="hero__slide" aria-hidden="true">
